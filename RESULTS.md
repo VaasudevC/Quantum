@@ -36,3 +36,26 @@ Compressing angles to |θ| < pi/6 recovers about 0.16 AUC compared with pi, and 
 
 **Decision.** s\* = pi/6. It is not the smallest scale tested, so no extension to pi/12 or pi/16 is needed. pi/8 is within 0.003 val AUC, but
 the rule prefers the larger scale, which is pi/6 in any case. Next: Stage 2 with `--scales "pi/6,pi/2,pi"`.
+
+## Stage 2 — training length, 1000 steps, k ∈ {8,16,32}, 5 folds (2026-11-04)
+
+Command: `scale_cv.py --scales "pi/6,pi/2,pi" --ks 8,16,32 --steps 1000 --jobs 3 --out results/stage2_steps1000.jsonl`
+
+| k | scale | val AUC | test AUC ± SD | LR AUC | gap to LR | last_step_frac | 300-step pilot |
+|---|---|---|---|---|---|---|---|
+| 8  | pi/6 | 0.929 | 0.928 ± 0.006 | 0.922 | +0.006 | 0.4 | – |
+| 8  | pi/2 | 0.931 | 0.928 ± 0.006 | 0.922 | +0.006 | 0.2 | 0.919 |
+| 8  | pi   | 0.910 | 0.910 ± 0.009 | 0.922 | −0.012 | 0.2 | 0.904 |
+| 16 | pi/6 | 0.941 | 0.940 ± 0.006 | 0.932 | +0.007 | 0.4 | – |
+| 16 | pi/2 | 0.926 | 0.923 ± 0.010 | 0.932 | −0.009 | 0.4 | 0.908 |
+| 16 | pi   | 0.891 | 0.892 ± 0.015 | 0.932 | −0.040 | 0.4 | 0.864 |
+| 32 | pi/6 | 0.952 | 0.951 ± 0.006 | 0.945 | +0.006 | 0.6 | – |
+| 32 | pi/2 | 0.911 | 0.910 ± 0.012 | 0.945 | −0.035 | 0.4 | 0.896 |
+| 32 | pi   | 0.789 | 0.791 ± 0.078 | 0.945 | −0.154 | 0.2 | 0.787 |
+
+**Key question: at s\* = pi/6, does AUC fall, stay flat or rise from k=8 to k=32? It RISES:** 0.928 → 0.940 → 0.951.
+k=32 beats k=8 in 5/5 folds (mean +0.023). Re-uploading extra features now helps, whereas at pi it hurts (0.910 → 0.791).
+pi/6 beats pi in 5/5 folds at every k, and beats pi/2 in 5/5 folds at k=16 (+0.016) and k=32 (+0.041); at k=8 the two are tied (−0.000).
+Going from 300 to 1000 steps helps pi/2 (about +0.01) but does not rescue pi at k=32.
+
+**Decision.** last_step_frac for pi/6 at k=32 is 0.6 > 0.5, so pi/6 is rerun at 2000 steps (`results/stage2_steps2000.jsonl`) to set STEPS\*.
