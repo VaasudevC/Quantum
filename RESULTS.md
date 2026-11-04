@@ -96,3 +96,37 @@ dominated by terms up to second order. It beats linear LR in 5/5 folds (+0.006) 
 degree-2 LR in 5/5 folds (−0.008). It therefore learns within the degree-2 class but does not reach its optimum
 (81 trainable readout and ansatz params vs 560 coefficients). The model whose rankings it tracks most closely is the degree-2 LR on the
 same angles (ρ = 0.959).
+
+## Stage 3 — selectors × seeds at s\*=pi/6, 1000 steps, 5 folds × 3 seeds (2026-11-05)
+
+Command: `scale_cv.py --scales "pi/6" --ks 8,16,32 --selectors l1,cohen_dedup,random --seeds 0,1,2 --steps 1000 --jobs 3 --out results/stage3_selectors.jsonl`
+(the 15 l1/seed-0 runs come from Stage 2.) Means are over 15 runs (5 folds × 3 seeds). Seed SD is the SD of the three per-seed means.
+
+| selector | k | VQC test AUC | fold SD | seed SD | LR AUC | VQC − LR |
+|---|---|---|---|---|---|---|
+| l1          | 8  | 0.928 | 0.006 | 0.0002 | 0.922 | +0.006 |
+| l1          | 16 | 0.939 | 0.005 | 0.0003 | 0.932 | +0.007 |
+| l1          | 32 | **0.951** | 0.005 | 0.0003 | 0.945 | +0.006 |
+| cohen_dedup | 8  | 0.917 | 0.007 | 0.0003 | 0.915 | +0.003 |
+| cohen_dedup | 16 | 0.934 | 0.006 | 0.0004 | 0.928 | +0.006 |
+| cohen_dedup | 32 | 0.947 | 0.005 | 0.0001 | 0.941 | +0.006 |
+| random      | 8  | 0.802 | 0.030 | 0.0013 | 0.759 | +0.043 |
+| random      | 16 | 0.872 | 0.022 | 0.0031 | 0.836 | +0.036 |
+| random      | 32 | 0.912 | 0.021 | 0.0004 | 0.902 | +0.011 |
+
+Selected-vs-random gap (VQC test AUC):
+
+| k | l1 − random | cohen_dedup − random | l1 − cohen_dedup |
+|---|---|---|---|
+| 8  | +0.127 | +0.116 | +0.011 |
+| 16 | +0.068 | +0.063 | +0.005 |
+| 32 | +0.039 | +0.034 | +0.005 |
+
+**Interpretation.** Feature selection matters most at small k. At k=8, selected features beat random ones by +0.12–0.13, close to the
+teammate's ~+0.10 at pi, and the gap shrinks as k grows because 32 random features carry more signal. l1 beats cohen_dedup in 5/5 folds at every
+k, but by only 0.005 at k ≥ 16. The VQC at pi/6 beats LR on the same features for every selector and k, and the margin is largest with random features.
+Seeds barely matter (seed SD ≤ 0.003, far below fold SD). Note: in `scale_cv.py` the random selector's feature order depends
+on the fold only, so the seeds change only the initialization and minibatches, never the random feature set.
+
+**Decision.** cohen_dedup is within 0.005 of l1 at k=32 (−0.0045): **"Cohen's-d pipeline is competitive"**,
+although l1 wins consistently in 5/5 folds.
