@@ -59,3 +59,16 @@ pi/6 beats pi in 5/5 folds at every k, and beats pi/2 in 5/5 folds at k=16 (+0.0
 Going from 300 to 1000 steps helps pi/2 (about +0.01) but does not rescue pi at k=32.
 
 **Decision.** last_step_frac for pi/6 at k=32 is 0.6 > 0.5, so pi/6 is rerun at 2000 steps (`results/stage2_steps2000.jsonl`) to set STEPS\*.
+
+### Stage 2b — pi/6 at 2000 steps (2026-11-04)
+
+| k | val AUC 1000 → 2000 | Δ val | test AUC 1000 → 2000 | LR | last_step_frac @2000 |
+|---|---|---|---|---|---|
+| 8  | 0.9291 → 0.9315 | +0.0024 | 0.928 → 0.930 ± 0.006 | 0.922 | 0.2 |
+| 16 | 0.9411 → 0.9440 | +0.0029 | 0.940 → 0.942 ± 0.005 | 0.932 | 0.2 |
+| 32 | 0.9519 → 0.9550 | +0.0030 | 0.951 → 0.953 ± 0.005 | 0.945 | 0.2 |
+
+Doubling the steps gives a small, consistent gain (test AUC improves in 5/5 folds at every k), and the rise with k is unchanged.
+The mean val-AUC gain over the rerun is **+0.0028 < 0.003**. Only k=32 alone reaches the threshold, and just barely (+0.00301).
+**Decision: STEPS\* = 1000.** This also keeps Stage 3 at 5 folds; at 2000 steps it would take about 10 h on 4 CPUs and need to be cut to 3 folds.
+The 2000-step k=32 figure (0.953, +0.008 over LR) is the best VQC number so far.
