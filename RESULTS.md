@@ -72,3 +72,27 @@ Doubling the steps gives a small, consistent gain (test AUC improves in 5/5 fold
 The mean val-AUC gain over the rerun is **+0.0028 < 0.003**. Only k=32 alone reaches the threshold, and just barely (+0.00301).
 **Decision: STEPS\* = 1000.** This also keeps Stage 3 at 5 folds; at 2000 steps it would take about 10 h on 4 CPUs and need to be cut to 3 folds.
 The 2000-step k=32 figure (0.953, +0.008 over LR) is the best VQC number so far.
+
+## Stage 4b — VQC vs degree-2 polynomial LR, k=32, s\*=pi/6, 1000 steps (2026-11-04)
+
+Command: `python -u stage4b_poly.py --vqc results/stage4_real.jsonl --scale pi/6 --k 32 --steps 1000 --out results/stage4b_poly.jsonl`.
+Same splits and the same 32 features (each run's logged list) as the VQC. Each polynomial model has 32 + 528 = 560 terms, standardized,
+with C ∈ {1e-3 … 1} chosen by **validation** AUC (C = 0.01 in 9/10 fits). The VQC test scores are recomputed from the stored
+params and match the logged AUC exactly.
+
+| model | test AUC ± SD | Spearman ρ with VQC logit (test) |
+|---|---|---|
+| linear LR on z | 0.945 ± 0.008 | 0.945 |
+| **VQC, s = pi/6** | **0.951 ± 0.006** | 1 |
+| degree-2 LR on z | 0.958 ± 0.004 | 0.949 |
+| degree-2 LR on the VQC angles pi/6·tanh(z) | 0.960 ± 0.004 | 0.959 |
+
+How much of the learned VQC logit a fixed function class explains (ridge fit on train rows, R² on test rows):
+**degree-1 in the angles: R² = 0.918 ± 0.008; degree-2 in the angles: R² = 0.986 ± 0.001.**
+
+**Interpretation.** The VQC at pi/6 is, to 98.6%, a quadratic function of its encoded angles: mostly linear, plus a small quadratic correction.
+This is consistent with small-angle encoding, where each <Z_i> expands as a low-order trigonometric polynomial
+dominated by terms up to second order. It beats linear LR in 5/5 folds (+0.006) but falls short of the best
+degree-2 LR in 5/5 folds (−0.008). It therefore learns within the degree-2 class but does not reach its optimum
+(81 trainable readout and ansatz params vs 560 coefficients). The model whose rankings it tracks most closely is the degree-2 LR on the
+same angles (ρ = 0.959).

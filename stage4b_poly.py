@@ -63,8 +63,9 @@ def run(row):
     _, y, _, _, feats = S.load()
     Z, tr, va, te, order = S.prep(row["split"], row["fold"], row["selector"])
     k, s = row["k"], eval(row["scale"], {"pi": np.pi})
-    sel = list(order[:k])
-    assert [feats[j] for j in sel] == row["features"], "feature selection mismatch"
+    # Use the logged feature list: the l1 selector (liblinear, no random_state) can swap
+    # near-tied features between runs, so recomputing the order is not exactly reproducible.
+    sel = [feats.index(n) for n in row["features"]]
     Zs = Z[:, sel]
     A = np.zeros((len(Zs), V.N_FEATURES)); A[:, :k] = s * np.tanh(Zs)
     p = np.asarray(row["params"])
