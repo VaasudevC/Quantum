@@ -15,6 +15,12 @@ Protocol (matches the teammate's Oct-2026 report):
   * checkpoint = best val AUC (every 25 steps); metric = test AUC; LR on same features as reference
   * --shuffle-later: permute rows of features 9..k (independently per column) = shuffle control
 
+Added 2026-11-05 (NEXT.md, stages N1/N2), defaults reproduce the original behaviour exactly:
+  * --readout zz : linear readout on 8 <Z_j> + 28 <Z_iZ_j> (36 observables, 72+37 params) instead of 8 <Z_j>
+  * --train-scale: per-feature learned scale s_f (angle_f = s_f*tanh(z_f)), initialised at --scales, trained with Adam;
+                   gradient from Vqc_fast8.backward_full (per-sample adjoint), finite-difference checked
+  * the l1 selector's liblinear fits now use random_state=0 (deterministic; before, near-tied features could swap order)
+
 Results are appended one JSON line per run to --out; reruns skip finished configs (resumable).
 
 Examples

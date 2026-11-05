@@ -1,5 +1,7 @@
 # HARDWARE — does the pi/6 advantage survive shots, noise and real devices?
 
+> Part of a three-phase study: [`RESULTS.md`](RESULTS.md) (classical) · [`HARDWARE.md`](HARDWARE.md) (hardware readiness) · [`NEXT.md`](NEXT.md) (improvements). Chronological log, decisions and problems: [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md); commands: [`docs/REPRODUCE.md`](docs/REPRODUCE.md); code and file formats: [`docs/CODE_AND_DATA.md`](docs/CODE_AND_DATA.md).
+
 Models ("the 6 models"): fold 0, selector l1, 1000 steps, k ∈ {8, 32} × scale ∈ {pi, pi/2, pi/6}, trained parameters taken
 from `results/stage2_steps1000.jsonl` (72 ansatz + 8 readout weights + 1 bias). **Nothing is retrained.** Test set = fold-0 test rows
 (2,993 ECGs). Code: `qiskit_vqc.py` (Qiskit + PennyLane circuits, model loader, count decoding).

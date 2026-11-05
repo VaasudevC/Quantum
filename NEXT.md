@@ -1,5 +1,7 @@
 # NEXT — improving the model (N1–N4)
 
+> Part of a three-phase study: [`RESULTS.md`](RESULTS.md) (classical) · [`HARDWARE.md`](HARDWARE.md) (hardware readiness) · [`NEXT.md`](NEXT.md) (improvements). Chronological log, decisions and problems: [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md); commands: [`docs/REPRODUCE.md`](docs/REPRODUCE.md); code and file formats: [`docs/CODE_AND_DATA.md`](docs/CODE_AND_DATA.md).
+
 Protocol unless stated: patient-grouped 5-fold CV, l1 selector, 8 qubits × 4 layers, k=32, scale pi/6, 1000 steps, choices on validation AUC.
 **Change for all new runs:** the l1 path now uses `liblinear` with `random_state=0`, so the selection is deterministic. Checked against the
 logged features: folds 0–3 select the identical ordered list, and fold 4 the same 32 features in a different order. The fold-4 baseline (z readout, fixed pi/6)

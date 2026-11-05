@@ -1,5 +1,7 @@
 # RESULTS — ECG VQC angle-scale study (PTB-XL, MI vs NORM)
 
+> Part of a three-phase study: [`RESULTS.md`](RESULTS.md) (classical) · [`HARDWARE.md`](HARDWARE.md) (hardware readiness) · [`NEXT.md`](NEXT.md) (improvements). Chronological log, decisions and problems: [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md); commands: [`docs/REPRODUCE.md`](docs/REPRODUCE.md); code and file formats: [`docs/CODE_AND_DATA.md`](docs/CODE_AND_DATA.md).
+
 **Chosen scale s\* = pi/6** (Stage 1) · **STEPS\* = 1000** (Stage 2b) · all choices made on validation AUC; test AUC reported.
 
 ## Headline
@@ -206,8 +208,8 @@ k=8 to k=32, and the ranking pi/6 > pi/2 > pi holds at k=32.
 - **Linear readout on 8 ⟨Z⟩** (81 params). Stage 4b shows the learned function is about 98.6% quadratic in the angles, and a classical
   degree-2 LR beats it, so this study gives **no quantum advantage claim**. The VQC is competitive with linear LR and slightly better.
 - **Statistics**: 5 outer folds, so a 5/5 sign test can reach at best p = 0.062. Seeds (Stage 3) vary only initialization and minibatches.
-- **Reproducibility caveat**: the l1 selector calls `liblinear` without `random_state`, so near-tied features can swap order
+- **Reproducibility caveat**: the l1 selector called `liblinear` without `random_state` in these runs, so near-tied features could swap order
   between runs (seen at positions 27/28 in one fold). Selected sets were identical in the cases checked, but the exact
-  order can differ. Each run's logged `features` list is the ground truth; `stage4b_poly.py` uses it. Fixing this
-  (e.g. `random_state=0`) would change the protocol, so it was left for after this study.
+  order can differ. Each run's logged `features` list is the ground truth; `stage4b_poly.py` uses it. Fixed for all
+  runs from 5 Nov (`random_state=0`, NEXT.md): folds 0–3 then give the identical ordered list and fold 4 the same set in a different order.
 - **Compute**: 4 CPUs; STEPS\* = 1000 was chosen partly so Stage 3 could keep all 5 folds.
