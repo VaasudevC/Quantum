@@ -1,0 +1,3 @@
+backend=fake_fez compile=best12 path=None n=100 shots=2000
+k=32 pi/6  noiseless=0.9831 shots=0.9822 raw=0.9844 mit=0.9844  corrP raw=0.981 |z| shrink=0.81  n2q=80  723.8s
+k=32 pi    noiseless=0.8563 shots=0.8568 raw=0.8659 mit=0.8659  corrP raw=0.993 |z| shrink=0.88  n2q=80  661.5s

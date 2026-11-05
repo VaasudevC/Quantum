@@ -96,3 +96,43 @@ Estimated success = product of (1 − error) over every gate and measurement, fr
   1q gates.
 - An IonQ-like all-to-all target needs **no SWAPs** (32 RXX). Its success figure uses *assumed* fidelities (1q 0.9995, 2q 0.995, readout 0.995),
   not calibration data, so it is illustrative only.
+
+## H3b — noisy simulation, IBM Heron noise model (FakeFez) (2026-11-05)
+
+`python -u hw_h3_noisy.py` (and `--best12 --n 100 --models "32:pi/6,32:pi"`), then `python hw_h3_plot.py` → `results/hw/h3_noisy.md`,
+`results/figs/hw_noisy.png`. Uses `AerSimulator.from_backend(FakeFez())` (density matrix, which includes gate, thermal-relaxation and readout noise), on 300 class-stratified
+fold-0 test ECGs (the same 300 for every model), 2000 shots each, on transpiled circuits. Readout mitigation uses a per-qubit confusion matrix measured on the
+same physical qubits (all-|0⟩ and all-|1⟩ calibration circuits, 20k shots), applied to ⟨Z_j⟩ as
+(⟨Z⟩_raw − (e1 − e0)) / (1 − e0 − e1).
+
+**Compile used for the 300-ECG run.** The best compile (H3a: 80 CZ, 12 active qubits) takes about 8 s per circuit to simulate as a density matrix, about 4 h for this run.
+The circuits were instead routed on the best 8-qubit *line* of FakeFez (qubits 126-125-124-123-136-143-142-141, chosen by lowest summed CZ + readout error),
+which needs 109–117 CZ instead of 80 and simulates in 0.1 s per circuit. This is a **pessimistic** proxy with about 40% more 2q gates than the best compile. The best compile
+itself was then run on the 100 H4 ECGs for the two k=32 models, as a check.
+
+| model | 2q gates (CZ) | noiseless | 2000 shots, ideal | noisy raw | noisy mitigated | corr P(MI) raw vs noiseless | ⟨Z⟩ shrink | bal. acc noiseless → noisy → rescaled | Brier noiseless → noisy → rescaled |
+|---|---|---|---|---|---|---|---|---|---|
+| k=8 pi | 109 | 0.9229 | 0.9241 | 0.9280 | 0.9277 | 0.989 | 0.76 | 0.829 → 0.840 → 0.832 | 0.110 → 0.127 → 0.107 |
+| k=8 pi/2 | 109 | 0.9383 | 0.9373 | 0.9433 | 0.9433 | 0.990 | 0.72 | 0.847 → 0.850 → 0.858 | 0.097 → 0.112 → 0.094 |
+| k=8 pi/6 | 109 | 0.9341 | 0.9334 | 0.9314 | 0.9315 | 0.991 | 0.71 | 0.849 → 0.839 → 0.843 | 0.097 → 0.115 → 0.102 |
+| k=32 pi | 117 | 0.8743 | 0.8707 | 0.8715 | 0.8713 | 0.986 | 0.75 | 0.792 → 0.785 → 0.802 | 0.142 → 0.173 → 0.145 |
+| k=32 pi/2 | 117 | 0.9340 | 0.9309 | 0.9373 | 0.9374 | 0.981 | 0.76 | 0.843 → 0.841 → 0.872 | 0.104 → 0.126 → 0.103 |
+| k=32 pi/6 | 117 | 0.9609 | 0.9598 | 0.9602 | 0.9601 | 0.969 | 0.71 | 0.883 → 0.857 → 0.883 | 0.080 → 0.126 → 0.079 |
+
+Best-compile check (H3a compile: 12 active qubits, fewest CZ), same noise model, 100 ECGs (the H4 set), 2000 shots:
+
+| model | 2q gates | noiseless | noisy raw | noisy mitigated | corr P(MI) raw vs noiseless | ⟨Z⟩ shrink |
+|---|---|---|---|---|---|---|
+| k=32 pi/6 | 80 | 0.9831 | 0.9844 | 0.9844 | 0.981 | 0.81 |
+| k=32 pi | 80 | 0.8563 | 0.8659 | 0.8659 | 0.993 | 0.88 |
+
+(Rescaled = mitigated ⟨Z⟩ divided by one global shrink factor. This uses the noiseless *simulation* of the same circuits but no labels.
+On hardware the factor would come from simulation or from mirror or calibration circuits.)
+
+**Reading.** **AUC survives the Heron noise model essentially unchanged for all 6 models** (|noisy − noiseless| ≤ 0.006 on 300 ECGs,
+≤ 0.010 on the 100-ECG best-compile check, within the sampling error of AUC on this many ECGs, which is about ±0.01). k=32 pi/6 stays the best model
+(0.960 noisy vs 0.937 for pi/2 and 0.871 for pi). Device noise acts mainly as a near-uniform **contraction of ⟨Z⟩ by 0.71–0.88×**,
+smaller with fewer CZ. Ranking survives this, so AUC is untouched and the predicted P(MI) stays correlated with noiseless at 0.97–0.99.
+What breaks is **calibration and the fixed 0.5 threshold**. For k=32 pi/6, balanced accuracy falls 0.883 → 0.857 and Brier score worsens 0.080 → 0.126.
+Readout mitigation alone barely helps, because the loss comes from gate noise, but **a single global rescaling restores both (0.883, 0.079)**.
+Readout mitigation does nothing for AUC either, because it is a per-qubit affine map that preserves the ranking almost exactly.

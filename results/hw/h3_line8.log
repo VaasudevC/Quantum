@@ -1,0 +1,9 @@
+/home/user/Quantum/hw_h3_noisy.py:36: RuntimeWarning: divide by zero encountered in log
+  w = -np.log(1 - props.error)
+backend=fake_fez compile=line8 path=[126, 125, 124, 123, 136, 143, 142, 141] n=300 shots=2000
+k= 8 pi    noiseless=0.9229 shots=0.9241 raw=0.9280 mit=0.9277  corrP raw=0.989 |z| shrink=0.76  n2q=109  28.9s
+k= 8 pi/2  noiseless=0.9383 shots=0.9373 raw=0.9433 mit=0.9433  corrP raw=0.990 |z| shrink=0.72  n2q=109  26.4s
+k= 8 pi/6  noiseless=0.9341 shots=0.9334 raw=0.9314 mit=0.9315  corrP raw=0.991 |z| shrink=0.71  n2q=109  26.0s
+k=32 pi    noiseless=0.8743 shots=0.8707 raw=0.8715 mit=0.8713  corrP raw=0.986 |z| shrink=0.75  n2q=117  28.0s
+k=32 pi/2  noiseless=0.9340 shots=0.9309 raw=0.9373 mit=0.9374  corrP raw=0.981 |z| shrink=0.76  n2q=117  26.1s
+k=32 pi/6  noiseless=0.9609 shots=0.9598 raw=0.9602 mit=0.9601  corrP raw=0.969 |z| shrink=0.71  n2q=117  26.2s

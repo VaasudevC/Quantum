@@ -34,15 +34,8 @@ for r in order:
 if best:
     md += ("\nBest-compile check (H3a compile: 12 active qubits, fewest CZ), same noise model, "
            f"{best[0]['n']} ECGs (the H4 set), {best[0]['shots']} shots:\n\n"
-           "| model | 2q gates | noiseless | noisy raw | noisy mitigated | line-8 compile on the same ECGs: raw |\n|---|---|---|---|---|---|\n")
+           "| model | 2q gates | noiseless | noisy raw | noisy mitigated | corr P(MI) raw vs noiseless | ⟨Z⟩ shrink |\n|---|---|---|---|---|---|---|\n")
     for b in best:
-        # line-8 AUC on the same 100 ECGs, from the saved per-ECG z
-        import qiskit_vqc as Q
-        from sklearn.metrics import roc_auc_score
-        d = np.load(R / f"h3_z_line8_k{b['k']}_{b['scale'].replace('/', '_')}.npz")
-        e = np.load(R / f"h3_z_best12_k{b['k']}_{b['scale'].replace('/', '_')}.npz")
-        th, w_, b_ = Q.split_params(Q.load_models()[(b["k"], b["scale"])])
-        m = np.isin(d["idx"], e["idx"])
-        a8 = roc_auc_score(d["y"][m], Q.logit_from_z(d["z_raw"][m], w_, b_)) if m.sum() == len(e["idx"]) else float("nan")
-        md += f"| k={b['k']} {b['scale']} | {b['n2q']} | {b['noiseless']:.4f} | {b['noisy_raw']:.4f} | {b['noisy_mitigated']:.4f} | {a8:.4f} |\n"
+        md += (f"| k={b['k']} {b['scale']} | {b['n2q']} | {b['noiseless']:.4f} | {b['noisy_raw']:.4f} | {b['noisy_mitigated']:.4f} | "
+               f"{b['corr_P_raw']:.3f} | {b['z_shrink_raw']:.2f} |\n")
 (R / "h3_noisy.md").write_text(md); print(md)
