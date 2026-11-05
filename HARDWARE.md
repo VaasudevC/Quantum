@@ -136,3 +136,47 @@ smaller with fewer CZ. Ranking survives this, so AUC is untouched and the predic
 What breaks is **calibration and the fixed 0.5 threshold**. For k=32 pi/6, balanced accuracy falls 0.883 → 0.857 and Brier score worsens 0.080 → 0.126.
 Readout mitigation alone barely helps, because the loss comes from gate noise, but **a single global rescaling restores both (0.883, 0.079)**.
 Readout mitigation does nothing for AUC either, because it is a per-qubit affine map that preserves the ranking almost exactly.
+
+## H5 — training-free encoding score (2026-11-05)
+
+`python -u hw_h5_encoding.py` → `results/hw/h5_encoding.{json,md}`, `results/figs/encoding_score.png`. Encoding only (θ = 0: Ry(angle) layers plus
+CNOT ring), fold-0 train rows, fold-0 l1 feature order, 1000 ECGs per class. From these, the class-mean density matrices ρ_MI and ρ_NORM (256×256) give
+the trace distance ½‖ρ_MI − ρ_NORM‖₁ and the Uhlmann fidelity. Trained AUC = l1 / grouped5 / seed-0 runs in `results/*.jsonl`, at the longest steps available per
+(k, scale): 13 configs, of which 7 are at k=32.
+
+| k | scale | trace distance | fidelity | purity | trained steps | test AUC (5-fold mean) | test AUC fold 0 |
+|---|---|---|---|---|---|---|---|
+| 8 | pi/8 | 0.2934 | 0.8991 | 0.8519 | – | – | – |
+| 8 | pi/6 | 0.3742 | 0.8352 | 0.7570 | 2000 | 0.9300 | 0.9370 |
+| 8 | pi/4 | 0.4969 | 0.7009 | 0.5569 | – | – | – |
+| 8 | pi/3 | 0.5734 | 0.5859 | 0.3879 | – | – | – |
+| 8 | pi/2 | 0.6471 | 0.4391 | 0.1892 | 1000 | 0.9284 | 0.9347 |
+| 8 | 2*pi/3 | 0.6756 | 0.3707 | 0.1057 | – | – | – |
+| 8 | pi | 0.6237 | 0.4572 | 0.0575 | 1000 | 0.9103 | 0.9243 |
+| 16 | pi/8 | 0.3584 | 0.8464 | 0.7394 | – | – | – |
+| 16 | pi/6 | 0.4431 | 0.7637 | 0.5962 | 2000 | 0.9415 | 0.9483 |
+| 16 | pi/4 | 0.5506 | 0.6241 | 0.3496 | – | – | – |
+| 16 | pi/3 | 0.5995 | 0.5404 | 0.1933 | – | – | – |
+| 16 | pi/2 | 0.6063 | 0.5110 | 0.0619 | 1000 | 0.9233 | 0.9383 |
+| 16 | 2*pi/3 | 0.5628 | 0.5653 | 0.0247 | – | – | – |
+| 16 | pi | 0.4749 | 0.6834 | 0.0096 | 1000 | 0.8922 | 0.9099 |
+| 32 | pi/8 | 0.4129 | 0.7928 | 0.5498 | 600 | 0.9468 | 0.9554 |
+| 32 | pi/6 | 0.4916 | 0.7071 | 0.3638 | 2000 | 0.9530 | 0.9603 |
+| 32 | pi/4 | 0.5504 | 0.6245 | 0.1353 | 600 | 0.9429 | 0.9489 |
+| 32 | pi/3 | 0.5240 | 0.6452 | 0.0471 | 600 | 0.9331 | 0.9430 |
+| 32 | pi/2 | 0.4072 | 0.7700 | 0.0091 | 1000 | 0.9103 | 0.9251 |
+| 32 | 2*pi/3 | 0.3375 | 0.8425 | 0.0055 | 600 | 0.8502 | 0.8586 |
+| 32 | pi | 0.3052 | 0.8716 | 0.0049 | 1000 | 0.7910 | 0.8612 |
+
+| Spearman with trained test AUC (5-fold mean) | trace distance | fidelity |
+|---|---|---|
+| all 13 configs | **+0.34** (p = 0.26) | −0.24 (p = 0.44) |
+| k=32 only (7 scales) | **+0.71** (p = 0.07) | −0.61 (p = 0.15) |
+
+**Reading.** **Trace distance is not a reliable training-free selector.** Across k the correlation is weak (ρ = 0.34). Within k=32
+it tracks the collapse (it ranks 2π/3 and pi last), but it peaks at pi/4 rather than pi/6, and at k=8 it peaks at 2π/3, where training shows no
+benefit. Trace distance measures distinguishability under the *best possible* measurement (the Helstrom bound), not what a linear readout on 8 ⟨Z⟩ can extract,
+and it ignores whether the trained ansatz can reach that measurement. *Post-hoc observation, not pre-registered:* the **purity** of the class-mean states
+tracks AUC much better (Spearman +0.80, p = 0.001 over 13 configs; +0.96 at k=32). At large scales the encoded states scatter so widely that the class means
+are close to maximally mixed (purity 0.005 ≈ 1/256 at k=32 pi), the same saturation identified in the classical study. Purity, however, rises monotonically as the scale
+shrinks, so on its own it would pick pi/8 rather than pi/6 (0.947 vs 0.953). It is a cheap way to *rule out* over-large scales, not to pick the optimum.
