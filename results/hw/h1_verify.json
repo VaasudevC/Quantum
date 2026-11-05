@@ -1,0 +1,58 @@
+{
+ "statevector_maxdiff_qiskit": 1.4946834900704541e-16,
+ "z_maxdiff_pennylane": 5.898059818321144e-16,
+ "models": {
+  "k8_pi/6": {
+   "logged": 0.9348869104931757,
+   "qiskit": 0.9348869104931757,
+   "absdiff": 0.0,
+   "z_maxdiff": 1.887379141862766e-15,
+   "n_test": 2993
+  },
+  "k8_pi/2": {
+   "logged": 0.9347384826238193,
+   "qiskit": 0.9347384826238193,
+   "absdiff": 0.0,
+   "z_maxdiff": 1.942890293094024e-15,
+   "n_test": 2993
+  },
+  "k8_pi": {
+   "logged": 0.9242969675415236,
+   "qiskit": 0.9242969675415236,
+   "absdiff": 0.0,
+   "z_maxdiff": 1.3322676295501878e-15,
+   "n_test": 2993
+  },
+  "k32_pi/6": {
+   "logged": 0.959758698692389,
+   "qiskit": 0.959758698692389,
+   "absdiff": 0.0,
+   "z_maxdiff": 1.942890293094024e-15,
+   "n_test": 2993
+  },
+  "k32_pi/2": {
+   "logged": 0.9251378981649881,
+   "qiskit": 0.9251378981649881,
+   "absdiff": 0.0,
+   "z_maxdiff": 9.992007221626409e-16,
+   "n_test": 2993
+  },
+  "k32_pi": {
+   "logged": 0.8612430737676873,
+   "qiskit": 0.8612430737676873,
+   "absdiff": 0.0,
+   "z_maxdiff": 1.2212453270876722e-15,
+   "n_test": 2993
+  }
+ },
+ "pass": true,
+ "aer_estimator_z_maxdiff": 1.4988010832439613e-15,
+ "benchmark_secs_1000_ecgs": {
+  "Vqc_fast8 (numpy, batched)": 0.127,
+  "Qiskit Aer EstimatorV2 (exact)": 0.931,
+  "PennyLane default.qubit": 0.324,
+  "PennyLane lightning.qubit": 4.387,
+  "Qiskit Aer SamplerV2, 1000 shots": 3.103,
+  "PennyLane lightning.qubit, 1000 shots (x5 from 200)": 7.554
+ }
+}
