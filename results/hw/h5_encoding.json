@@ -1,0 +1,289 @@
+{
+ "per_config": [
+  {
+   "k": 8,
+   "scale": "pi/8",
+   "trace_distance": 0.29338731349220426,
+   "fidelity": 0.8991289912870173,
+   "purity": 0.8519095566873378,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 8,
+   "scale": "pi/6",
+   "trace_distance": 0.37417592443232783,
+   "fidelity": 0.8351565848513849,
+   "purity": 0.7570445548498708,
+   "steps": 2000.0,
+   "auc_mean": 0.930046945290602,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9370241754301759
+  },
+  {
+   "k": 8,
+   "scale": "pi/4",
+   "trace_distance": 0.4968669540061005,
+   "fidelity": 0.7009006531513787,
+   "purity": 0.5569382882272527,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 8,
+   "scale": "pi/3",
+   "trace_distance": 0.5734460544663325,
+   "fidelity": 0.5858921597834044,
+   "purity": 0.38791767535516675,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 8,
+   "scale": "pi/2",
+   "trace_distance": 0.6470843082998377,
+   "fidelity": 0.4391492344550888,
+   "purity": 0.18922150852535763,
+   "steps": 1000.0,
+   "auc_mean": 0.9283931732773765,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9347384826238193
+  },
+  {
+   "k": 8,
+   "scale": "2*pi/3",
+   "trace_distance": 0.6756049842598134,
+   "fidelity": 0.3706540672716427,
+   "purity": 0.10565225239719234,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 8,
+   "scale": "pi",
+   "trace_distance": 0.6236551097534753,
+   "fidelity": 0.45720033971615254,
+   "purity": 0.057465276046478844,
+   "steps": 1000.0,
+   "auc_mean": 0.9103317852601007,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9242969675415236
+  },
+  {
+   "k": 16,
+   "scale": "pi/8",
+   "trace_distance": 0.3584165102858486,
+   "fidelity": 0.8463719889851115,
+   "purity": 0.7394370484480575,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 16,
+   "scale": "pi/6",
+   "trace_distance": 0.44308595038155546,
+   "fidelity": 0.7636809741116574,
+   "purity": 0.5962314411076687,
+   "steps": 2000.0,
+   "auc_mean": 0.9415283570145402,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9482752970725976
+  },
+  {
+   "k": 16,
+   "scale": "pi/4",
+   "trace_distance": 0.5505942824416838,
+   "fidelity": 0.6240674797922839,
+   "purity": 0.3495517211428447,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 16,
+   "scale": "pi/3",
+   "trace_distance": 0.5994656583300846,
+   "fidelity": 0.540355737159718,
+   "purity": 0.19332692804730578,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 16,
+   "scale": "pi/2",
+   "trace_distance": 0.6062540698203486,
+   "fidelity": 0.5110162708000816,
+   "purity": 0.061855497112269064,
+   "steps": 1000.0,
+   "auc_mean": 0.9233108693595307,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9382626807037023
+  },
+  {
+   "k": 16,
+   "scale": "2*pi/3",
+   "trace_distance": 0.5628147244851206,
+   "fidelity": 0.5653040430545684,
+   "purity": 0.024703341626712033,
+   "steps": NaN,
+   "auc_mean": NaN,
+   "n_folds": NaN,
+   "auc_fold0": NaN
+  },
+  {
+   "k": 16,
+   "scale": "pi",
+   "trace_distance": 0.47487562018414564,
+   "fidelity": 0.6834020219980894,
+   "purity": 0.009567992998470703,
+   "steps": 1000.0,
+   "auc_mean": 0.8922252948118358,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9098748868719406
+  },
+  {
+   "k": 32,
+   "scale": "pi/8",
+   "trace_distance": 0.41293074407302854,
+   "fidelity": 0.7928218117151218,
+   "purity": 0.5498180150538192,
+   "steps": 600.0,
+   "auc_mean": 0.9467816426027795,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9554451342163828
+  },
+  {
+   "k": 32,
+   "scale": "pi/6",
+   "trace_distance": 0.49161110139513053,
+   "fidelity": 0.707119656103923,
+   "purity": 0.3638101971781341,
+   "steps": 2000.0,
+   "auc_mean": 0.9529741787960735,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9602791600524703
+  },
+  {
+   "k": 32,
+   "scale": "pi/4",
+   "trace_distance": 0.5504374864418446,
+   "fidelity": 0.6245027397674835,
+   "purity": 0.135278650801823,
+   "steps": 600.0,
+   "auc_mean": 0.9429178253693837,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9488694904586903
+  },
+  {
+   "k": 32,
+   "scale": "pi/3",
+   "trace_distance": 0.5240432763089364,
+   "fidelity": 0.6452218206947904,
+   "purity": 0.04714637202839743,
+   "steps": 600.0,
+   "auc_mean": 0.9330910589005844,
+   "n_folds": 5.0,
+   "auc_fold0": 0.942958398752435
+  },
+  {
+   "k": 32,
+   "scale": "pi/2",
+   "trace_distance": 0.40720166079690134,
+   "fidelity": 0.77003439731258,
+   "purity": 0.009130657223271797,
+   "steps": 1000.0,
+   "auc_mean": 0.9102864168551251,
+   "n_folds": 5.0,
+   "auc_fold0": 0.9251378981649881
+  },
+  {
+   "k": 32,
+   "scale": "2*pi/3",
+   "trace_distance": 0.3374838330182964,
+   "fidelity": 0.8425397739328935,
+   "purity": 0.005479971527766232,
+   "steps": 600.0,
+   "auc_mean": 0.850195200844974,
+   "n_folds": 5.0,
+   "auc_fold0": 0.8586161896252775
+  },
+  {
+   "k": 32,
+   "scale": "pi",
+   "trace_distance": 0.3052306847956788,
+   "fidelity": 0.8716168877149637,
+   "purity": 0.004942311958297193,
+   "steps": 1000.0,
+   "auc_mean": 0.7909664042508588,
+   "n_folds": 5.0,
+   "auc_fold0": 0.8612430737676873
+  }
+ ],
+ "spearman": {
+  "all configs with trained runs | trace_distance vs auc_mean": {
+   "rho": 0.33516483516483514,
+   "p": 0.26294314035936023,
+   "n": 13
+  },
+  "all configs with trained runs | trace_distance vs auc_fold0": {
+   "rho": 0.3186813186813187,
+   "p": 0.28858316144472024,
+   "n": 13
+  },
+  "all configs with trained runs | fidelity vs auc_mean": {
+   "rho": -0.23626373626373626,
+   "p": 0.43708354383118136,
+   "n": 13
+  },
+  "all configs with trained runs | fidelity vs auc_fold0": {
+   "rho": -0.22527472527472525,
+   "p": 0.45930514272500556,
+   "n": 13
+  },
+  "k=32 only (7 scales) | trace_distance vs auc_mean": {
+   "rho": 0.7142857142857144,
+   "p": 0.07134356146753766,
+   "n": 7
+  },
+  "k=32 only (7 scales) | trace_distance vs auc_fold0": {
+   "rho": 0.6785714285714287,
+   "p": 0.09375025395983135,
+   "n": 7
+  },
+  "k=32 only (7 scales) | fidelity vs auc_mean": {
+   "rho": -0.6071428571428572,
+   "p": 0.14823116148116164,
+   "n": 7
+  },
+  "k=32 only (7 scales) | fidelity vs auc_fold0": {
+   "rho": -0.5714285714285715,
+   "p": 0.18020198891152767,
+   "n": 7
+  }
+ },
+ "post_hoc_purity": {
+  "all configs with trained runs": {
+   "rho": 0.8021978021978022,
+   "p": 0.0009687789139250083,
+   "n": 13
+  },
+  "k=32 only (7 scales)": {
+   "rho": 0.9642857142857145,
+   "p": 0.00045414916919416935,
+   "n": 7
+  }
+ }
+}

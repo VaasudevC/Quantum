@@ -1,0 +1,101 @@
+{
+ "logical": {
+  "ops": {
+   "ry": 40,
+   "rz": 32,
+   "cx": 32,
+   "measure": 8
+  },
+  "n1q": 72,
+  "n2q": 32,
+  "depth": 42,
+  "depth2q": 32,
+  "active_qubits": 8
+ },
+ "targets": {
+  "fake_fez": {
+   "ops": {
+    "sx": 224,
+    "rz": 146,
+    "cz": 80,
+    "measure": 8,
+    "x": 1
+   },
+   "n1q": 371,
+   "n2q": 80,
+   "depth": 205,
+   "depth2q": 80,
+   "active_qubits": 12,
+   "seed": 1,
+   "success": 0.7051907584057207,
+   "swaps_added": 16,
+   "n_qubits_device": 156,
+   "native_2q": [
+    "cz"
+   ]
+  },
+  "fake_torino": {
+   "ops": {
+    "sx": 228,
+    "rz": 143,
+    "cz": 80,
+    "measure": 8
+   },
+   "n1q": 371,
+   "n2q": 80,
+   "depth": 207,
+   "depth2q": 80,
+   "active_qubits": 12,
+   "seed": 4,
+   "success": 0.5778383424240547,
+   "swaps_added": 16,
+   "n_qubits_device": 133,
+   "native_2q": [
+    "cz"
+   ]
+  },
+  "fake_sherbrooke": {
+   "ops": {
+    "rz": 319,
+    "sx": 231,
+    "ecr": 80,
+    "measure": 8,
+    "x": 1
+   },
+   "n1q": 551,
+   "n2q": 80,
+   "depth": 296,
+   "depth2q": 80,
+   "active_qubits": 12,
+   "seed": 0,
+   "success": 0.48071022434126914,
+   "swaps_added": 16,
+   "n_qubits_device": 127,
+   "native_2q": [
+    "ecr"
+   ]
+  },
+  "ionq_like_all_to_all": {
+   "ops": {
+    "ry": 90,
+    "rx": 64,
+    "rz": 39,
+    "rxx": 32,
+    "measure": 8
+   },
+   "n1q": 193,
+   "n2q": 32,
+   "depth": 106,
+   "depth2q": 32,
+   "active_qubits": 8,
+   "seed": 0,
+   "swaps_added": 0,
+   "success_assumed": 0.7430248376256419,
+   "assumed_fidelities": {
+    "one_q": 0.9995,
+    "two_q": 0.995,
+    "readout": 0.995
+   }
+  }
+ }
+}

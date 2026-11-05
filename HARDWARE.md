@@ -74,3 +74,25 @@ class gap in ⟨Z⟩ (max 0.32 vs 0.23 for pi/2) and a smaller readout norm (‖
 Small input angles do not mean small output differences, because the trained ansatz re-spreads them. At k=8, pi/6 is slightly more
 shot-sensitive than pi/2 (≈190 vs ≈120 shots for 0.01). At every shot count, including 30, k=32 pi/6 is the best of the 6 models.
 With 300 shots it reaches 0.954, above the *noiseless* AUC of every other model. **1000 shots per ECG costs ≤ 0.002 AUC for all 6 models.**
+
+## H3a — compilation to real device layouts, k=32 pi/6 circuit (2026-11-05)
+
+`python -u hw_h3_compile.py` → `results/hw/h3_compile.{json,md}`. optimization_level=3, 5 transpiler seeds, keep the fewest 2q gates.
+Estimated success = product of (1 − error) over every gate and measurement, from the fake backend's calibration snapshot
+(idle decoherence is not included).
+
+| target | native 2q | 1q gates | 2q gates | depth | 2q depth | SWAPs added | est. success |
+|---|---|---|---|---|---|---|---|
+| logical circuit | cx | 72 | 32 | 42 | 32 | – | – |
+| fake_fez | cz | 371 | 80 | 205 | 80 | 16 | 0.705 |
+| fake_torino | cz | 371 | 80 | 207 | 80 | 16 | 0.578 |
+| fake_sherbrooke | ecr | 551 | 80 | 296 | 80 | 16 | 0.481 |
+| ionq_like_all_to_all | rxx | 193 | 32 | 106 | 32 | 0 | 0.743 (assumed fidelities) |
+
+- **SWAPs.** The CNOT ring 0→1→…→7→0 is an 8-cycle, and heavy-hex has no 8-cycles (its smallest ring has 12 qubits), so the router adds **16 SWAPs**
+  (4 per layer; 1 SWAP = 3 CZ/ECR). The 2q-gate count goes from 32 to **80**, and the circuit uses 12 physical qubits. The 2q depth equals the
+  2q count because the ring is inherently sequential: each CNOT shares a qubit with the next.
+- Heron r2 (FakeFez) is clearly the best IBM target (estimated success 0.705 vs 0.578 Torino, 0.481 Eagle/Sherbrooke). Eagle's ECR basis needs 50% more
+  1q gates.
+- An IonQ-like all-to-all target needs **no SWAPs** (32 RXX). Its success figure uses *assumed* fidelities (1q 0.9995, 2q 0.995, readout 0.995),
+  not calibration data, so it is illustrative only.
