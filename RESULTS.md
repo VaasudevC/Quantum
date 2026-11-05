@@ -1,6 +1,31 @@
 # RESULTS — ECG VQC angle-scale study (PTB-XL, MI vs NORM)
 
-**Chosen scale s\* = pi/6** (Stage 1, highest mean validation AUC at k=32, 600 steps).
+**Chosen scale s\* = pi/6** (Stage 1) · **STEPS\* = 1000** (Stage 2b) · all choices made on validation AUC; test AUC reported.
+
+## Headline
+
+The 8-qubit re-uploading VQC encodes each feature as an angle `s·tanh(z)`. At the original scale s = pi, about 10% of the angles
+are pushed to ±pi, and the classifier collapses as more features are re-uploaded (k=32: test AUC 0.79). **Shrinking the scale to
+s = pi/6 removes the collapse.** AUC now **rises** with the number of re-uploaded features: **0.928 (k=8) → 0.940 (k=16) → 0.951 (k=32)**.
+k=32 beats k=8 in 5/5 folds, and pi/6 beats pi in 5/5 folds at every k (+0.16 at k=32). At pi/6 the VQC is **ahead of logistic regression on the same
+features by +0.006–0.007 at every k** (k=32: 0.951 vs 0.945, 5/5 folds), and 2000 steps give 0.953. A shuffle control shows the
+later re-uploading rounds carry information (+0.023 over k=8, while shuffled later features cost only −0.006). A degree-2 polynomial LR
+on the same 32 features scores 0.958–0.960 and beats the VQC in 5/5 folds. A quadratic function of the input angles explains 98.6% of the
+VQC's learned logit, so the VQC learns within the degree-2 class but does not reach its optimum.
+Selector choice: l1 > cohen_dedup by 0.005 at k=32 (competitive), and both beat random features by 0.04–0.13. On the official
+PTB-XL split (train folds 1–8, val fold 9, test fold 10), pi/6 gives 0.942 at k=32 vs LR 0.938, with the same ranking pi/6 > pi/2 > pi.
+
+| key number (test AUC, 5-fold grouped CV) | k=8 | k=16 | k=32 |
+|---|---|---|---|
+| VQC, s=pi (1000 steps)   | 0.910 | 0.892 | 0.791 |
+| VQC, s=pi/2 (1000 steps) | 0.928 | 0.923 | 0.910 |
+| **VQC, s=pi/6 (1000 steps)** | **0.928** | **0.940** | **0.951** |
+| LR, same features        | 0.922 | 0.932 | 0.945 |
+| degree-2 LR, same features | – | – | 0.958 |
+
+Figures (`results/figs/`, 150 dpi): `a_auc_vs_scale_k32.png` (test AUC vs scale, k=32, LR dashed);
+`b_auc_vs_k.png` (AUC vs k for pi, pi/2, pi/6); `c_shuffle_control.png` (shuffle drop, plus the change vs k=8 for real and shuffled features);
+`d_poly2_vs_vqc.png` (per-fold linear LR vs VQC vs degree-2 LR). Regenerate with `python make_figs.py --sstar pi/6 --steps 1000`.
 
 ---
 
@@ -73,30 +98,6 @@ The mean val-AUC gain over the rerun is **+0.0028 < 0.003**. Only k=32 alone rea
 **Decision: STEPS\* = 1000.** This also keeps Stage 3 at 5 folds; at 2000 steps it would take about 10 h on 4 CPUs and need to be cut to 3 folds.
 The 2000-step k=32 figure (0.953, +0.008 over LR) is the best VQC number so far.
 
-## Stage 4b — VQC vs degree-2 polynomial LR, k=32, s\*=pi/6, 1000 steps (2026-11-04)
-
-Command: `python -u stage4b_poly.py --vqc results/stage4_real.jsonl --scale pi/6 --k 32 --steps 1000 --out results/stage4b_poly.jsonl`.
-Same splits and the same 32 features (each run's logged list) as the VQC. Each polynomial model has 32 + 528 = 560 terms, standardized,
-with C ∈ {1e-3 … 1} chosen by **validation** AUC (C = 0.01 in 9/10 fits). The VQC test scores are recomputed from the stored
-params and match the logged AUC exactly.
-
-| model | test AUC ± SD | Spearman ρ with VQC logit (test) |
-|---|---|---|
-| linear LR on z | 0.945 ± 0.008 | 0.945 |
-| **VQC, s = pi/6** | **0.951 ± 0.006** | 1 |
-| degree-2 LR on z | 0.958 ± 0.004 | 0.949 |
-| degree-2 LR on the VQC angles pi/6·tanh(z) | 0.960 ± 0.004 | 0.959 |
-
-How much of the learned VQC logit a fixed function class explains (ridge fit on train rows, R² on test rows):
-**degree-1 in the angles: R² = 0.918 ± 0.008; degree-2 in the angles: R² = 0.986 ± 0.001.**
-
-**Interpretation.** The VQC at pi/6 is, to 98.6%, a quadratic function of its encoded angles: mostly linear, plus a small quadratic correction.
-This is consistent with small-angle encoding, where each <Z_i> expands as a low-order trigonometric polynomial
-dominated by terms up to second order. It beats linear LR in 5/5 folds (+0.006) but falls short of the best
-degree-2 LR in 5/5 folds (−0.008). It therefore learns within the degree-2 class but does not reach its optimum
-(81 trainable readout and ansatz params vs 560 coefficients). The model whose rankings it tracks most closely is the degree-2 LR on the
-same angles (ρ = 0.959).
-
 ## Stage 3 — selectors × seeds at s\*=pi/6, 1000 steps, 5 folds × 3 seeds (2026-11-05)
 
 Command: `scale_cv.py --scales "pi/6" --ks 8,16,32 --selectors l1,cohen_dedup,random --seeds 0,1,2 --steps 1000 --jobs 3 --out results/stage3_selectors.jsonl`
@@ -152,3 +153,61 @@ the two effects separate cleanly. Shuffled later features are close to harmless 
 and real later features add +0.023. The drop of +0.029 is therefore close to the full information content of features 9..32, with low variance (SD 0.004).
 In short, at pi/6 later rounds carry information and noise in them is tolerated; at pi later rounds act mostly as damaging noise.
 The real − shuffled drop alone cannot tell these two situations apart; the k=8 baseline can.
+
+## Stage 4b — VQC vs degree-2 polynomial LR, k=32, s\*=pi/6, 1000 steps (2026-11-04)
+
+Command: `python -u stage4b_poly.py --vqc results/stage4_real.jsonl --scale pi/6 --k 32 --steps 1000 --out results/stage4b_poly.jsonl`.
+Same splits and the same 32 features (each run's logged list) as the VQC. Each polynomial model has 32 + 528 = 560 terms, standardized,
+with C ∈ {1e-3 … 1} chosen by **validation** AUC (C = 0.01 in 9/10 fits). The VQC test scores are recomputed from the stored
+params and match the logged AUC exactly.
+
+| model | test AUC ± SD | Spearman ρ with VQC logit (test) |
+|---|---|---|
+| linear LR on z | 0.945 ± 0.008 | 0.945 |
+| **VQC, s = pi/6** | **0.951 ± 0.006** | 1 |
+| degree-2 LR on z | 0.958 ± 0.004 | 0.949 |
+| degree-2 LR on the VQC angles pi/6·tanh(z) | 0.960 ± 0.004 | 0.959 |
+
+How much of the learned VQC logit a fixed function class explains (ridge fit on train rows, R² on test rows):
+**degree-1 in the angles: R² = 0.918 ± 0.008; degree-2 in the angles: R² = 0.986 ± 0.001.**
+
+**Interpretation.** The VQC at pi/6 is, to 98.6%, a quadratic function of its encoded angles: mostly linear, plus a small quadratic correction.
+This is consistent with small-angle encoding, where each <Z_i> expands as a low-order trigonometric polynomial
+dominated by terms up to second order. It beats linear LR in 5/5 folds (+0.006) but falls short of the best
+degree-2 LR in 5/5 folds (−0.008). It therefore learns within the degree-2 class but does not reach its optimum
+(81 trainable readout and ansatz params vs 560 coefficients). The model whose rankings it tracks most closely is the degree-2 LR on the
+same angles (ρ = 0.959).
+
+## Stage 5 — official PTB-XL split, 1000 steps (2026-11-05)
+
+Command: `scale_cv.py --split official --scales "pi/6,pi/2,pi" --ks 8,32 --steps 1000 --jobs 3 --out results/stage5_official.jsonl`
+(train strat_fold 1–8, val 9, test 10; one run per config.) z = (official − CV mean) / CV fold SD, using the Stage 2 runs.
+
+| k | scale | official test AUC | val AUC | LR | grouped-CV mean ± SD | z | flag (>2 SD) |
+|---|---|---|---|---|---|---|---|
+| 8  | pi/6 | 0.918 | 0.929 | 0.913 | 0.928 ± 0.006 | −1.6 | |
+| 8  | pi/2 | 0.914 | 0.925 | 0.913 | 0.928 ± 0.006 | −2.2 | **flag** |
+| 8  | pi   | 0.895 | 0.901 | 0.913 | 0.910 ± 0.009 | −1.8 | |
+| 32 | pi/6 | **0.942** | 0.948 | 0.938 | 0.951 ± 0.006 | −1.5 | |
+| 32 | pi/2 | 0.905 | 0.916 | 0.938 | 0.910 ± 0.012 | −0.5 | |
+| 32 | pi   | 0.701 | 0.710 | 0.938 | 0.791 ± 0.078 | −1.2 | |
+
+**Interpretation.** Every model scores lower on test fold 10 than its grouped-CV mean, LR included (0.922 → 0.913 at k=8,
+0.945 → 0.938 at k=32). The official test fold is therefore somewhat harder than an average CV fold, and the gap is not specific to the VQC. Only pi/2 at k=8
+passes the 2-SD flag (z = −2.2). The conclusions carry over: at pi/6 the VQC beats LR at both k (+0.005, +0.004), AUC rises from
+k=8 to k=32, and the ranking pi/6 > pi/2 > pi holds at k=32.
+
+## Limitations
+
+- **Single dataset and task**: PTB-XL MI vs NORM, using pre-extracted ST/T/QRS features (no raw-signal model).
+- **Exact noiseless simulation**: state-vector simulation with adjoint gradients; no shot noise, gate noise or hardware compilation.
+  Small-angle encodings may behave differently under noise, since small rotations are closer to the noise floor.
+- **8 qubits × 4 layers only**: k ≤ 32 is capped by 8 qubits × 4 re-uploading rounds; deeper or wider circuits were not tested.
+- **Linear readout on 8 ⟨Z⟩** (81 params). Stage 4b shows the learned function is about 98.6% quadratic in the angles, and a classical
+  degree-2 LR beats it, so this study gives **no quantum advantage claim**. The VQC is competitive with linear LR and slightly better.
+- **Statistics**: 5 outer folds, so a 5/5 sign test can reach at best p = 0.062. Seeds (Stage 3) vary only initialization and minibatches.
+- **Reproducibility caveat**: the l1 selector calls `liblinear` without `random_state`, so near-tied features can swap order
+  between runs (seen at positions 27/28 in one fold). Selected sets were identical in the cases checked, but the exact
+  order can differ. Each run's logged `features` list is the ground truth; `stage4b_poly.py` uses it. Fixing this
+  (e.g. `random_state=0`) would change the protocol, so it was left for after this study.
+- **Compute**: 4 CPUs; STEPS\* = 1000 was chosen partly so Stage 3 could keep all 5 folds.

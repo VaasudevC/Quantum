@@ -34,8 +34,9 @@ r = load("stage1_sweep.jsonl"); g = r.groupby("sv")
 fig, ax = plt.subplots(figsize=(5.5, 3.8))
 ax.errorbar(g.test_auc.mean().index, g.test_auc.mean(), yerr=g.test_auc.std(), marker="o", capsize=3, label="VQC (8 qubits)")
 ax.axhline(r.lr_auc.mean(), ls="--", c="k", lw=1, label="LR, same 32 features")
+ax.set_xscale("log"); ax.minorticks_off()
 ax.set_xticks(g.test_auc.mean().index); ax.set_xticklabels([label(s) for s in g.scale.first()])
-ax.set_xlabel("angle scale s  (angle = s·tanh z)"); ax.set_ylabel("test AUC (5-fold grouped CV)")
+ax.set_xlabel("angle scale s  (angle = s·tanh z), log axis"); ax.set_ylabel("test AUC (5-fold grouped CV)")
 ax.set_title("k = 32 features, 600 steps"); ax.legend(); fig.tight_layout(); fig.savefig(OUT / "a_auc_vs_scale_k32.png", dpi=150)
 
 # (b)
@@ -57,12 +58,24 @@ if len(re) and len(sh):
     key = ["fold", "k", "scale"]
     m = re.merge(sh, on=key, suffixes=("_r", "_s")); m["drop"] = m.test_auc_r - m.test_auc_s
     d = m.groupby(["scale", "k"]).drop.agg(["mean", "std"]).reset_index()
-    fig, ax = plt.subplots(figsize=(5.5, 3.8)); w = 0.35
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10, 3.8)); w = 0.35
     for i, sc in enumerate([a.sstar, "pi"]):
         x = d[d.scale == sc]
         ax.bar(np.arange(len(x)) + (i - .5) * w, x["mean"], w, yerr=x["std"], capsize=3, label=f"s={label(sc)}")
     ax.set_xticks(range(len(x))); ax.set_xticklabels([f"k={k}" for k in x.k])
-    ax.set_ylabel("AUC drop, real − shuffled features 9..k"); ax.legend(); fig.tight_layout()
+    ax.set_ylabel("AUC drop, real − shuffled features 9..k"); ax.legend(); ax.set_title("shuffle drop")
+    # right: change vs the k=8 model (no later features), real and shuffled
+    b8 = load("stage2_steps1000.jsonl"); b8 = b8[b8.k == 8].set_index(["scale", "fold"]).test_auc
+    labels, w2 = [], 0.2
+    for j, (nm, df) in enumerate([("real", re), ("shuffled", sh)]):
+        for i, sc in enumerate([a.sstar, "pi"]):
+            v = [(df[(df.scale == sc) & (df.k == k)].set_index(["scale", "fold"]).test_auc - b8.loc[sc]) for k in (16, 32)]
+            ax2.bar(np.arange(2) + (2 * j + i - 1.5) * w2, [x.mean() for x in v], w2, yerr=[x.std() for x in v],
+                    capsize=3, label=f"{nm}, s={label(sc)}", hatch="//" if nm == "shuffled" else None,
+                    color=f"C{i}", alpha=1 if nm == "real" else .55)
+    ax2.axhline(0, c="k", lw=.8); ax2.set_xticks(range(2)); ax2.set_xticklabels(["k=16", "k=32"])
+    ax2.set_ylabel("test AUC − same-scale k=8 model"); ax2.set_title("effect of later features vs k=8"); ax2.legend(fontsize=8)
+    fig.tight_layout()
     fig.savefig(OUT / "c_shuffle_control.png", dpi=150)
 
 # (d)
