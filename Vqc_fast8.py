@@ -174,6 +174,54 @@ def backward(psi: np.ndarray, g: np.ndarray, angles: np.ndarray, theta: np.ndarr
     return grad
 
 
+def _ry_grad_ps(lam: np.ndarray, psi: np.ndarray, q: int) -> np.ndarray:
+    """Per-sample version of _ry_grad: (B,) = 2 Re <lam_b | (-i/2) Y_q | psi_b>."""
+    B = psi.shape[0]
+    p = psi.reshape(B, 1 << q, 2, 1 << (N_QUBITS - 1 - q))
+    l = lam.reshape(B, 1 << q, 2, 1 << (N_QUBITS - 1 - q))
+    return np.real(np.einsum("bij,bij->b", np.conj(l[:, :, 1, :]), p[:, :, 0, :])
+                   - np.einsum("bij,bij->b", np.conj(l[:, :, 0, :]), p[:, :, 1, :]))
+
+
+def backward_full(psi: np.ndarray, g: np.ndarray, angles: np.ndarray, theta: np.ndarray,
+                  readout: str = "zz") -> tuple[np.ndarray, np.ndarray]:
+    """Same as backward(), plus the per-sample gradient w.r.t. the input angles.
+
+    The encoding Ry on qubit i in layer L uses angle[b, 8L+i] + theta[16L+i], so
+    dL/dangle[b, 8L+i] is the per-sample term of the theta[16L+i] gradient.
+    Returns (grad_theta (72,), grad_angles (B, 32)).
+    """
+    B = psi.shape[0]
+    D = g @ READOUT_SIGNS[readout]
+    lam = D * psi
+    psi = psi.copy()
+    grad = np.zeros(N_ANSATZ)
+    gang = np.zeros((B, N_FEATURES))
+
+    fb = _STRIDE * N_LAYERS
+    for i in range(N_QUBITS):
+        grad[fb + i] = _ry_grad(lam, psi, i)
+    for i in range(N_QUBITS):
+        a = np.full(B, -theta[fb + i])
+        psi = _ry(psi, i, a); lam = _ry(lam, i, a)
+
+    for L in reversed(range(N_LAYERS)):
+        base = _STRIDE * L
+        psi = psi[:, _RING_INV]; lam = lam[:, _RING_INV]
+        M = (np.conj(lam) * psi) @ _ZSIGN.T
+        grad[base + N_QUBITS: base + 2 * N_QUBITS] = M.imag.sum(axis=0)
+        ph = np.conj(_rz_phase(theta[base + N_QUBITS: base + 2 * N_QUBITS]))[None, :]
+        psi = psi * ph; lam = lam * ph
+        for i in range(N_QUBITS):
+            gb = _ry_grad_ps(lam, psi, i)
+            gang[:, L * N_QUBITS + i] = gb
+            grad[base + i] = gb.sum()
+        a_all = angles[:, L * N_QUBITS:(L + 1) * N_QUBITS] + theta[base:base + N_QUBITS][None, :]
+        for i in range(N_QUBITS):
+            psi = _ry(psi, i, -a_all[:, i]); lam = _ry(lam, i, -a_all[:, i])
+    return grad, gang
+
+
 # ---------------------------------------------------------------------------
 #  MLP readout  (N_OBS -> N_HIDDEN -> 1)
 # ---------------------------------------------------------------------------

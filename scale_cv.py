@@ -78,7 +78,7 @@ def splits(split, fold):
 def l1_order(Z, y):
     first = np.full(Z.shape[1], np.inf)
     for i, C in enumerate(np.logspace(-4, 0, 40)):
-        c = LogisticRegression(penalty="l1", C=C, solver="liblinear", max_iter=2000).fit(Z, y).coef_[0]
+        c = LogisticRegression(penalty="l1", C=C, solver="liblinear", max_iter=2000, random_state=0).fit(Z, y).coef_[0]
         new = (np.abs(c) > 1e-8) & np.isinf(first)
         first[new] = i - 1e-6 * np.abs(c[new])        # ties: larger |coef| first
         if np.isfinite(first).sum() >= 40:
@@ -119,27 +119,48 @@ def prep(split, fold, selector):
 
 
 class Linear:
-    def init(self, rng):
-        return np.concatenate([rng.normal(scale=0.1, size=V.N_ANSATZ), rng.normal(scale=0.1, size=8), [0.0]])
+    """Linear readout on <Z_j> ("z", 8 obs) or <Z_j> + <Z_iZ_j> ("zz", 36 obs).
+    Inputs are T = tanh(z) padded to 32 columns; angle = s * T. With train_scale, s is a learned per-feature
+    vector (k entries, initialised at `scale`) appended to the params; otherwise s is the fixed scale."""
+    def __init__(self, k, scale, readout="z", train_scale=False):
+        self.k, self.s0, self.ro, self.ts = k, scale, readout, train_scale
+        self.n_obs = V.READOUT_SIGNS[readout].shape[0]
 
-    def proba(self, A, p, chunk=4000):
-        out = []
-        for s in range(0, len(A), chunk):
-            z = V.expectations(V.forward(A[s:s+chunk], p[:V.N_ANSATZ]), "z")
-            out.append(1 / (1 + np.exp(-(z @ p[V.N_ANSATZ:V.N_ANSATZ+8] + p[-1]))))
+    def init(self, rng):
+        p = [rng.normal(scale=0.1, size=V.N_ANSATZ), rng.normal(scale=0.1, size=self.n_obs), [0.0]]
+        return np.concatenate(p + ([np.full(self.k, self.s0)] if self.ts else []))
+
+    def split(self, p):
+        th, w = p[:V.N_ANSATZ], p[V.N_ANSATZ:V.N_ANSATZ + self.n_obs]
+        b = p[V.N_ANSATZ + self.n_obs]
+        s = p[V.N_ANSATZ + self.n_obs + 1:] if self.ts else np.full(self.k, self.s0)
+        return th, w, b, s
+
+    def angles(self, T, s):
+        A = np.zeros_like(T); A[:, :self.k] = s * T[:, :self.k]; return A
+
+    def proba(self, T, p, chunk=4000):
+        th, w, b, s = self.split(p); out = []
+        for i in range(0, len(T), chunk):
+            z = V.expectations(V.forward(self.angles(T[i:i+chunk], s), th), self.ro)
+            out.append(1 / (1 + np.exp(-(z @ w + b))))
         return np.concatenate(out)
 
-    def loss_grad(self, p, A, y, cw):
-        th, w, b = p[:V.N_ANSATZ], p[V.N_ANSATZ:V.N_ANSATZ+8], p[-1]
-        psi = V.forward(A, th); z = V.expectations(psi, "z")
+    def loss_grad(self, p, T, y, cw):
+        th, w, b, s = self.split(p); A = self.angles(T, s)
+        psi = V.forward(A, th); z = V.expectations(psi, self.ro)
         q = np.clip(1 / (1 + np.exp(-(z @ w + b))), 1e-7, 1 - 1e-7)
         sw = np.where(y == 1, cw[1], cw[0]); r = sw * (q - y) / len(y)
         loss = float((sw * -(y*np.log(q) + (1-y)*np.log(1-q))).mean())
-        return loss, np.concatenate([V.backward(psi, np.outer(r, w), A, th, "z"), z.T @ r, [r.sum()]])
+        if self.ts:
+            gth, gang = V.backward_full(psi, np.outer(r, w), A, th, self.ro)
+            gs = (gang[:, :self.k] * T[:, :self.k]).sum(0)          # dL/ds_f = sum_b dL/dangle_bf * tanh(z_bf)
+            return loss, np.concatenate([gth, z.T @ r, [r.sum()], gs])
+        return loss, np.concatenate([V.backward(psi, np.outer(r, w), A, th, self.ro), z.T @ r, [r.sum()]])
 
 
-def train(A_tr, y_tr, A_va, y_va, steps, batch, lr, seed):
-    m = Linear(); rng = np.random.default_rng(seed); p = m.init(rng)
+def train(m, A_tr, y_tr, A_va, y_va, steps, batch, lr, seed):
+    rng = np.random.default_rng(seed); p = m.init(rng)
     n = len(y_tr); cw = np.array([n/(2*(n-y_tr.sum())), n/(2*y_tr.sum())])
     mo = np.zeros_like(p); vo = np.zeros_like(p); best = (-1.0, p.copy(), 0)
     for t in range(1, steps+1):
@@ -166,16 +187,19 @@ def run_one(cfg):
     t0 = time.time()
     lr_ref = LogisticRegression(max_iter=3000).fit(Zs[tr], y[tr])
     auc_lr = roc_auc_score(y[te], lr_ref.predict_proba(Zs[te])[:, 1])
-    A = np.zeros((len(Zs), V.N_FEATURES)); A[:, :k] = s * np.tanh(Zs)
-    m, (vauc, p, bstep) = train(A[tr], y[tr], A[va], y[va], cfg["steps"], cfg["batch"], cfg["lr"], cfg["seed"] + cfg["fold"])
-    return dict(cfg, test_auc=float(roc_auc_score(y[te], m.proba(A[te], p))), val_auc=float(vauc),
+    T = np.zeros((len(Zs), V.N_FEATURES)); T[:, :k] = np.tanh(Zs)
+    model = Linear(k, s, cfg.get("readout", "z"), cfg.get("train_scale", False))
+    m, (vauc, p, bstep) = train(model, T[tr], y[tr], T[va], y[va], cfg["steps"], cfg["batch"], cfg["lr"], cfg["seed"] + cfg["fold"])
+    A_tr = model.angles(T[tr], model.split(p)[3])
+    return dict(cfg, test_auc=float(roc_auc_score(y[te], m.proba(T[te], p))), val_auc=float(vauc),
                 best_step=bstep, lr_auc=float(auc_lr),
-                frac_angle_gt_0p9pi=float((np.abs(A[tr][:, :k]) > 0.9*np.pi).mean()),
+                frac_angle_gt_0p9pi=float((np.abs(A_tr[:, :k]) > 0.9*np.pi).mean()),
                 secs=round(time.time()-t0, 1), features=[feats[j] for j in sel], params=p.tolist())
 
 
 def key(c):
-    return (c["split"], c["fold"], c["selector"], c["k"], c["scale"], c["steps"], c["seed"], c["shuffle_later"])
+    return (c["split"], c["fold"], c["selector"], c["k"], c["scale"], c["steps"], c["seed"], c["shuffle_later"],
+            c.get("readout", "z"), c.get("train_scale", False))
 
 
 def main():
@@ -185,12 +209,14 @@ def main():
     ap.add_argument("--seeds", default="0"); ap.add_argument("--split", default="grouped5", choices=["grouped5", "official"])
     ap.add_argument("--steps", type=int, default=300); ap.add_argument("--batch", type=int, default=1000)
     ap.add_argument("--lr", type=float, default=0.01); ap.add_argument("--shuffle-later", action="store_true")
+    ap.add_argument("--readout", default="z", choices=["z", "zz"]); ap.add_argument("--train-scale", action="store_true")
     ap.add_argument("--jobs", type=int, default=max(1, (os.cpu_count() or 2) - 1))
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     folds = [0] if a.split == "official" else [int(f) for f in a.folds.split(",")]
     cfgs = [dict(split=a.split, fold=f, selector=sel, k=int(k), scale=sc, steps=a.steps, batch=a.batch,
-                 lr=a.lr, seed=int(sd), shuffle_later=a.shuffle_later)
+                 lr=a.lr, seed=int(sd), shuffle_later=a.shuffle_later,
+                 readout=a.readout, train_scale=a.train_scale)
             for sd in a.seeds.split(",") for f in folds for sel in a.selectors.split(",")
             for k in a.ks.split(",") for sc in a.scales.split(",")]
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
