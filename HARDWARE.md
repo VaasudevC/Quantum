@@ -180,3 +180,38 @@ and it ignores whether the trained ansatz can reach that measurement. *Post-hoc 
 tracks AUC much better (Spearman +0.80, p = 0.001 over 13 configs; +0.96 at k=32). At large scales the encoded states scatter so widely that the class means
 are close to maximally mixed (purity 0.005 ≈ 1/256 at k=32 pi), the same saturation identified in the classical study. Purity, however, rises monotonically as the scale
 shrinks, so on its own it would pick pi/8 rather than pi/6 (0.947 vs 0.953). It is a cheap way to *rule out* over-large scales, not to pick the optimum.
+
+## H4 — real IBM hardware: script ready and dry-run tested; NOT run (2026-11-05)
+
+**Not run, for two independent reasons.** (1) No `QISKIT_IBM_TOKEN` is set. (2) This cloud environment's network policy **blocks IBM Quantum**: the
+proxy answers `403` to CONNECT for `quantum.cloud.ibm.com`, `iam.cloud.ibm.com` and `us-east.quantum-computing.cloud.ibm.com`. So even
+with a token, the job cannot be sent from this session unless those hosts are allowed in the environment's network settings. No hardware results are reported or
+simulated in their place.
+
+**What is ready.** `hw_run_ibm.py` implements the runbook plan exactly:
+- `QiskitRuntimeService(channel="ibm_quantum_platform", token=$QISKIT_IBM_TOKEN, instance=$QISKIT_IBM_INSTANCE)`, then `least_busy(operational=True, simulator=False, min_num_qubits=8)`.
+- 2 models (k=32 pi/6, k=32 pi), the **same 100** class-stratified fold-0 test ECGs (the set used in the H3 best-compile check), 1000 shots.
+- **One SamplerV2 job per model inside a `Batch`**; each PUB = one ECG (the transpiled template + that ECG's 32 angles), plus 2 readout-calibration PUBs
+  on the same physical qubits. Transpiled once with the backend's preset pass manager (optimization_level=3).
+- Dynamical decoupling (XpXm) and gate + measurement twirling switched on (options checked as valid in qiskit-ibm-runtime 0.51).
+- Budget: 2 × 102 PUBs × 1000 shots = 204k shots, expected to need about 1–2 of the ~10 QPU minutes/month on the open plan. The script prints the plan and asks
+  for confirmation before submitting.
+- **Saved before any analysis** in `results/hw/ibm_hw/`: `meta.json` (job ids written immediately after submission, backend name, calibration
+  timestamp, circuit stats, physical qubits), `ecgs_*.npz` (ECG indices + labels), `counts_*.json` (raw counts of every PUB).
+- Then it runs Aer with **the same backend's noise model** on the same circuits, and `--analyze` reports AUC (hardware raw, hardware mitigated, Aer noisy raw/mitigated,
+  noiseless) and the correlation of hardware vs noiseless P(MI) per ECG. `--retrieve` re-fetches results from the saved job ids if the session drops.
+
+**Dry run** (`python -u hw_run_ibm.py --local --n 10`): the full pipeline ran through Qiskit Runtime *local mode* on FakeFez: transpile (80 CZ,
+depth 205–209, physical qubits 146-143-136-123-126-127-137-147), submit, save, Aer comparison, analysis. Output is in `results/hw/ibm_local/`. With 10 ECGs the AUCs
+(0.958 for pi/6, 0.875 for pi, the same across all columns) only show that the plumbing works, not the noise level.
+
+**To run it** (from a laptop, or from this environment after allowing the IBM hosts):
+```bash
+pip install -r requirements.txt -r requirements-hw.txt
+export QISKIT_IBM_TOKEN=...          # from quantum.cloud.ibm.com; do not commit or paste it
+export QISKIT_IBM_INSTANCE=crn:...   # only for newer IBM Cloud accounts
+python -u hw_run_ibm.py --submit     # shows the plan, asks y/N, submits, saves, analyses
+```
+The Aer comparison step simulates the 12-qubit compile as a density matrix, so expect about 10–25 min of CPU after the jobs return. Results land in
+`results/hw/ibm_hw/analysis.json`. The H3 best-compile numbers on the same 100 ECGs (noiseless 0.983 / FakeFez-noisy 0.984 for pi/6;
+0.856 / 0.866 for pi) are the simulation baseline to compare against.

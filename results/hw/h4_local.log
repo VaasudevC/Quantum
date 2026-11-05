@@ -1,0 +1,11 @@
+k=32 pi/6: 12 PUBs, 80 2q gates, depth 209, qubits [146, 143, 136, 123, 126, 127, 137, 147]
+k=32 pi: 12 PUBs, 80 2q gates, depth 205, qubits [146, 143, 136, 123, 126, 127, 137, 147]
+backend fake_fez (calibrated 2025-02-26 15:16:25-05:00); total shots 24,000 (open plan budget ~10 QPU min/month; expect ~1-2 min)
+submitted k=32 pi/6: job 309ee902-f464-4ebd-aa40-1ea2b0254030
+submitted k=32 pi: job 3cf27ccb-15d2-43c9-b056-5389d19f87de
+saved counts k=32 pi/6
+saved counts k=32 pi
+Aer noisy (fake_fez) k=32 pi/6 done (80 2q gates)
+Aer noisy (fake_fez) k=32 pi done (80 2q gates)
+k32_pi_6 {'noiseless': 0.9583, 'hardware_raw': 0.9583, 'hardware_mitigated': 0.9583, 'aer_noisy_raw': 0.9583, 'aer_noisy_mitigated': 0.9583}
+k32_pi {'noiseless': 0.875, 'hardware_raw': 0.875, 'hardware_mitigated': 0.875, 'aer_noisy_raw': 0.875, 'aer_noisy_mitigated': 0.875}

@@ -1,0 +1,7 @@
+# hardware stages H1-H5 (on top of requirements.txt)
+qiskit>=2.0
+qiskit-aer>=0.17
+qiskit-ibm-runtime>=0.40
+networkx>=3.0
+pennylane>=0.40          # optional: verified-equivalent PennyLane circuit (qiskit_vqc.pennylane_qnode)
+pennylane-lightning>=0.40
