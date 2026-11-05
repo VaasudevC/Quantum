@@ -4,6 +4,46 @@ Models ("the 6 models"): fold 0, selector l1, 1000 steps, k ∈ {8, 32} × scale
 from `results/stage2_steps1000.jsonl` (72 ansatz + 8 readout weights + 1 bias). **Nothing is retrained.** Test set = fold-0 test rows
 (2,993 ECGs). Code: `qiskit_vqc.py` (Qiskit + PennyLane circuits, model loader, count decoding).
 
+## Headline
+
+**Does the pi/6 advantage survive? In simulation of shots and IBM-Heron noise, yes. Real hardware has not been run yet.**
+The k=32 pi/6 model stays the best of the 6 at every step of the hardware chain (fold-0 test ECGs):
+- **Shot noise (H2, 2,993 ECGs):** 0.960 noiseless → 0.958 at 1000 shots → 0.954 at 300 → 0.941 at 100. It needs ≈180 shots to stay
+  within 0.01 of noiseless, *fewer* than pi/2 (≈410), because the trained model has a larger ⟨Z⟩ class gap and a smaller readout norm. Even at
+  300 shots it beats the noiseless AUC of every other model (pi/2 0.925, pi 0.861).
+- **Compilation (H3a):** the 8-qubit CNOT ring needs 16 SWAPs on heavy-hex (32 → 80 CZ, 12 physical qubits). The estimated success
+  probability is 0.705 on Heron r2 (FakeFez), 0.578 on Torino and 0.481 on Eagle. An all-to-all ion-trap-like target needs no SWAPs.
+- **Device noise (H3b, FakeFez noise model, 300 ECGs, 2000 shots):** AUC 0.961 noiseless → **0.960 noisy** (pi/2: 0.934 → 0.937; pi: 0.874 → 0.871).
+  On the 100-ECG best-compile check: 0.983 → 0.984. Noise contracts ⟨Z⟩ by 0.71–0.88×, which preserves ranking (AUC) but breaks the 0.5 threshold
+  (balanced accuracy 0.883 → 0.857, Brier 0.080 → 0.126). One global rescale restores both. Readout mitigation changes neither AUC nor calibration much.
+- **Real hardware (H4): not run.** There is no IBM token, and this environment's network policy blocks IBM. `hw_run_ibm.py` is ready and was dry-run end to end
+  on FakeFez in Qiskit Runtime local mode; one command runs it once a token is set.
+- **Training-free encoding score (H5):** trace distance between class-mean encoded states is a weak predictor of trained AUC
+  (Spearman 0.34; 0.71 within k=32), so it is not a usable selector. Post hoc, the purity of the class-mean states tracks AUC (0.80) and flags over-large scales.
+- **Framework (H0):** Qiskit is used for the device stages (transpiler, calibrated noise models, Runtime). The PennyLane circuit is kept and verified identical.
+  PennyLane is about 3× faster than Aer for exact simulation, Aer about 2.4× faster with shots, and our numpy simulator is faster than both.
+
+**Gate counts, k=32 pi/6 circuit** (from H3a):
+
+| target | 1q | 2q | depth | 2q depth | SWAPs | est. success |
+|---|---|---|---|---|---|---|
+| logical | 72 | 32 (CX) | 42 | 32 | – | – |
+| IBM Heron r2, FakeFez | 371 | 80 (CZ) | 205 | 80 | 16 | 0.705 |
+| IBM Heron r1, FakeTorino | 371 | 80 (CZ) | 207 | 80 | 16 | 0.578 |
+| IBM Eagle, FakeSherbrooke | 551 | 80 (ECR) | 296 | 80 | 16 | 0.481 |
+| IonQ-like all-to-all | 193 | 32 (RXX) | 106 | 32 | 0 | 0.743 (assumed fidelities) |
+
+**Figures** (`results/figs/`, 150 dpi): `hw_shots.png` (AUC vs shots, log-x, 6 models); `hw_noisy.png` (noiseless / shots-only / noisy /
+mitigated per model); `encoding_score.png` (trace distance vs scale, and vs trained AUC).
+
+**Limitations.** Fold 0 only; 300 ECGs (H3) and 100 ECGs (best-compile check, H4 plan), so AUC differences below about 0.01 are within sampling error.
+Noise comes from one *simulated* device (FakeFez calibration snapshot of 2025-02-26), i.e. one device and one calibration day, and simulated noise models
+omit crosstalk, drift and leakage. The 300-ECG noisy run uses an 8-qubit-line compile (109–117 CZ) that is more pessimistic than the best compile.
+The estimated success probability ignores idle decoherence. The global rescale used for calibration relies on noiseless simulation of the same circuits.
+H5 correlations rest on 13 (7) configurations with mixed training lengths, and the purity result is post hoc. **No real-hardware data yet.**
+
+---
+
 ## H0 — framework choice: Qiskit vs PennyLane (2026-11-05)
 
 PennyLane was the mentor's recommendation, so both were installed (qiskit 2.6.1, qiskit-aer 0.18.2, qiskit-ibm-runtime 0.51.0,
