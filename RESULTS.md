@@ -130,3 +130,25 @@ on the fold only, so the seeds change only the initialization and minibatches, n
 
 **Decision.** cohen_dedup is within 0.005 of l1 at k=32 (−0.0045): **"Cohen's-d pipeline is competitive"**,
 although l1 wins consistently in 5/5 folds.
+
+## Stage 4 — shuffle control, k ∈ {16,32}, 1000 steps, 5 folds (2026-11-05)
+
+Commands: `scale_cv.py --scales "pi/6,pi" --ks 16,32 --steps 1000 [--shuffle-later] --out results/stage4_{real,shuffled}.jsonl`
+(all 20 real runs are reused from Stage 2. The shuffled run was interrupted by a worker restart at 9/20 and resumed.)
+The k=8 column is the matching Stage 2 run, which has no later features.
+
+| scale | k | real | shuffled 9..k | **drop = real − shuffled** | folds with drop > 0 | real − k=8 | shuffled − k=8 |
+|---|---|---|---|---|---|---|---|
+| pi/6 | 16 | 0.940 | 0.926 | **+0.014 ± 0.002** | 5/5 | +0.011 | −0.003 |
+| pi/6 | 32 | 0.951 | 0.922 | **+0.029 ± 0.004** | 5/5 | +0.023 | −0.006 |
+| pi   | 16 | 0.892 | 0.867 | **+0.025 ± 0.016** | 5/5 | −0.018 | −0.043 |
+| pi   | 32 | 0.791 | 0.681 | **+0.110 ± 0.058** | 5/5 | −0.119 | −0.229 |
+
+**Rule outcome.** The drop at s\* is *not* ≥ 2× the drop at pi; it is smaller (0.029 vs 0.110 at k=32).
+
+**Interpretation.** At pi, the drop is not mainly a measure of information use. Shuffled later features destroy the circuit
+(shuffled − k=8 = −0.229), and real ones only partly undo that damage (real is still −0.119 below k=8). At pi/6
+the two effects separate cleanly. Shuffled later features are close to harmless (−0.006 vs k=8), so extra re-uploading rounds of noise cost little,
+and real later features add +0.023. The drop of +0.029 is therefore close to the full information content of features 9..32, with low variance (SD 0.004).
+In short, at pi/6 later rounds carry information and noise in them is tolerated; at pi later rounds act mostly as damaging noise.
+The real − shuffled drop alone cannot tell these two situations apart; the k=8 baseline can.
