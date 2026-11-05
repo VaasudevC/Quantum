@@ -145,7 +145,7 @@ The VQCs are trained with class-weighted BCE, so they are calibrated to a 50/50 
 Subtype sizes (all folds): {'AMI': 1986, 'IMI': 2263, 'AMI+IMI': 989, 'other MI': 216}; each subtype AUC is that subtype vs all NORM ECGs of the test fold.
 
 **Reading.** Ranking by sensitivity at high specificity follows AUC. The best VQC (N2) detects 86.7% of MIs at 90% specificity and 79.6% at 95%,
-1.1 and 0.5 points above fixed pi/6 and 1.7 and 1.8 points below degree-2 LR. VQC calibration slopes are 1.08–1.11 (slightly too moderate, partly from the
+1.1 and 0.5 points above fixed pi/6 and 1.7 and 2.0 points below degree-2 LR. VQC calibration slopes are 1.08–1.11 (slightly too moderate, partly from the
 class weighting), but Brier scores (0.080–0.085) are close to LR's (0.083). **Subtypes:** combined anterior+inferior MI is almost perfectly separated
-(AUC 0.988 for every k=32 model). **Inferior MI is the hardest common subtype (0.938–0.948 vs 0.953–0.960 for anterior)**, and the rare
+(AUC 0.988 for every k=32 model). **Inferior MI is the hardest common subtype (0.933–0.948 vs 0.945–0.960 for anterior, k=32 models)**, and the rare
 lateral/posterior group is weakest (≈0.90). The pi-scale collapse at k=32 hurts every subtype (AMI 0.795, IMI 0.779).

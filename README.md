@@ -25,6 +25,7 @@ summarize.py        aggregate *.jsonl results -> table (+ --md for Markdown)
 stage4b_poly.py     Stage 4b: VQC vs degree-2 polynomial LR on the same features
 make_figs.py        Stage 6 figures -> results/figs/
 RESULTS.md          full write-up of Stages 0-6 (headline, tables, limitations)
+NEXT.md             N1-N4: zz readout, trained input scales, KTA encoding score, clinical metrics
 HARDWARE.md         hardware stages H0-H5 (shots, compilation, IBM noise model, encoding score)
 qiskit_vqc.py       Qiskit + PennyLane versions of the circuit (verified identical), model loader
 hw_h*.py            hardware-stage scripts (H1 verify, H2 shots, H3 compile/noisy/plot, H5 encoding)
