@@ -52,3 +52,25 @@ hardware needs a provider account whichever framework is used.
 | pi/6 | 0.9349 | **0.9598** |
 
 **H1 PASS.**
+
+## H2 — finite-shot robustness (2026-11-05)
+
+`python -u hw_h2_shots.py` → `results/hw/h2_shots.{jsonl,md}`, `results/figs/hw_shots.png`. Exact probabilities come from Vqc_fast8;
+counts are drawn with a numpy multinomial and turned into ⟨Z_j⟩ and then the logged linear readout. All 2,993 fold-0 test ECGs, 10 repeats per shot count
+(mean ± SD over repeats). The runbook grid {100, 300, 1000, 4000, 10000} was extended with 30 and 2000. "Shots for loss ≤ x" is log-interpolated on the grid.
+
+| model | noiseless | 30 shots | 100 shots | 300 shots | 1000 shots | 2000 shots | 4000 shots | 10000 shots | shots for loss ≤ 0.01 | ≤ 0.005 | ‖w‖ |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| k=8 pi | 0.9243 | 0.8613 ± 0.0045 | 0.9018 ± 0.0026 | 0.9160 ± 0.0021 | 0.9216 ± 0.0010 | 0.9232 ± 0.0004 | 0.9239 ± 0.0004 | 0.9241 ± 0.0002 | 243 | 512 | 8.09 |
+| k=8 pi/2 | 0.9347 | 0.8994 ± 0.0033 | 0.9233 ± 0.0014 | 0.9302 ± 0.0016 | 0.9339 ± 0.0006 | 0.9340 ± 0.0003 | 0.9344 ± 0.0004 | 0.9346 ± 0.0002 | 118 | 265 | 6.55 |
+| k=8 pi/6 | 0.9349 | 0.8775 ± 0.0066 | 0.9152 ± 0.0018 | 0.9286 ± 0.0015 | 0.9328 ± 0.0006 | 0.9336 ± 0.0005 | 0.9342 ± 0.0002 | 0.9346 ± 0.0002 | 192 | 386 | 6.13 |
+| k=32 pi | 0.8612 | 0.7981 ± 0.0075 | 0.8416 ± 0.0025 | 0.8539 ± 0.0017 | 0.8591 ± 0.0010 | 0.8599 ± 0.0006 | 0.8608 ± 0.0003 | 0.8610 ± 0.0002 | 213 | 438 | 6.19 |
+| k=32 pi/2 | 0.9251 | 0.8250 ± 0.0047 | 0.8903 ± 0.0021 | 0.9118 ± 0.0024 | 0.9205 ± 0.0013 | 0.9231 ± 0.0007 | 0.9246 ± 0.0007 | 0.9249 ± 0.0004 | 414 | 909 | 10.69 |
+| k=32 pi/6 | 0.9598 | 0.9038 ± 0.0028 | 0.9413 ± 0.0027 | 0.9539 ± 0.0017 | 0.9578 ± 0.0005 | 0.9590 ± 0.0006 | 0.9592 ± 0.0005 | 0.9596 ± 0.0002 | 179 | 355 | 8.08 |
+
+**Key question: does pi/6 lose more AUC than pi/2 under shot noise? At k=32, no; it loses less.** pi/6 needs **≈180 shots** to stay
+within 0.01 of noiseless (≈360 for 0.005), against ≈410 (≈910) for pi/2. After training, the k=32 pi/6 model actually has a *larger*
+class gap in ⟨Z⟩ (max 0.32 vs 0.23 for pi/2) and a smaller readout norm (‖w‖ 8.1 vs 10.7), so shot noise is amplified less.
+Small input angles do not mean small output differences, because the trained ansatz re-spreads them. At k=8, pi/6 is slightly more
+shot-sensitive than pi/2 (≈190 vs ≈120 shots for 0.01). At every shot count, including 30, k=32 pi/6 is the best of the 6 models.
+With 300 shots it reaches 0.954, above the *noiseless* AUC of every other model. **1000 shots per ECG costs ≤ 0.002 AUC for all 6 models.**
