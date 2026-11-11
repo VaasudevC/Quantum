@@ -1,0 +1,181 @@
+{
+ "nan_frac_ext": 0.0,
+ "selected_top32": [
+  "aVR_t_amp",
+  "III_q_depth",
+  "V2_q_depth",
+  "V6_q_duration",
+  "II_r_amp",
+  "V5_t_inverted",
+  "aVR_t_inverted",
+  "V3_q_depth",
+  "aVL_st_min",
+  "aVL_t_inverted",
+  "V4_t_inverted",
+  "V1_q_depth",
+  "V2_q_duration",
+  "I_q_duration",
+  "V2_t_inverted",
+  "V6_t_inverted",
+  "V6_t_amp",
+  "II_q_depth",
+  "III_st_curvature",
+  "V3_r_amp",
+  "III_st_max",
+  "V3_t_inverted",
+  "V4_st_curvature",
+  "II_t_inverted",
+  "V2_s_amp",
+  "V3_st_amp_j60",
+  "aVR_st_slope",
+  "aVF_t_inverted",
+  "n_depressed_leads",
+  "II_t_amp",
+  "aVR_st_slope_cat",
+  "aVL_r_amp"
+ ],
+ "groups": {
+  "NORM": {
+   "n_xl": 9511,
+   "n_ptb": 80,
+   "mean_abs_shift_all": 0.26453703323851535,
+   "mean_abs_shift_top32": 0.17610811605441345,
+   "frac_cols_abs_shift_gt_0p5": 0.20080321285140562,
+   "largest_shifts": {
+    "V4_st_max": [
+     1.02,
+     1.59
+    ],
+    "V6_t_hyperacute": [
+     0.98,
+     1.86
+    ],
+    "V5_t_hyperacute": [
+     0.98,
+     1.3
+    ],
+    "V5_st_max": [
+     0.93,
+     1.23
+    ],
+    "V4_st_dev_j60": [
+     0.92,
+     1.5
+    ],
+    "V4_st_dev_j80": [
+     0.9,
+     1.43
+    ],
+    "V4_st_area": [
+     0.84,
+     1.41
+    ],
+    "V4_st_mean": [
+     0.84,
+     1.41
+    ],
+    "V5_t_amp": [
+     0.81,
+     1.44
+    ],
+    "aVR_st_mean": [
+     -0.8,
+     1.0
+    ],
+    "aVR_st_area": [
+     -0.8,
+     1.0
+    ],
+    "V5_st_dev_j60": [
+     0.79,
+     1.13
+    ]
+   },
+   "top32_shift": {
+    "aVR_t_amp": -0.34,
+    "III_q_depth": -0.0,
+    "V2_q_depth": -0.06,
+    "V6_q_duration": 0.08,
+    "II_r_amp": 0.32,
+    "V5_t_inverted": -0.01,
+    "aVR_t_inverted": 0.18,
+    "V3_q_depth": -0.01,
+    "aVL_st_min": -0.01,
+    "aVL_t_inverted": 0.01,
+    "V4_t_inverted": 0.04,
+    "V1_q_depth": -0.03
+   }
+  },
+  "MI": {
+   "n_xl": 5454,
+   "n_ptb": 365,
+   "mean_abs_shift_all": 0.21443566874584247,
+   "mean_abs_shift_top32": 0.1599555949271974,
+   "frac_cols_abs_shift_gt_0p5": 0.10843373493975904,
+   "largest_shifts": {
+    "V5_st_mean": [
+     0.64,
+     0.89
+    ],
+    "V5_st_area": [
+     0.64,
+     0.89
+    ],
+    "V4_q_duration": [
+     0.64,
+     0.93
+    ],
+    "V4_st_amp_j60": [
+     0.62,
+     1.04
+    ],
+    "V4_st_amp_j80": [
+     0.62,
+     1.03
+    ],
+    "V6_st_amp_j60": [
+     0.6,
+     0.9
+    ],
+    "V5_st_amp_j60": [
+     0.6,
+     0.94
+    ],
+    "V2_rs_ratio": [
+     -0.6,
+     18.16
+    ],
+    "V6_st_mean": [
+     0.6,
+     0.84
+    ],
+    "V5_st_min": [
+     0.6,
+     0.75
+    ],
+    "V6_st_area": [
+     0.6,
+     0.85
+    ],
+    "V3_rs_ratio": [
+     -0.59,
+     8.91
+    ]
+   },
+   "top32_shift": {
+    "aVR_t_amp": 0.01,
+    "III_q_depth": 0.37,
+    "V2_q_depth": 0.08,
+    "V6_q_duration": 0.48,
+    "II_r_amp": 0.14,
+    "V5_t_inverted": -0.05,
+    "aVR_t_inverted": -0.11,
+    "V3_q_depth": 0.06,
+    "aVL_st_min": 0.21,
+    "aVL_t_inverted": -0.07,
+    "V4_t_inverted": 0.17,
+    "V1_q_depth": 0.13
+   }
+  }
+ }
+}

@@ -1,0 +1,307 @@
+{
+ "rbs_two_qubit_cost": {
+  "ops": {
+   "rz": 10,
+   "sx": 8,
+   "cz": 2
+  },
+  "depth": 12
+ },
+ "circuits": {
+  "n8_k2_c4": {
+   "logical": {
+    "oneq_nonvirtual": 283,
+    "rz": 242,
+    "twoq": 89,
+    "depth": 128,
+    "twoq_depth": 32
+   },
+   "IBM Heron r2 (FakeFez)": {
+    "oneq_nonvirtual": 362,
+    "rz": 261,
+    "twoq": 128,
+    "depth": 214,
+    "twoq_depth": 59,
+    "swaps_routing_only": 13,
+    "est_success": 0.6023372489552374,
+    "active_qubits": 8
+   },
+   "IBM Heron r1 (FakeTorino)": {
+    "oneq_nonvirtual": 361,
+    "rz": 252,
+    "twoq": 128,
+    "depth": 195,
+    "twoq_depth": 62,
+    "swaps_routing_only": 13,
+    "est_success": 0.4473397010726016,
+    "active_qubits": 12
+   },
+   "IQM-like 4x5 square lattice (assumed errors)": {
+    "oneq_nonvirtual": 291,
+    "rz": 245,
+    "twoq": 92,
+    "depth": 128,
+    "twoq_depth": 32,
+    "swaps_routing_only": 1,
+    "est_success": 0.5120279590745753,
+    "active_qubits": 8
+   },
+   "ring of n (assumed errors)": {
+    "oneq_nonvirtual": 294,
+    "rz": 243,
+    "twoq": 92,
+    "depth": 129,
+    "twoq_depth": 32,
+    "swaps_routing_only": 1,
+    "est_success": 0.5115672721451318,
+    "active_qubits": 8
+   },
+   "all-to-all (assumed errors)": {
+    "oneq_nonvirtual": 283,
+    "rz": 242,
+    "twoq": 89,
+    "depth": 128,
+    "twoq_depth": 32,
+    "swaps_routing_only": 0,
+    "est_success": 0.5210349993012271,
+    "active_qubits": 8
+   }
+  },
+  "n8_k4_c4": {
+   "logical": {
+    "oneq_nonvirtual": 284,
+    "rz": 236,
+    "twoq": 92,
+    "depth": 127,
+    "twoq_depth": 35
+   },
+   "IBM Heron r2 (FakeFez)": {
+    "oneq_nonvirtual": 365,
+    "rz": 257,
+    "twoq": 134,
+    "depth": 214,
+    "twoq_depth": 63,
+    "swaps_routing_only": 14,
+    "est_success": 0.5905474535200641,
+    "active_qubits": 8
+   },
+   "IBM Heron r1 (FakeTorino)": {
+    "oneq_nonvirtual": 368,
+    "rz": 245,
+    "twoq": 134,
+    "depth": 200,
+    "twoq_depth": 68,
+    "swaps_routing_only": 14,
+    "est_success": 0.43695190948069607,
+    "active_qubits": 12
+   },
+   "IQM-like 4x5 square lattice (assumed errors)": {
+    "oneq_nonvirtual": 302,
+    "rz": 243,
+    "twoq": 98,
+    "depth": 132,
+    "twoq_depth": 35,
+    "swaps_routing_only": 2,
+    "est_success": 0.4952206818187968,
+    "active_qubits": 9
+   },
+   "ring of n (assumed errors)": {
+    "oneq_nonvirtual": 304,
+    "rz": 241,
+    "twoq": 98,
+    "depth": 141,
+    "twoq_depth": 38,
+    "swaps_routing_only": 2,
+    "est_success": 0.4949235939795676,
+    "active_qubits": 8
+   },
+   "all-to-all (assumed errors)": {
+    "oneq_nonvirtual": 284,
+    "rz": 236,
+    "twoq": 92,
+    "depth": 127,
+    "twoq_depth": 35,
+    "swaps_routing_only": 0,
+    "est_success": 0.5131045092612391,
+    "active_qubits": 8
+   }
+  },
+  "n12_k2_c4": {
+   "logical": {
+    "oneq_nonvirtual": 531,
+    "rz": 427,
+    "twoq": 181,
+    "depth": 181,
+    "twoq_depth": 48
+   },
+   "IBM Heron r2 (FakeFez)": {
+    "oneq_nonvirtual": 537,
+    "rz": 435,
+    "twoq": 184,
+    "depth": 185,
+    "twoq_depth": 48,
+    "swaps_routing_only": 1,
+    "est_success": 0.470028786912518,
+    "active_qubits": 12
+   },
+   "IBM Heron r1 (FakeTorino)": {
+    "oneq_nonvirtual": 535,
+    "rz": 433,
+    "twoq": 184,
+    "depth": 183,
+    "twoq_depth": 48,
+    "swaps_routing_only": 1,
+    "est_success": 0.31097628384789655,
+    "active_qubits": 12
+   },
+   "IQM-like 4x5 square lattice (assumed errors)": {
+    "oneq_nonvirtual": 542,
+    "rz": 429,
+    "twoq": 184,
+    "depth": 181,
+    "twoq_depth": 48,
+    "swaps_routing_only": 1,
+    "est_success": 0.2818738230597187,
+    "active_qubits": 12
+   },
+   "ring of n (assumed errors)": {
+    "oneq_nonvirtual": 542,
+    "rz": 429,
+    "twoq": 184,
+    "depth": 181,
+    "twoq_depth": 48,
+    "swaps_routing_only": 1,
+    "est_success": 0.28187382305971775,
+    "active_qubits": 12
+   },
+   "all-to-all (assumed errors)": {
+    "oneq_nonvirtual": 531,
+    "rz": 427,
+    "twoq": 181,
+    "depth": 181,
+    "twoq_depth": 48,
+    "swaps_routing_only": 0,
+    "est_success": 0.28709054546258916,
+    "active_qubits": 12
+   }
+  },
+  "n12_k4_c4": {
+   "logical": {
+    "oneq_nonvirtual": 536,
+    "rz": 428,
+    "twoq": 184,
+    "depth": 177,
+    "twoq_depth": 48
+   },
+   "IBM Heron r2 (FakeFez)": {
+    "oneq_nonvirtual": 546,
+    "rz": 435,
+    "twoq": 190,
+    "depth": 181,
+    "twoq_depth": 48,
+    "swaps_routing_only": 2,
+    "est_success": 0.46129974120871853,
+    "active_qubits": 12
+   },
+   "IBM Heron r1 (FakeTorino)": {
+    "oneq_nonvirtual": 545,
+    "rz": 434,
+    "twoq": 190,
+    "depth": 181,
+    "twoq_depth": 48,
+    "swaps_routing_only": 2,
+    "est_success": 0.30305667506241607,
+    "active_qubits": 12
+   },
+   "IQM-like 4x5 square lattice (assumed errors)": {
+    "oneq_nonvirtual": 555,
+    "rz": 431,
+    "twoq": 190,
+    "depth": 177,
+    "twoq_depth": 48,
+    "swaps_routing_only": 2,
+    "est_success": 0.27245778884734295,
+    "active_qubits": 13
+   },
+   "ring of n (assumed errors)": {
+    "oneq_nonvirtual": 558,
+    "rz": 430,
+    "twoq": 190,
+    "depth": 178,
+    "twoq_depth": 48,
+    "swaps_routing_only": 2,
+    "est_success": 0.2722126503936275,
+    "active_qubits": 12
+   },
+   "all-to-all (assumed errors)": {
+    "oneq_nonvirtual": 536,
+    "rz": 428,
+    "twoq": 184,
+    "depth": 177,
+    "twoq_depth": 48,
+    "swaps_routing_only": 0,
+    "est_success": 0.28238172910923237,
+    "active_qubits": 12
+   }
+  },
+  "n12_k6_c4": {
+   "logical": {
+    "oneq_nonvirtual": 537,
+    "rz": 433,
+    "twoq": 187,
+    "depth": 179,
+    "twoq_depth": 51
+   },
+   "IBM Heron r2 (FakeFez)": {
+    "oneq_nonvirtual": 552,
+    "rz": 442,
+    "twoq": 196,
+    "depth": 193,
+    "twoq_depth": 54,
+    "swaps_routing_only": 3,
+    "est_success": 0.45276884770469356,
+    "active_qubits": 12
+   },
+   "IBM Heron r1 (FakeTorino)": {
+    "oneq_nonvirtual": 551,
+    "rz": 439,
+    "twoq": 196,
+    "depth": 189,
+    "twoq_depth": 54,
+    "swaps_routing_only": 3,
+    "est_success": 0.2971893631008926,
+    "active_qubits": 12
+   },
+   "IQM-like 4x5 square lattice (assumed errors)": {
+    "oneq_nonvirtual": 561,
+    "rz": 443,
+    "twoq": 196,
+    "depth": 190,
+    "twoq_depth": 54,
+    "swaps_routing_only": 3,
+    "est_success": 0.2639100110483463,
+    "active_qubits": 13
+   },
+   "ring of n (assumed errors)": {
+    "oneq_nonvirtual": 568,
+    "rz": 438,
+    "twoq": 196,
+    "depth": 192,
+    "twoq_depth": 54,
+    "swaps_routing_only": 3,
+    "est_success": 0.26335629856574566,
+    "active_qubits": 12
+   },
+   "all-to-all (assumed errors)": {
+    "oneq_nonvirtual": 537,
+    "rz": 433,
+    "twoq": 187,
+    "depth": 179,
+    "twoq_depth": 51,
+    "swaps_routing_only": 0,
+    "est_success": 0.2780836963606096,
+    "active_qubits": 12
+   }
+  }
+ }
+}
