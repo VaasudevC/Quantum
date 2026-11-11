@@ -1,0 +1,19 @@
+{
+ "n_requested": 50,
+ "n_reproduced": 50,
+ "max_abs_diff_overall": 8.526512829121202e-14,
+ "n_cols_diff_gt_1e9": 0,
+ "worst_cols": {
+  "V3_st_curvature": 0.0,
+  "V2_st_curvature": 0.0,
+  "I_st_curvature": 0.0,
+  "II_st_curvature": 0.0,
+  "I_rs_ratio": 0.0,
+  "V6_st_curvature": 0.0,
+  "aVR_rs_ratio": 0.0,
+  "V1_st_curvature": 0.0,
+  "aVF_st_curvature": 0.0,
+  "V4_st_curvature": 0.0
+ },
+ "n_nan_mismatch": 0
+}

@@ -120,7 +120,8 @@ def stage_main(stage, jobs):
             gm = group_mean_val([r for r in A if r["n"] == n])
             best = dict(max(gm.items(), key=lambda kv: kv[1])[0])
             print("stage A winner", n, best, flush=True)
-            for ch in (dict(columns=n), dict(head="linear_score"), dict(head="corr"), dict(columns=n, head="corr"), dict(lr=0.06), dict(lr=0.06, columns=n)):
+            variants = (dict(columns=n), dict(head="linear_score"), dict(head="corr"), dict(columns=n, head="corr"), dict(lr=0.06), dict(lr=0.06, columns=n)) if n == 8                 else (dict(head="linear_score"), dict(head="corr"))          # n=12: columns=12 skipped (too slow)
+            for ch in variants:
                 for fold in (0, 1):
                     c = dict(best); c.update(ch); c["fold"] = fold; cfgs.append(c)
         runner(cfgs, RES / "p3_stageB.jsonl", jobs)

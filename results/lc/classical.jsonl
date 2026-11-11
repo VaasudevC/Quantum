@@ -1,0 +1,600 @@
+{"model": "lr", "k": 8, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8392459892532246, "test_auc": 0.8472089295748312, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8617486180650015, "test_auc": 0.8739466681316691, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.839531540917817, "test_auc": 0.832956962664608, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8344533518556035, "test_auc": 0.842751274407469, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8308144975351877, "test_auc": 0.8469771315061284, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 14.3}
+{"model": "rf", "k": 12, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8523167308193211, "test_auc": 0.8633784110700204, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.2}
+{"model": "xgb", "k": 8, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8310228730742145, "test_auc": 0.85057698924669, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 138}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 0, "size": 50, "rep": 0, "val_auc": 0.8448586229849796, "test_auc": 0.8609679039189777, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 113}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.8479321621856281, "test_auc": 0.8562447170762408, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.8683992706856134, "test_auc": 0.8732421176608925, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.8570736742588682, "test_auc": 0.8591313499900246, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.851447534705139, "test_auc": 0.8488854898264261, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.8435234760126955, "test_auc": 0.8639646529631118, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.8}
+{"model": "rf", "k": 12, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.8586239496811662, "test_auc": 0.8797642695565765, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.7}
+{"model": "xgb", "k": 8, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.83118976644575, "test_auc": 0.8524894437906552, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 74}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 1, "size": 50, "rep": 0, "val_auc": 0.8564089948774347, "test_auc": 0.8737512541673053, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 416}, "secs": 1.0}
+{"model": "lr", "k": 8, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.8093788286593543, "test_auc": 0.7920431414541911, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.8381732411078631, "test_auc": 0.8228508860783916, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.7679178846023983, "test_auc": 0.7569940863793785, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.801041877695135, "test_auc": 0.7891244368554586, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.7674876277023703, "test_auc": 0.7555060342083176, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 14.5}
+{"model": "rf", "k": 12, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.8015869340819417, "test_auc": 0.7915074909076878, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.0}
+{"model": "xgb", "k": 8, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.742800914537088, "test_auc": 0.7307445566713936, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 6}, "secs": 0.5}
+{"model": "xgb", "k": 12, "fold": 2, "size": 50, "rep": 0, "val_auc": 0.7330284876373494, "test_auc": 0.7172927579853173, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 71}, "secs": 0.6}
+{"model": "lr", "k": 8, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8803712171639705, "test_auc": 0.8831732914651084, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8874309032500796, "test_auc": 0.8870926546517197, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8782353678889434, "test_auc": 0.8755509420832526, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.887753113574316, "test_auc": 0.8772482244075173, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8589162542567458, "test_auc": 0.8618714826691186, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 13.7}
+{"model": "rf", "k": 12, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8620573225672639, "test_auc": 0.8619996703744721, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.2}
+{"model": "xgb", "k": 8, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8500525762355415, "test_auc": 0.8492411384224815, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 78}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 3, "size": 50, "rep": 0, "val_auc": 0.8574962135463395, "test_auc": 0.8515012900695007, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 159}, "secs": 0.4}
+{"model": "lr", "k": 8, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.7733433662296568, "test_auc": 0.7880576425952943, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.8458831360518623, "test_auc": 0.825301648754704, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.7740649630036949, "test_auc": 0.7884718662654797, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.8392054717873026, "test_auc": 0.8030072638455465, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.7390356843110584, "test_auc": 0.7427613209496511, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 13.9}
+{"model": "rf", "k": 12, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.8245632313643774, "test_auc": 0.8042576413429903, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 14.8}
+{"model": "xgb", "k": 8, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.7035578193885721, "test_auc": 0.7123999300636316, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 77}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 4, "size": 50, "rep": 0, "val_auc": 0.8015502754222982, "test_auc": 0.7870232875584068, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 10}, "secs": 0.3}
+{"model": "lr", "k": 8, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.8911083456332785, "test_auc": 0.9016646089166597, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.9005296211616937, "test_auc": 0.9090893757451513, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.8797229377092196, "test_auc": 0.8914597109897342, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.8682931535129608, "test_auc": 0.8833617177538043, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.9073510259601194, "test_auc": 0.9097912757182608, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.9}
+{"model": "rf", "k": 12, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.9118050531068216, "test_auc": 0.9173480855214396, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.4}
+{"model": "xgb", "k": 8, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.8972477064220183, "test_auc": 0.8978883726040705, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 35}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 0, "size": 50, "rep": 1, "val_auc": 0.901745145139351, "test_auc": 0.9012504084175951, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 41}, "secs": 0.4}
+{"model": "lr", "k": 8, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.7645800171716879, "test_auc": 0.8022063706398108, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.7573235319653865, "test_auc": 0.7951738774660472, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.828917894249414, "test_auc": 0.8459737976619719, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.8190316325644662, "test_auc": 0.8319608574504527, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.8030214453158915, "test_auc": 0.8192146141694641, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.4}
+{"model": "rf", "k": 12, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.7991047569434395, "test_auc": 0.8165462858817147, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.9}
+{"model": "xgb", "k": 8, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.7826604539885587, "test_auc": 0.8122440462593769, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 39}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 1, "size": 50, "rep": 1, "val_auc": 0.7810301083359862, "test_auc": 0.8018326504687526, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 127}, "secs": 0.7}
+{"model": "lr", "k": 8, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.824653913311917, "test_auc": 0.8120385108866571, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.8244629024011423, "test_auc": 0.8166739019284384, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.7961045350620786, "test_auc": 0.7761762123886975, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.7199239815163179, "test_auc": 0.6958541950047752, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.8654935895580702, "test_auc": 0.8479828090180302, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.9}
+{"model": "rf", "k": 12, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.8718548317078113, "test_auc": 0.8523193837486374, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 14.7}
+{"model": "xgb", "k": 8, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.8507896082346926, "test_auc": 0.8273661717747615, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 50}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 2, "size": 50, "rep": 1, "val_auc": 0.8575338369075527, "test_auc": 0.8396656344359873, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 96}, "secs": 0.3}
+{"model": "lr", "k": 8, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.8989475105875997, "test_auc": 0.8846310651820024, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.9001784697903704, "test_auc": 0.8838686856712168, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.8719744547024377, "test_auc": 0.8492339097924805, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.868046189911151, "test_auc": 0.8525243821689938, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.865155944008721, "test_auc": 0.8501095378399504, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.7}
+{"model": "rf", "k": 12, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.8737224939464976, "test_auc": 0.8565136221122829, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.6}
+{"model": "xgb", "k": 8, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.863004659508581, "test_auc": 0.8529930383474003, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 78}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 3, "size": 50, "rep": 1, "val_auc": 0.8679535785604723, "test_auc": 0.8572321479343948, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 433}, "secs": 1.1}
+{"model": "lr", "k": 8, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8371853867006243, "test_auc": 0.8766552690936641, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8546985789945881, "test_auc": 0.8902143511162124, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8273878775600767, "test_auc": 0.851315858553213, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8544940622618393, "test_auc": 0.8657693747101035, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8468092495586491, "test_auc": 0.8764561045731738, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.2}
+{"model": "rf", "k": 12, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.848279454750673, "test_auc": 0.8699349717003352, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8499647883927107, "test_auc": 0.8718941051636834, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 13}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 4, "size": 50, "rep": 1, "val_auc": 0.8255742386092864, "test_auc": 0.852062665298123, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 161}, "secs": 0.6}
+{"model": "lr", "k": 8, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8867228122980156, "test_auc": 0.8815839566821938, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8844248931593012, "test_auc": 0.8845578150646576, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8432765124108859, "test_auc": 0.8516323692268547, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8463249693707252, "test_auc": 0.8459728338446385, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8928139380082771, "test_auc": 0.8844710715046441, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.9}
+{"model": "rf", "k": 12, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8948407760059425, "test_auc": 0.8921136610505033, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.9}
+{"model": "xgb", "k": 8, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.889368024001775, "test_auc": 0.8747837434857996, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 23}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 0, "size": 50, "rep": 2, "val_auc": 0.8963765809046972, "test_auc": 0.8856601811398297, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 35}, "secs": 0.4}
+{"model": "lr", "k": 8, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.833056463982867, "test_auc": 0.8390598540202268, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.8244860552388119, "test_auc": 0.8317738768877567, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.8482292902690552, "test_auc": 0.8529335226270576, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.7666232550960361, "test_auc": 0.7940182604832001, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.8237133292815868, "test_auc": 0.8331979169979788, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.2}
+{"model": "rf", "k": 12, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.8318457635130573, "test_auc": 0.8367428371505319, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.8}
+{"model": "xgb", "k": 8, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.8155288011653594, "test_auc": 0.8323167470008416, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 10}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 1, "size": 50, "rep": 2, "val_auc": 0.8114847721857242, "test_auc": 0.8215728342301654, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 66}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8430179723902411, "test_auc": 0.8181354248063362, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8884476987044059, "test_auc": 0.8652972727886628, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8432167009135725, "test_auc": 0.8245092080764816, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.852365930599369, "test_auc": 0.839993150618856, "hp": {"C": 0.03}, "secs": 0.2}
+{"model": "rf", "k": 8, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8624007563260305, "test_auc": 0.8355709586239497, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.5}
+{"model": "rf", "k": 12, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8852940892734834, "test_auc": 0.8571358975101052, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.2}
+{"model": "xgb", "k": 8, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8566241233274487, "test_auc": 0.8228173626988491, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 27}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 2, "size": 50, "rep": 2, "val_auc": 0.8713850220434308, "test_auc": 0.8412846448451171, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 96}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8904542779691103, "test_auc": 0.8720431288980387, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8873788093653229, "test_auc": 0.870592101902479, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8468381906057363, "test_auc": 0.8387620344641802, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8295951147512518, "test_auc": 0.8014049565270192, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8832653218726787, "test_auc": 0.8677938992290426, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.8}
+{"model": "rf", "k": 12, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8968386729565211, "test_auc": 0.8762381438420265, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.8}
+{"model": "xgb", "k": 8, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.8952517388745792, "test_auc": 0.8817726239252233, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 155}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 3, "size": 50, "rep": 2, "val_auc": 0.9029037517244042, "test_auc": 0.8885313929762776, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 795}, "secs": 1.4}
+{"model": "lr", "k": 8, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.9025323416201199, "test_auc": 0.8980523299358965, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8881389942021436, "test_auc": 0.886844208069366, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8352752775928767, "test_auc": 0.801244404970106, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8164732440019681, "test_auc": 0.7738608487828326, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8926007389614024, "test_auc": 0.8928538228750686, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 15.4}
+{"model": "rf", "k": 12, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8840968946256476, "test_auc": 0.8819582953828993, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.2}
+{"model": "xgb", "k": 8, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8753673101226135, "test_auc": 0.8811455018440179, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 378}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 4, "size": 50, "rep": 2, "val_auc": 0.8761988828755825, "test_auc": 0.8740136298853708, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 279}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.8924280573804495, "test_auc": 0.8798702894632597, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.880311405666657, "test_auc": 0.875907072587975, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.8899526331529342, "test_auc": 0.8817458779942191, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.8674654395662702, "test_auc": 0.8633914226040225, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.890809288146712, "test_auc": 0.882618855544022, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 16.0}
+{"model": "rf", "k": 12, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.8933339121542752, "test_auc": 0.8834009933101439, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 16.8}
+{"model": "xgb", "k": 8, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.8888798850075729, "test_auc": 0.8810456647014432, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 173}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 0, "size": 100, "rep": 0, "val_auc": 0.8966708148834158, "test_auc": 0.8864524389879532, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 202}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.8578010592423235, "test_auc": 0.8524853475669877, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.8723256060737611, "test_auc": 0.8735356000389382, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.831516800277834, "test_auc": 0.8254314769247673, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.8446791884930398, "test_auc": 0.8461087320886597, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.8645095939571092, "test_auc": 0.8629687887032899, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.2}
+{"model": "rf", "k": 12, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.875630673651106, "test_auc": 0.8804808677440217, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 17.3}
+{"model": "xgb", "k": 8, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.8554819166690785, "test_auc": 0.8553368011480992, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 98}, "secs": 0.5}
+{"model": "xgb", "k": 12, "fold": 1, "size": 100, "rep": 0, "val_auc": 0.8594690282561088, "test_auc": 0.871411105681607, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 57}, "secs": 0.4}
+{"model": "lr", "k": 8, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.8973885528511756, "test_auc": 0.8896516462632285, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.909424169633124, "test_auc": 0.9027455406669946, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.8995186139167849, "test_auc": 0.8902791846342334, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.8752988163111741, "test_auc": 0.8839845068927927, "hp": {"C": 0.003}, "secs": 0.2}
+{"model": "rf", "k": 8, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.889096942860726, "test_auc": 0.8839560481964904, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.8}
+{"model": "rf", "k": 12, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.8949420696707473, "test_auc": 0.8950409515816282, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 17.0}
+{"model": "xgb", "k": 8, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.8770613260787776, "test_auc": 0.8701622628040016, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 21}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 2, "size": 100, "rep": 0, "val_auc": 0.877968145554173, "test_auc": 0.8785927898204691, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 69}, "secs": 0.6}
+{"model": "lr", "k": 8, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.8959202770622909, "test_auc": 0.8882410430045655, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9085308559797026, "test_auc": 0.8986309938595197, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9139563376069612, "test_auc": 0.9085525294904009, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9270685613405494, "test_auc": 0.9218271856244715, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9167925602214957, "test_auc": 0.9059892572920009, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 16.5}
+{"model": "rf", "k": 12, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9252250166411022, "test_auc": 0.9153481645544609, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.7}
+{"model": "xgb", "k": 8, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9149914623911093, "test_auc": 0.9037385028639833, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 22}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 3, "size": 100, "rep": 0, "val_auc": 0.9089186660106696, "test_auc": 0.9021342289123997, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 56}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.8882528289873529, "test_auc": 0.8728786088635195, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.8871742926325741, "test_auc": 0.8782948241789099, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.8945079539644413, "test_auc": 0.8903752240299821, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.8881409236052826, "test_auc": 0.8879948828927069, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.8995311550371892, "test_auc": 0.9062792455156675, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 16.3}
+{"model": "rf", "k": 12, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.9070346038453005, "test_auc": 0.9122163711790877, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.2}
+{"model": "xgb", "k": 8, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.8860841798589605, "test_auc": 0.8858635576129734, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 47}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 4, "size": 100, "rep": 0, "val_auc": 0.896547333082511, "test_auc": 0.896446490730782, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 167}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.9097791798107256, "test_auc": 0.9002979159377797, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.9215273155249424, "test_auc": 0.9127697122330588, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.9001803991935096, "test_auc": 0.8878203367385, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.9128160603517302, "test_auc": 0.8980059583187556, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.9045910147695811, "test_auc": 0.8994868636516533, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.2}
+{"model": "rf", "k": 12, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.9245593725580992, "test_auc": 0.9164261942419624, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.8946835296501028, "test_auc": 0.8904387874792417, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 37}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 0, "size": 100, "rep": 1, "val_auc": 0.908248198419819, "test_auc": 0.9051692896955398, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 36}, "secs": 0.4}
+{"model": "lr", "k": 8, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8977686452695859, "test_auc": 0.8928957988166252, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8964836627789193, "test_auc": 0.8892251005020525, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8859066747701599, "test_auc": 0.877788444022935, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8797731021908373, "test_auc": 0.8698094822276903, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8968859433334297, "test_auc": 0.8973457434453194, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 14.7}
+{"model": "rf", "k": 12, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8970190721500304, "test_auc": 0.9015501556083084, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.9}
+{"model": "xgb", "k": 8, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8917170723236767, "test_auc": 0.8879605721605218, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 9}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 1, "size": 100, "rep": 1, "val_auc": 0.8886406390183197, "test_auc": 0.8872362634344089, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 21}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8037816301527123, "test_auc": 0.7933223357354401, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8451557510684071, "test_auc": 0.8258901783733202, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8402975139640552, "test_auc": 0.8283858613337963, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8490801570534157, "test_auc": 0.8412511214655747, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.84169826064307, "test_auc": 0.840694488659933, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 14.6}
+{"model": "rf", "k": 12, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8554780578628002, "test_auc": 0.8480358676043567, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8397881515353225, "test_auc": 0.8369208172951699, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 26}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 2, "size": 100, "rep": 1, "val_auc": 0.8611611148091337, "test_auc": 0.8524587831254401, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 8}, "secs": 0.3}
+{"model": "lr", "k": 8, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.9196210652234731, "test_auc": 0.9041729435270509, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.9162542567456757, "test_auc": 0.9002935787597791, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.9123935210642588, "test_auc": 0.8985644904635094, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.8211771288551887, "test_auc": 0.7988175888952823, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.8970885306630394, "test_auc": 0.8866820684676557, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.0}
+{"model": "rf", "k": 12, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.8939349212321169, "test_auc": 0.8816663630642068, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.0}
+{"model": "xgb", "k": 8, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.8948870816812818, "test_auc": 0.880856515549747, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 11}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 3, "size": 100, "rep": 1, "val_auc": 0.8753566984053482, "test_auc": 0.8645311366008668, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 185}, "secs": 0.7}
+{"model": "lr", "k": 8, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.8873903857841577, "test_auc": 0.8874376075596784, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.9125112146557464, "test_auc": 0.9100233940042568, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.8654318486576178, "test_auc": 0.8657684113992427, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.8923836811082492, "test_auc": 0.8852513735608739, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.8824723371824926, "test_auc": 0.8898208386295361, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 14.4}
+{"model": "rf", "k": 12, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.9125951436922988, "test_auc": 0.9103815048167951, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.1}
+{"model": "xgb", "k": 8, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.8687282339208366, "test_auc": 0.880116445016865, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 11}, "secs": 0.3}
+{"model": "xgb", "k": 12, "fold": 4, "size": 100, "rep": 1, "val_auc": 0.90472800239246, "test_auc": 0.8979836940370575, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 10}, "secs": 0.3}
+{"model": "lr", "k": 8, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.9222527711052586, "test_auc": 0.921156850669034, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.9212166816195408, "test_auc": 0.9226936574072735, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.9221563009483017, "test_auc": 0.9220262139038361, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.918966997559305, "test_auc": 0.9213250367937267, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.9194146190875853, "test_auc": 0.9174059145614486, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 13.6}
+{"model": "rf", "k": 12, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.9199808989089224, "test_auc": 0.9221124755551827, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.9119748405830657, "test_auc": 0.9134855875575038, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 135}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 0, "size": 100, "rep": 2, "val_auc": 0.916195409949932, "test_auc": 0.9201619502265452, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 219}, "secs": 0.7}
+{"model": "lr", "k": 8, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.903784524257421, "test_auc": 0.9086744523830865, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.9196403592548643, "test_auc": 0.9130159675617638, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.9039215118802997, "test_auc": 0.914223630680619, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.8926846679979548, "test_auc": 0.8921025771511681, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.9023615894423062, "test_auc": 0.9065533313864225, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 14.1}
+{"model": "rf", "k": 12, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.9101206841663533, "test_auc": 0.9120309462469435, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 15.3}
+{"model": "xgb", "k": 8, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.8950395045292738, "test_auc": 0.8985141310078348, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 26}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 1, "size": 100, "rep": 2, "val_auc": 0.9021561080079877, "test_auc": 0.9003636964707902, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 202}, "secs": 0.7}
+{"model": "lr", "k": 8, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8950231046025912, "test_auc": 0.8661756335677558, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8868077060361377, "test_auc": 0.8624282503207632, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.887284268611505, "test_auc": 0.8613063023953541, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8689877386430507, "test_auc": 0.8499532119738759, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8980705968608611, "test_auc": 0.8743321853384656, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 14.8}
+{"model": "rf", "k": 12, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8938770391379427, "test_auc": 0.8732140962193347, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8934699350755844, "test_auc": 0.8714484511716301, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 79}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 2, "size": 100, "rep": 2, "val_auc": 0.8904571720738191, "test_auc": 0.8679480315264472, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 58}, "secs": 0.4}
+{"model": "lr", "k": 8, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.9069024397302694, "test_auc": 0.9091202178998227, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.9036070191686202, "test_auc": 0.9083641032017048, "hp": {"C": 0.003}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.8961556642452657, "test_auc": 0.8838797695705519, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.8834389681552012, "test_auc": 0.8668197208592239, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.9083089746187016, "test_auc": 0.9020727855573901, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.0}
+{"model": "rf", "k": 12, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.9097598857793341, "test_auc": 0.9002865910841114, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.893437135222219, "test_auc": 0.883701222409524, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 132}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 3, "size": 100, "rep": 2, "val_auc": 0.8891191309968262, "test_auc": 0.8782679431463432, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 85}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.8878052074590727, "test_auc": 0.8789180863059098, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.902518835798146, "test_auc": 0.8960231156074181, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.9042495104139534, "test_auc": 0.890403160044948, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.8881717940555091, "test_auc": 0.8690802741390047, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.9012984883126405, "test_auc": 0.886447564822392, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.3}
+{"model": "rf", "k": 12, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.917828649707213, "test_auc": 0.9170695312962842, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.9016110516211809, "test_auc": 0.8878780814508233, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 89}, "secs": 0.5}
+{"model": "xgb", "k": 12, "fold": 4, "size": 100, "rep": 2, "val_auc": 0.9134681986127591, "test_auc": 0.9123343767595476, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 27}, "secs": 0.5}
+{"model": "lr", "k": 8, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9242574209668238, "test_auc": 0.9203756767202452, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9135704569791334, "test_auc": 0.910799669603418, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9385504394215651, "test_auc": 0.9255383642670507, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9271573138849497, "test_auc": 0.9176297611371502, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9334105094588988, "test_auc": 0.9305511782184993, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.2}
+{"model": "rf", "k": 12, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9307402155143306, "test_auc": 0.9254183690090318, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 16.5}
+{"model": "xgb", "k": 8, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.931801387240857, "test_auc": 0.9236555471060903, "hp": {"max_depth": 7, "learning_rate": 0.1, "n_estimators": 50}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 0, "size": 250, "rep": 0, "val_auc": 0.9341369297407849, "test_auc": 0.9295331461600073, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 44}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9068715692800432, "test_auc": 0.9042187248503915, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9118262765413518, "test_auc": 0.9119750448416013, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9034681021426023, "test_auc": 0.9040866818757042, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9066496879190422, "test_auc": 0.9035021266629463, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9080793756451442, "test_auc": 0.9084409676340501, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.9}
+{"model": "rf", "k": 12, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9130755650739444, "test_auc": 0.9135778730671849, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.7}
+{"model": "xgb", "k": 8, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.9036610424565161, "test_auc": 0.9049280944078355, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 144}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 1, "size": 250, "rep": 0, "val_auc": 0.911319808217328, "test_auc": 0.9103435430503467, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 127}, "secs": 0.8}
+{"model": "lr", "k": 8, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.9176858738749168, "test_auc": 0.902160449165051, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.925339816127881, "test_auc": 0.9073568141695367, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.920049392720362, "test_auc": 0.9084396916813784, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.9251237229762974, "test_auc": 0.9111760676834622, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.9084777973933764, "test_auc": 0.8980317676226859, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.6}
+{"model": "rf", "k": 12, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.9143007360672977, "test_auc": 0.898961257584966, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.7}
+{"model": "xgb", "k": 8, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.909780144512295, "test_auc": 0.8967026500352117, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 61}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 2, "size": 250, "rep": 0, "val_auc": 0.9137248092302647, "test_auc": 0.8979531444447661, "hp": {"max_depth": 7, "learning_rate": 0.1, "n_estimators": 54}, "secs": 1.2}
+{"model": "lr", "k": 8, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9119555465516743, "test_auc": 0.9021200126067307, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9193065725117935, "test_auc": 0.9097452534405868, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9088916543667216, "test_auc": 0.8990015816242443, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9127929075140605, "test_auc": 0.9047141269598021, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9091019593088878, "test_auc": 0.8979401777857453, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.0}
+{"model": "rf", "k": 12, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.918792386575213, "test_auc": 0.9100958419956418, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.9}
+{"model": "xgb", "k": 8, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9126462728754859, "test_auc": 0.9032204510472358, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 73}, "secs": 0.9}
+{"model": "xgb", "k": 12, "fold": 3, "size": 250, "rep": 0, "val_auc": 0.9228624624972266, "test_auc": 0.914441935306653, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 92}, "secs": 1.1}
+{"model": "lr", "k": 8, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9134932808535681, "test_auc": 0.9212950943876064, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9102924010457365, "test_auc": 0.9177982759625523, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9189399859153571, "test_auc": 0.9202012549050584, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9085810204613203, "test_auc": 0.911352762992294, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9178903906076654, "test_auc": 0.9178199504569224, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 5}, "secs": 15.9}
+{"model": "rf", "k": 12, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9228200156281654, "test_auc": 0.9225815960423337, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.6}
+{"model": "xgb", "k": 8, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9139929962666049, "test_auc": 0.9168807223675484, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 124}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 4, "size": 250, "rep": 0, "val_auc": 0.9171919466712973, "test_auc": 0.9172583402250197, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 107}, "secs": 0.6}
+{"model": "lr", "k": 8, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9320309862144146, "test_auc": 0.9303935940844749, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9332445807889329, "test_auc": 0.9357813329786486, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9326040189467389, "test_auc": 0.9286322179075333, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9265186814458948, "test_auc": 0.929101115040273, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9205298141020076, "test_auc": 0.9223857177692256, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 5}, "secs": 16.0}
+{"model": "rf", "k": 12, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9258781196037006, "test_auc": 0.9289575062575841, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 16.4}
+{"model": "xgb", "k": 8, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.91510240307161, "test_auc": 0.9138542476875612, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 32}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 0, "size": 250, "rep": 1, "val_auc": 0.9227351218900433, "test_auc": 0.9193089718864123, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 32}, "secs": 0.7}
+{"model": "lr", "k": 8, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9160246577721183, "test_auc": 0.9065130920127494, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9264376465140509, "test_auc": 0.9145662677426724, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9184749997588246, "test_auc": 0.911414103153514, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9214019043208982, "test_auc": 0.9141142374132685, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9098061914546736, "test_auc": 0.9056798719279526, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 15.7}
+{"model": "rf", "k": 12, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9118976644575002, "test_auc": 0.9120044412702727, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.8}
+{"model": "xgb", "k": 8, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9067094994163556, "test_auc": 0.9058646839016482, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 86}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 1, "size": 250, "rep": 1, "val_auc": 0.9109483981130438, "test_auc": 0.9126509217467068, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 121}, "secs": 0.8}
+{"model": "lr", "k": 8, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9114172430758545, "test_auc": 0.9012328886059097, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9059859732391784, "test_auc": 0.8966577914122267, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9033272557134451, "test_auc": 0.8957861835441207, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9109291040816524, "test_auc": 0.8972129771655138, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9080427169855004, "test_auc": 0.9021310257671791, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.1}
+{"model": "rf", "k": 12, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9217048206137431, "test_auc": 0.9159817285522724, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 16.3}
+{"model": "xgb", "k": 8, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9041163815973529, "test_auc": 0.8964016631455058, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 89}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 2, "size": 250, "rep": 1, "val_auc": 0.9215726564987121, "test_auc": 0.9129752361107091, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 67}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.9145100763078943, "test_auc": 0.9077308752136061, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.915021368139766, "test_auc": 0.9037030825769776, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.919995369432466, "test_auc": 0.9086036118090756, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.9181045543561098, "test_auc": 0.9005273044631491, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.9176058036446425, "test_auc": 0.9062808120353799, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.2}
+{"model": "rf", "k": 12, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.9211356466876972, "test_auc": 0.9098751278262739, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.9}
+{"model": "xgb", "k": 8, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.9152818375635496, "test_auc": 0.9019079727933643, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 223}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 3, "size": 250, "rep": 1, "val_auc": 0.9179598491206746, "test_auc": 0.9046712370884621, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 248}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9058605620351345, "test_auc": 0.9154453891848126, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.923132578936706, "test_auc": 0.9294312179187381, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9094087344080111, "test_auc": 0.923592109135414, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9235647652398731, "test_auc": 0.9321882136026236, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9119844875987615, "test_auc": 0.9176716005843444, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 16.1}
+{"model": "rf", "k": 12, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9256755322740912, "test_auc": 0.9276567993129667, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 16.5}
+{"model": "xgb", "k": 8, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9080784109435746, "test_auc": 0.9128930970588676, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 66}, "secs": 0.5}
+{"model": "xgb", "k": 12, "fold": 4, "size": 250, "rep": 1, "val_auc": 0.9186129520832731, "test_auc": 0.9217839746495115, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 90}, "secs": 0.8}
+{"model": "lr", "k": 8, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.916910253812983, "test_auc": 0.9249494718762922, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.9217491968859434, "test_auc": 0.9270371002206177, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.9105663762914942, "test_auc": 0.9218353780718063, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.9169912887448268, "test_auc": 0.92168695020245, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.91503487396174, "test_auc": 0.9190909082147115, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 16.6}
+{"model": "rf", "k": 12, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.9237268351035608, "test_auc": 0.9253643952383568, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 15.4}
+{"model": "xgb", "k": 8, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.9147358164751733, "test_auc": 0.9174688036424584, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 57}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 0, "size": 250, "rep": 2, "val_auc": 0.9217405145718172, "test_auc": 0.919468001746437, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 23}, "secs": 0.8}
+{"model": "lr", "k": 8, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.9088646427227738, "test_auc": 0.9143812148146433, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.911658418468247, "test_auc": 0.9199366579248436, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.90947819292102, "test_auc": 0.9135720901631837, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.9051505416799314, "test_auc": 0.9155936970201659, "hp": {"C": 0.01}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.9143499358473455, "test_auc": 0.9215409318764269, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 16.2}
+{"model": "rf", "k": 12, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.9136900799737602, "test_auc": 0.9260234053401264, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 16.3}
+{"model": "xgb", "k": 8, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.9150059329146528, "test_auc": 0.9218009216021343, "hp": {"max_depth": 7, "learning_rate": 0.1, "n_estimators": 34}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 1, "size": 250, "rep": 2, "val_auc": 0.910286612836319, "test_auc": 0.9248246575316059, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 170}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9011817594227226, "test_auc": 0.8900659855873585, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9106570582390339, "test_auc": 0.8942228846506334, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9046122382041115, "test_auc": 0.8945040951581628, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9162639037613713, "test_auc": 0.9010766069516395, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9115156426359505, "test_auc": 0.8999035298430431, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 15.9}
+{"model": "rf", "k": 12, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9190808323445141, "test_auc": 0.9089169777829229, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.7}
+{"model": "xgb", "k": 8, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.9094338166488196, "test_auc": 0.8959598298266431, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 45}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 2, "size": 250, "rep": 2, "val_auc": 0.919800499715413, "test_auc": 0.9066463114635488, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 72}, "secs": 1.0}
+{"model": "lr", "k": 8, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.919132926229271, "test_auc": 0.9102898102340052, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9270762789531058, "test_auc": 0.9183531060459297, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9215832682159774, "test_auc": 0.912989462585093, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9300437009811017, "test_auc": 0.9179656514778693, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9259938837920489, "test_auc": 0.909214671998504, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 5}, "secs": 15.4}
+{"model": "rf", "k": 12, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9315872234924126, "test_auc": 0.9178654144751871, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 17.0}
+{"model": "xgb", "k": 8, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9235802004649862, "test_auc": 0.9095351412618875, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 88}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 3, "size": 250, "rep": 2, "val_auc": 0.9299337250021706, "test_auc": 0.9130762061451067, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 80}, "secs": 0.7}
+{"model": "lr", "k": 8, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.918702669329243, "test_auc": 0.922257441937642, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9189245506902439, "test_auc": 0.919378587429853, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9155712480344207, "test_auc": 0.9170420769367487, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9208790360701917, "test_auc": 0.9173806807043536, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9226116400891384, "test_auc": 0.9240858059516235, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 16.2}
+{"model": "rf", "k": 12, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9321332445807888, "test_auc": 0.9309503591463718, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 15.7}
+{"model": "xgb", "k": 8, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9213498104361415, "test_auc": 0.92187934242474, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 17}, "secs": 0.4}
+{"model": "xgb", "k": 12, "fold": 4, "size": 250, "rep": 2, "val_auc": 0.9274216421150118, "test_auc": 0.9312003383147742, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 138}, "secs": 0.9}
+{"model": "lr", "k": 8, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.916078681060014, "test_auc": 0.9087342090577625, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9202770622907804, "test_auc": 0.9245899680109028, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9345777983580779, "test_auc": 0.9273517865800003, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9281239448576583, "test_auc": 0.92959410760635, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9315486354296298, "test_auc": 0.9289989504029238, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.9}
+{"model": "rf", "k": 12, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9393250947819292, "test_auc": 0.939611061153246, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 18.3}
+{"model": "xgb", "k": 8, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9341552590706066, "test_auc": 0.9280724809911126, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 57}, "secs": 0.9}
+{"model": "xgb", "k": 12, "fold": 0, "size": 500, "rep": 0, "val_auc": 0.9408792290105057, "test_auc": 0.9382511148957005, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 55}, "secs": 1.0}
+{"model": "lr", "k": 8, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9177804146287347, "test_auc": 0.9119625152162661, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9153435784640022, "test_auc": 0.9139788210779141, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9161114809133796, "test_auc": 0.9125422513423566, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9213536692424199, "test_auc": 0.9199988241428531, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9136495625078382, "test_auc": 0.9120213080736087, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 17.7}
+{"model": "rf", "k": 12, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9322721616068069, "test_auc": 0.9300393912144194, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 18.3}
+{"model": "xgb", "k": 8, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9136071156387773, "test_auc": 0.909951269395619, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 119}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 1, "size": 500, "rep": 0, "val_auc": 0.9277245584078566, "test_auc": 0.9229673815299828, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 139}, "secs": 1.1}
+{"model": "lr", "k": 8, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9143345006222324, "test_auc": 0.9050082481984199, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9198352289719175, "test_auc": 0.9099200262398828, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9228605330940873, "test_auc": 0.9182372008219257, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9272827250889938, "test_auc": 0.9211250349704321, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9218495258491787, "test_auc": 0.9186028227167926, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.9}
+{"model": "rf", "k": 12, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.922973403177727, "test_auc": 0.9182126009319017, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 18.2}
+{"model": "xgb", "k": 8, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9246953954794085, "test_auc": 0.916419703064857, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 183}, "secs": 1.1}
+{"model": "xgb", "k": 12, "fold": 2, "size": 500, "rep": 0, "val_auc": 0.9286101544487213, "test_auc": 0.9147493222971473, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 107}, "secs": 1.8}
+{"model": "lr", "k": 8, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9184807879682421, "test_auc": 0.9092652724085122, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9230611910205578, "test_auc": 0.9157281495381869, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9305279811690254, "test_auc": 0.9195564319867842, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9319210102354837, "test_auc": 0.9228676264359674, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9342401528087286, "test_auc": 0.9233355597513737, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.3}
+{"model": "rf", "k": 12, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.934189988327111, "test_auc": 0.9224621002929041, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 17.5}
+{"model": "xgb", "k": 8, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9301874415149674, "test_auc": 0.9187133327743193, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 35}, "secs": 0.6}
+{"model": "xgb", "k": 12, "fold": 3, "size": 500, "rep": 0, "val_auc": 0.9330188406216537, "test_auc": 0.9196325735561295, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 35}, "secs": 1.1}
+{"model": "lr", "k": 8, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9150657444119662, "test_auc": 0.9148808890203273, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9211221408657231, "test_auc": 0.9187741098646404, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9267309157912, "test_auc": 0.9235839209930963, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.926231200378163, "test_auc": 0.9228036391957701, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9270434790997404, "test_auc": 0.9251895193704955, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 17.0}
+{"model": "rf", "k": 12, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9323039967586026, "test_auc": 0.9281598884100698, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 17.2}
+{"model": "xgb", "k": 8, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9256408030175864, "test_auc": 0.9248140689624613, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 75}, "secs": 1.1}
+{"model": "xgb", "k": 12, "fold": 4, "size": 500, "rep": 0, "val_auc": 0.9306456747605129, "test_auc": 0.9273909255153593, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 231}, "secs": 1.6}
+{"model": "lr", "k": 8, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9085617264299289, "test_auc": 0.9189381431673543, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9260807069333103, "test_auc": 0.9312711497666116, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9158722349241262, "test_auc": 0.9230059342233222, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9287471420716001, "test_auc": 0.9310051361825702, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9256928969023431, "test_auc": 0.9272949213573247, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 18.0}
+{"model": "rf", "k": 12, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9361116738536932, "test_auc": 0.9341279043430573, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 19.5}
+{"model": "xgb", "k": 8, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9261945417185193, "test_auc": 0.9273460036759994, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 55}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 0, "size": 500, "rep": 1, "val_auc": 0.9351334664621499, "test_auc": 0.9314366853936374, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 21}, "secs": 1.0}
+{"model": "lr", "k": 8, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9128025545297562, "test_auc": 0.9034573091569393, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9276666763136825, "test_auc": 0.9195251079234459, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9106859992861208, "test_auc": 0.9046119623224527, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9218205848020915, "test_auc": 0.9147416824973664, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9112667496310016, "test_auc": 0.9067545282547871, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.0}
+{"model": "rf", "k": 12, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.920661013515469, "test_auc": 0.9172678477284272, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 18.0}
+{"model": "xgb", "k": 8, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9112107969399666, "test_auc": 0.909304788919185, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 199}, "secs": 1.0}
+{"model": "xgb", "k": 12, "fold": 1, "size": 500, "rep": 1, "val_auc": 0.9212861401325501, "test_auc": 0.9200181004895228, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 60}, "secs": 1.6}
+{"model": "lr", "k": 8, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.9208520244262438, "test_auc": 0.9112493850027494, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.9232907899941154, "test_auc": 0.9124403090903829, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.9204429909607462, "test_auc": 0.9133403756547912, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.9262215533624673, "test_auc": 0.9178382967229087, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.9194339131189766, "test_auc": 0.9100772725957225, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.1}
+{"model": "rf", "k": 12, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.922117712885519, "test_auc": 0.9138451557510685, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 18.2}
+{"model": "xgb", "k": 8, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.922805545104622, "test_auc": 0.9113077494477084, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 280}, "secs": 1.2}
+{"model": "xgb", "k": 12, "fold": 2, "size": 500, "rep": 1, "val_auc": 0.9253378867247417, "test_auc": 0.9129537715007864, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 79}, "secs": 1.1}
+{"model": "lr", "k": 8, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9240162455744316, "test_auc": 0.9167579883590142, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9300301951591274, "test_auc": 0.9191193408260492, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9258240963158049, "test_auc": 0.9195477576307827, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9326020895435998, "test_auc": 0.92113227332703, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9242979384327458, "test_auc": 0.9201096631362038, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 17.6}
+{"model": "rf", "k": 12, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9293510452541507, "test_auc": 0.9222546386118715, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.4}
+{"model": "xgb", "k": 8, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9214906568652989, "test_auc": 0.9171736345840791, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 161}, "secs": 0.9}
+{"model": "xgb", "k": 12, "fold": 3, "size": 500, "rep": 1, "val_auc": 0.9275895001881167, "test_auc": 0.9165230578839776, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 100}, "secs": 1.4}
+{"model": "lr", "k": 8, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9009579486585825, "test_auc": 0.9014744917692311, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9141936541930753, "test_auc": 0.9159333061358567, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9184518469211549, "test_auc": 0.9185564016100779, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9305530634098341, "test_auc": 0.9277381990807124, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9251912520861671, "test_auc": 0.919968615332152, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 17.8}
+{"model": "rf", "k": 12, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9338426957620659, "test_auc": 0.9317046315504538, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 17.0}
+{"model": "xgb", "k": 8, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9268601858015223, "test_auc": 0.9198152080775543, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 137}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 4, "size": 500, "rep": 1, "val_auc": 0.9362467320734331, "test_auc": 0.9336953134444963, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 208}, "secs": 1.2}
+{"model": "lr", "k": 8, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9148824511137481, "test_auc": 0.9185164730839552, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9266016457808776, "test_auc": 0.92961482967902, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9255211800229599, "test_auc": 0.9241875742741732, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9346298922428347, "test_auc": 0.9338686374803502, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9264318583046336, "test_auc": 0.9248386328829414, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 5}, "secs": 17.0}
+{"model": "rf", "k": 12, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9340028362226145, "test_auc": 0.933949116227696, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 18.3}
+{"model": "xgb", "k": 8, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9285329783231557, "test_auc": 0.9241075774354941, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 205}, "secs": 1.2}
+{"model": "xgb", "k": 12, "fold": 0, "size": 500, "rep": 2, "val_auc": 0.9374931265013168, "test_auc": 0.9351042513018761, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 156}, "secs": 1.2}
+{"model": "lr", "k": 8, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.9068098283795907, "test_auc": 0.9096936892132456, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.9111741382803231, "test_auc": 0.9109268934914379, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.901785662605273, "test_auc": 0.9143624203766405, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.9059743968203436, "test_auc": 0.9155146639988203, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.9007669377478078, "test_auc": 0.914827944148713, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 17.7}
+{"model": "rf", "k": 12, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.9042321457857012, "test_auc": 0.9168750921650325, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 18.4}
+{"model": "xgb", "k": 8, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.8989243577499301, "test_auc": 0.9095406832115549, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 100}, "secs": 0.9}
+{"model": "xgb", "k": 12, "fold": 1, "size": 500, "rep": 2, "val_auc": 0.902686693871251, "test_auc": 0.9114950638095266, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 157}, "secs": 1.2}
+{"model": "lr", "k": 8, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9319267984449011, "test_auc": 0.9147724751348172, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9315158355762645, "test_auc": 0.9160516694160661, "hp": {"C": 0.001}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9316605408117001, "test_auc": 0.9126544728388273, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9415197908526999, "test_auc": 0.9237331056637631, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9285233313074601, "test_auc": 0.9131160825398663, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.3}
+{"model": "rf", "k": 12, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9452030214453159, "test_auc": 0.9303451702215919, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 18.6}
+{"model": "xgb", "k": 8, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.927508465256273, "test_auc": 0.9148559218205847, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 223}, "secs": 1.0}
+{"model": "xgb", "k": 12, "fold": 2, "size": 500, "rep": 2, "val_auc": 0.9443868839174602, "test_auc": 0.9295034681021426, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 214}, "secs": 1.4}
+{"model": "lr", "k": 8, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.9223492412622155, "test_auc": 0.9154756293968142, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.9296790437878042, "test_auc": 0.9210734804696874, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.9247127601076607, "test_auc": 0.9177974653531764, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.936258308492268, "test_auc": 0.927775866206733, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.924133939165919, "test_auc": 0.9149464936807317, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 17.3}
+{"model": "rf", "k": 12, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.9326503246220783, "test_auc": 0.9216891187914502, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 18.2}
+{"model": "xgb", "k": 8, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.922731263083765, "test_auc": 0.9125979117933651, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 37}, "secs": 0.7}
+{"model": "xgb", "k": 12, "fold": 3, "size": 500, "rep": 2, "val_auc": 0.9308926383623226, "test_auc": 0.9196846196921374, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 132}, "secs": 1.0}
+{"model": "lr", "k": 8, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9174003222103243, "test_auc": 0.922773294903652, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9220714072101794, "test_auc": 0.9305664797683045, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9247571363798608, "test_auc": 0.9310490985096135, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.929966524855536, "test_auc": 0.934794451136779, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9193644546059676, "test_auc": 0.9209738302154975, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 17.8}
+{"model": "rf", "k": 12, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9287278480402089, "test_auc": 0.9276209159833981, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 18.2}
+{"model": "xgb", "k": 8, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9245391138251382, "test_auc": 0.9220474401699665, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 356}, "secs": 1.3}
+{"model": "xgb", "k": 12, "fold": 4, "size": 500, "rep": 2, "val_auc": 0.9362216498326243, "test_auc": 0.9295217691396623, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 120}, "secs": 1.7}
+{"model": "lr", "k": 8, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9223858999218592, "test_auc": 0.9294562817276618, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9343964344629989, "test_auc": 0.9404404259687087, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9298005961855701, "test_auc": 0.933275407911591, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9427816205056965, "test_auc": 0.9415570083495496, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9342131411647807, "test_auc": 0.9350107610205283, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 20.3}
+{"model": "rf", "k": 12, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9465208037893478, "test_auc": 0.9442161803726309, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 21.7}
+{"model": "xgb", "k": 8, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9363374140209726, "test_auc": 0.9302480576671187, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 131}, "secs": 1.2}
+{"model": "xgb", "k": 12, "fold": 0, "size": 1000, "rep": 0, "val_auc": 0.9479582091280063, "test_auc": 0.9434003089998371, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 271}, "secs": 1.7}
+{"model": "lr", "k": 8, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9116719242902208, "test_auc": 0.9135585967205151, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9211395054939755, "test_auc": 0.9199101529481728, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9197599822494912, "test_auc": 0.9258371476404306, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9284249317473638, "test_auc": 0.9301680608284395, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9237827877945958, "test_auc": 0.9281127203647856, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 21.2}
+{"model": "rf", "k": 12, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.928980599851436, "test_auc": 0.9323380955547782, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 21.1}
+{"model": "xgb", "k": 8, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9236670236062473, "test_auc": 0.9288341376388981, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 121}, "secs": 1.0}
+{"model": "xgb", "k": 12, "fold": 1, "size": 1000, "rep": 0, "val_auc": 0.9297108789396, "test_auc": 0.9310829644322489, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 101}, "secs": 1.1}
+{"model": "lr", "k": 8, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9263855526292941, "test_auc": 0.913513057235744, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9280718509729016, "test_auc": 0.9158481173848871, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9311376725609934, "test_auc": 0.9232903076433305, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9401518440270504, "test_auc": 0.9307132038703827, "hp": {"C": 0.1}, "secs": 0.2}
+{"model": "rf", "k": 8, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9330487463703105, "test_auc": 0.9220579013882055, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 20.7}
+{"model": "rf", "k": 12, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9400939619328761, "test_auc": 0.9314340771182432, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 23.1}
+{"model": "xgb", "k": 8, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9326213835749911, "test_auc": 0.922875003617631, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 42}, "secs": 1.3}
+{"model": "xgb", "k": 12, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9413635091984295, "test_auc": 0.9336362496261781, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 267}, "secs": 1.7}
+{"model": "lr", "k": 8, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9202365448248585, "test_auc": 0.9096445345292379, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9320502802458059, "test_auc": 0.9208821627289909, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9239081989986397, "test_auc": 0.911787582370239, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9398315631059532, "test_auc": 0.9296321783910226, "hp": {"C": 0.1}, "secs": 0.2}
+{"model": "rf", "k": 8, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.926022824839136, "test_auc": 0.9159681400542243, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 5}, "secs": 20.3}
+{"model": "rf", "k": 12, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9395305762162477, "test_auc": 0.9314504197906395, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 5}, "secs": 21.4}
+{"model": "xgb", "k": 8, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.925854966766031, "test_auc": 0.9167358205603442, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 251}, "secs": 1.0}
+{"model": "xgb", "k": 12, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9358801454769967, "test_auc": 0.9301107136970972, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 211}, "secs": 1.4}
+{"model": "lr", "k": 8, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9189341977059395, "test_auc": 0.9239942914198385, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9237499879412304, "test_auc": 0.9285179992226081, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9273309601674722, "test_auc": 0.9311473562174251, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9367503062927482, "test_auc": 0.9337555203733021, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9317087758901783, "test_auc": 0.9316434613107868, "hp": {"n_estimators": 300, "max_depth": 16, "min_samples_leaf": 1}, "secs": 19.6}
+{"model": "rf", "k": 12, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9376793139042437, "test_auc": 0.9347532695974757, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 20.9}
+{"model": "xgb", "k": 8, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9318650575444487, "test_auc": 0.9304643688170494, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 91}, "secs": 1.3}
+{"model": "xgb", "k": 12, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9363895079057294, "test_auc": 0.935958130656742, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 173}, "secs": 1.6}
+{"model": "lr", "k": 8, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9259958131951881, "test_auc": 0.9325082093141379, "hp": {"C": 3.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9313421892937419, "test_auc": 0.9347857096731599, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9277129819890217, "test_auc": 0.9345823442157949, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.940537724654878, "test_auc": 0.9444980969426752, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9278731224495702, "test_auc": 0.9330156591402171, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 5}, "secs": 19.5}
+{"model": "rf", "k": 12, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9384501104583298, "test_auc": 0.9368357491414798, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 20.9}
+{"model": "xgb", "k": 8, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9325673602870953, "test_auc": 0.937453556052243, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 82}, "secs": 0.9}
+{"model": "xgb", "k": 12, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9447033060322789, "test_auc": 0.9422601130943259, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 238}, "secs": 2.1}
+{"model": "lr", "k": 8, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9103174832865454, "test_auc": 0.9129701862384234, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9216276444881776, "test_auc": 0.9232541171866944, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9195342420822119, "test_auc": 0.9232970070580344, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9329493821086446, "test_auc": 0.9361519207433732, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9256909674992041, "test_auc": 0.9300702333690909, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 5}, "secs": 19.8}
+{"model": "rf", "k": 12, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9347070683684003, "test_auc": 0.9394809458132255, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 5}, "secs": 21.5}
+{"model": "xgb", "k": 8, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9236921058470562, "test_auc": 0.9290206362929272, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 138}, "secs": 1.3}
+{"model": "xgb", "k": 12, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.9332156397418458, "test_auc": 0.938373519697053, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 194}, "secs": 1.7}
+{"model": "lr", "k": 8, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9234181306012984, "test_auc": 0.9087305492046036, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9293954215263509, "test_auc": 0.9161712924106927, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9283844142814421, "test_auc": 0.9104438591921589, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9341166710078237, "test_auc": 0.919003173868164, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9219421371998572, "test_auc": 0.9062650131681763, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 18.9}
+{"model": "rf", "k": 12, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9235435418053426, "test_auc": 0.9143166536431956, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 5}, "secs": 21.1}
+{"model": "xgb", "k": 8, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9264202818857986, "test_auc": 0.9076534599021794, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 58}, "secs": 1.2}
+{"model": "xgb", "k": 12, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9286429543020867, "test_auc": 0.9156035655370013, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 230}, "secs": 1.5}
+{"model": "lr", "k": 8, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9172228171215234, "test_auc": 0.9119625152162663, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9231480141618191, "test_auc": 0.9159344064475525, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9267540686288696, "test_auc": 0.9197463040014805, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9353129009540897, "test_auc": 0.9269758978199417, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9316750113352433, "test_auc": 0.9188453757490066, "hp": {"n_estimators": 300, "max_depth": null, "min_samples_leaf": 1}, "secs": 18.8}
+{"model": "rf", "k": 12, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9372162571508504, "test_auc": 0.9269599948339391, "hp": {"n_estimators": 800, "max_depth": null, "min_samples_leaf": 1}, "secs": 21.0}
+{"model": "xgb", "k": 8, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9311434607704107, "test_auc": 0.9223546346602206, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 196}, "secs": 1.2}
+{"model": "xgb", "k": 12, "fold": 3, "size": 1000, "rep": 1, "val_auc": 0.9401325499956589, "test_auc": 0.9315911371213281, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 263}, "secs": 2.0}
+{"model": "lr", "k": 8, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9213652456612547, "test_auc": 0.9285459352375741, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9269315737176704, "test_auc": 0.9292843130124513, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9283805554751638, "test_auc": 0.9320437169734891, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9372654569308986, "test_auc": 0.936562126566524, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9305800750537822, "test_auc": 0.9321617225539491, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 22.9}
+{"model": "rf", "k": 12, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9415747788421651, "test_auc": 0.9423280237244199, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 22.4}
+{"model": "xgb", "k": 8, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.9287210951292219, "test_auc": 0.9301840453565285, "hp": {"max_depth": 3, "learning_rate": 0.1, "n_estimators": 107}, "secs": 1.1}
+{"model": "xgb", "k": 12, "fold": 4, "size": 1000, "rep": 1, "val_auc": 0.941203368737881, "test_auc": 0.9425197225857382, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 197}, "secs": 1.4}
+{"model": "lr", "k": 8, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9295401267617862, "test_auc": 0.930829721427876, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9380951002807281, "test_auc": 0.9413420770841827, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9323377613135377, "test_auc": 0.9360377083893552, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9399068098283796, "test_auc": 0.9453173416761361, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9341378944423544, "test_auc": 0.937673306404277, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 23.4}
+{"model": "rf", "k": 12, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9381356177466501, "test_auc": 0.9450007276820869, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 23.0}
+{"model": "xgb", "k": 8, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9378172662286922, "test_auc": 0.9345327076231206, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 299}, "secs": 1.5}
+{"model": "xgb", "k": 12, "fold": 0, "size": 1000, "rep": 2, "val_auc": 0.9409274640889841, "test_auc": 0.9439506486972564, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 248}, "secs": 2.1}
+{"model": "lr", "k": 8, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9102345189515624, "test_auc": 0.9095486347045563, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9120925341745532, "test_auc": 0.9158968175715466, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9124571913678503, "test_auc": 0.9156202019968367, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9201728745212667, "test_auc": 0.9249938074736324, "hp": {"C": 0.1}, "secs": 0.2}
+{"model": "rf", "k": 8, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9121793573158143, "test_auc": 0.9189472994320225, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 23.2}
+{"model": "rf", "k": 12, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9240046691555968, "test_auc": 0.9304466040378163, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 22.8}
+{"model": "xgb", "k": 8, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9122603922476582, "test_auc": 0.9153057565917877, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 46}, "secs": 1.1}
+{"model": "xgb", "k": 12, "fold": 1, "size": 1000, "rep": 2, "val_auc": 0.9183862472144241, "test_auc": 0.9275503329506979, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 59}, "secs": 1.3}
+{"model": "lr", "k": 8, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9119362525202829, "test_auc": 0.9002903751724405, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9253050868713762, "test_auc": 0.9149461214173396, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9206803075468604, "test_auc": 0.9077981651376146, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9423995986841471, "test_auc": 0.9285098254854861, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9210488235464358, "test_auc": 0.9124721442421787, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 20.6}
+{"model": "rf", "k": 12, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9356891345662219, "test_auc": 0.9277600111905382, "hp": {"n_estimators": 300, "max_depth": 8, "min_samples_leaf": 1}, "secs": 21.4}
+{"model": "xgb", "k": 8, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.9239004813860833, "test_auc": 0.9141888306852275, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 273}, "secs": 1.4}
+{"model": "xgb", "k": 12, "fold": 2, "size": 1000, "rep": 2, "val_auc": 0.94364792251517, "test_auc": 0.9318182695183246, "hp": {"max_depth": 3, "learning_rate": 0.03, "n_estimators": 507}, "secs": 2.3}
+{"model": "lr", "k": 8, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9196924531396213, "test_auc": 0.9122280468916409, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9304334404152076, "test_auc": 0.9238136131487816, "hp": {"C": 10.0}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9284152847316682, "test_auc": 0.9214643083984151, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9347977503159397, "test_auc": 0.9274698542033519, "hp": {"C": 0.3}, "secs": 0.2}
+{"model": "rf", "k": 8, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9256282618971822, "test_auc": 0.9201041211865362, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 19.5}
+{"model": "rf", "k": 12, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9349762201063101, "test_auc": 0.926353271822511, "hp": {"n_estimators": 300, "max_depth": 16, "min_samples_leaf": 1}, "secs": 21.3}
+{"model": "xgb", "k": 8, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9265649871212339, "test_auc": 0.9194113774780948, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 179}, "secs": 1.3}
+{"model": "xgb", "k": 12, "fold": 3, "size": 1000, "rep": 2, "val_auc": 0.9346453274679477, "test_auc": 0.9241523949415011, "hp": {"max_depth": 7, "learning_rate": 0.03, "n_estimators": 155}, "secs": 1.5}
+{"model": "lr", "k": 8, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9200725455580316, "test_auc": 0.9185308738722642, "hp": {"C": 1.0}, "secs": 0.1}
+{"model": "lr", "k": 12, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9245506902439731, "test_auc": 0.9229553606563614, "hp": {"C": 0.3}, "secs": 0.1}
+{"model": "lr2", "k": 8, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9364319547747904, "test_auc": 0.9330633815197481, "hp": {"C": 0.1}, "secs": 0.1}
+{"model": "lr2", "k": 12, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9374313856008645, "test_auc": 0.934084009376868, "hp": {"C": 0.03}, "secs": 0.1}
+{"model": "rf", "k": 8, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9391446955884198, "test_auc": 0.9347930061704879, "hp": {"n_estimators": 800, "max_depth": 8, "min_samples_leaf": 1}, "secs": 19.3}
+{"model": "rf", "k": 12, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9435514523582129, "test_auc": 0.9364802451433479, "hp": {"n_estimators": 800, "max_depth": 16, "min_samples_leaf": 1}, "secs": 21.5}
+{"model": "xgb", "k": 8, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9351353958652892, "test_auc": 0.931694275958699, "hp": {"max_depth": 5, "learning_rate": 0.03, "n_estimators": 76}, "secs": 0.8}
+{"model": "xgb", "k": 12, "fold": 4, "size": 1000, "rep": 2, "val_auc": 0.9386025333063218, "test_auc": 0.9334891649202643, "hp": {"max_depth": 5, "learning_rate": 0.1, "n_estimators": 58}, "secs": 1.4}

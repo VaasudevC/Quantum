@@ -101,3 +101,42 @@ for ro in ("z", "zz"):
         fd = (m.loss_grad(p + e, T, y, cw)[0] - m.loss_grad(p - e, T, y, cw)[0]) / 2e-6
         print(ro, j, abs(fd - g[j]))          # expect < 1e-9
 ```
+
+
+---
+
+## Brick-wall study (branch `brickwall-overnight`): environment and workarounds
+
+Two Python 3.14.3 environments are used (Windows 11, 16 logical / 10 physical cores). **Do not merge them**: Windows Application Control (WDAC / Smart App Control)
+blocks some native DLLs, and which ones differs per location.
+
+| env | location | use | key versions |
+|---|---|---|---|
+| `.venv` | `LimrickQuantumWork\.venv` (inside OneDrive) | all sklearn/xgboost work, feature extraction (wfdb), angle VQC (`Vqc_fast8`), P1, P4 prep/classical/vqc, P5 prep/classical/vqc | numpy 2.4.6, scipy 1.17.1, pandas 2.3.3, scikit-learn 1.9.0, xgboost 3.4.1, wfdb 4.3.1, matplotlib 3.11.0, pypdf 7.0.1 |
+| `C:\bwvenv` | **outside OneDrive** | brick-wall simulator (torch), PennyLane/Qiskit checks, hardware prep | numpy 2.5.4, scipy 1.18.1, pandas 3.1.1, scikit-learn 1.9.1, torch 2.15.0+cpu, pennylane 0.43.3, pennylane_lightning 0.44.0, qiskit 2.6.2, qiskit-aer 0.18.2, qiskit-ibm-runtime 0.52.0, networkx 3.7, matplotlib 3.11.2 |
+
+Create `C:\bwvenv`:
+```
+python -m venv C:\bwvenv
+C:\bwvenv\Scripts\python.exe -m pip install numpy scipy scikit-learn pandas xgboost matplotlib wfdb pypdf pennylane==0.43.3 qiskit qiskit-aer qiskit-ibm-runtime networkx
+C:\bwvenv\Scripts\python.exe -m pip install torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+```
+Problems and workarounds:
+* `import torch` in the OneDrive `.venv` fails with *"An Application Control policy has blocked this file … torch_global_deps.dll"* (WinError 4551). The same wheel works in `C:\bwvenv`.
+* In `C:\bwvenv`, some sklearn / pandas extension modules (`_argkmin`, `_loss`, `pandas._libs.ops_dispatch`) are blocked intermittently (the same import may succeed later).
+  Therefore **torch workers import only numpy + torch** (`bw_torch.py`, `p3_brickwall.py`, `p4_bw.py`, `p5_lc.py bw`): AUC and the logistic warm start are implemented in numpy/torch and the data arrays are read from `C:\bwcache`.
+* `C:\bwcache` (not in git, rebuilt in minutes, keeps big arrays out of OneDrive): `cd cloud_repo && ..\.venv\Scripts\python.exe cache_data.py` (CV folds, standardised top-32 columns, `l1_f{0-4}.npz`, `cohen_dedup_f{0-4}.npz`);
+  `..\.venv\Scripts\python.exe p4_external.py prep` (`full.npz`, PTB-XL + PTB); `..\.venv\Scripts\python.exe p5_lc.py prep` (`lc\*.npz`, learning-curve subsamples).
+* Only ~1 GB of RAM was free during the run, so at most 3–5 workers were used (`OMP/MKL/OPENBLAS_NUM_THREADS=1`).
+* **PTB-XL feature table:** `data/st_features_plus_TR.csv.gz` has ST columns built with a 0.5–40 Hz band-pass, not the 0.05 Hz `diagnostic_filter` that `extract_st_features.py` has had since 2026-07-31.
+  `ptb_external/extract_ptb_features.py` patches this in (verified: all 249 columns of 50 records reproduced to 8.5e-14, `ptb_external/xl_check.json`).
+
+Order of commands (all from `cloud_repo`; `.venv` = `..\.venv\Scripts\python.exe`, `bw` = `C:\bwvenv\Scripts\python.exe`):
+```
+.venv p0_sanity.py ; .venv cache_data.py ; .venv p1_classical.py --jobs 4          # P0, P1
+bw p2_verify.py ; bw p2_xor_facts.py                                                # P2
+bw p3_brickwall.py --stage A|B|C|ref --jobs 4 ; .venv p3_vqc_scores.py ; bw p3_analyze.py   # P3
+.venv ptb_external/extract_ptb_features.py --mode xl-check|ptb ; .venv p4_external.py prep|classical|vqc ; bw p4_bw.py ; .venv p4_report.py   # P4
+.venv p5_lc.py prep|classical|vqc ; bw p5_lc.py bw                                  # P5
+bw hw_bw.py ; bw p6_compile.py ; (noise / IBM scripts, see BRICKWALL.md)            # P6
+```
