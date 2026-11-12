@@ -102,3 +102,33 @@ Consequences, stated now: (1) the subsets were drawn before any result was seen,
 (3) the Holm family still counts every quantum × classical × size comparison that is actually run (reported with each table); at k = 4 the quantum side is Q1–Q3 only;
 (4) claim language: a superiority or non-inferiority result in a reduced cell is reported with the label "reduced sample (10 of 40 subsets)"; a failure to reach either in a reduced cell is reported as "inconclusive at reduced sample size", not as evidence that classical models were better, unless the CI excludes the margin on the classical side.
 (5) Implementation note (no effect on results): an exact faster brick-wall formulation (column unitary = matrix_exp of commuting generators; verified to 1e-15) was profiled and NOT adopted — it is only ~15 % faster and not bit-identical in complex64, so all Q4 runs use the same code as N = 100.
+
+## Primary endpoint — N = 100, k = 8 (pre-registered analysis, run 2026-11-13 after the deviation log was committed)
+
+All 200 subsets (5 folds × 40) for every model; C7 TabPFN pending (not in the comparison family). Table and figures: `results/sd_tables_k8_N100.md`, `results/sd_analysis_k8_N100.json`.
+
+| model | mean test AUC [95% CI] | generalisation gap |
+|---|---|---|
+| Q1 angle VQC | 0.889 [0.882, 0.894] | +0.07 |
+| Q2 angle VQC, trained scales | 0.883 [0.876, 0.889] | +0.08 |
+| Q3 quantum-kernel SVM | 0.889 [0.882, 0.895] | +0.07 |
+| Q4 brick-wall n=8 | 0.857 [0.846, 0.866] | +0.07 |
+| C1 LR | 0.887 [0.881, 0.893] | +0.07 |
+| C2 SVM-RBF | 0.889 [0.884, 0.895] | +0.07 |
+| C3 GP classifier | 0.891 [0.886, 0.897] | +0.07 |
+| C4 kNN | 0.863 [0.859, 0.868] | +0.14 |
+| C5 random forest | 0.891 [0.885, 0.898] | +0.10 |
+| C6 XGBoost | 0.875 [0.868, 0.881] | +0.12 |
+
+**Primary comparison (best quantum vs best classical, chosen after seeing the results):** Q3 quantum-kernel SVM vs C5 random forest: mean d = **−0.0028 [−0.0049, −0.0010]**, quantum wins in 42 % of the 200 paired subsets.
+Superiority: **not met** (Holm p = 1.0). Non-inferiority (lower CI bound > −0.02): **met**.
+**Claim level at N = 100: the quantum models matched classical performance within 0.02 AUC** — Q1, Q2 and Q3 are non-inferior to every classical model (all 18 lower CI bounds > −0.012).
+The best classical models (random forest, GP classifier) are nevertheless slightly but significantly better than the best quantum model (CI of d entirely below 0, by ~0.003 AUC).
+
+**All 24 pairs (Holm over the 24 comparisons at N = 100; with the full pre-registered family of 120 the conclusions are the same — every significant raw p is the bootstrap floor 0.0002, i.e. ≤ 0.024 after ×120):**
+* Superiority met: Q1, Q2 and Q3 each **outperformed C4 kNN** (+0.019 to +0.025) **and C6 XGBoost** (+0.008 to +0.014) at N = 100 (adjusted p = 0.005, win fractions 0.74–0.95). These are not the best classical models.
+* No superiority vs C1 LR, C2 SVM-RBF, C3 GP or C5 random forest (Q1 and Q3 vs LR: +0.002, CI includes 0).
+* Q4 brick-wall: classical models were better — significantly below LR, SVM-RBF, GP, RF and XGBoost (−0.018 to −0.035; not non-inferior against any of them); level with kNN (−0.007, CI includes 0).
+* Generalisation gap: Q1/Q3 have a significantly **smaller** train-test gap than RF (−0.03), XGBoost (−0.05) and kNN (−0.07), and an equal gap to LR, SVM-RBF and GP (CIs include 0). Q2's gap is significantly larger than LR/SVM/GP (+0.01).
+
+This is an empirical result on classical ECG features (8 hand-crafted features, 100 training ECGs); the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict classical hardness at this size — the angle-encoding kernel used by Q3 is a product of cos² terms that a classical computer evaluates exactly, and the models that matched the classical ones are of that kind.
