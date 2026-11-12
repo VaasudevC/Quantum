@@ -43,3 +43,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - Machine CPU-saturated; set EXTRA 1/4 workers to Idle priority so P5 (lc bw/vqc) finishes first.
 - P5 done and reported. EXTRA 5: butterfly n=8 external AUC 0.9069 (val 0.9294); n=16 external launched.
 - SD phase started: branch smalldata (from brickwall-overnight); SD0 plan committed before any SD run. EXTRA 6 (shot-robust heads) still running in background; its commits land on smalldata.
+- SD1: C7 TabPFN NOT runnable unattended: tabpfn 9.2 needs interactive browser license login (no token); TabPFN v1 weights unavailable (GitHub path 404, pip wheels carry no checkpoint). Logged; C7 skipped as the plan allows. (Side effect: pandas in C:\bwvenv downgraded to 2.3.3 because 3.1.1 DLLs are blocked.)

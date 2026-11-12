@@ -189,3 +189,29 @@ def train_model(m, Ztr, ytr, Zva, yva, steps=600, batch=512, lr=0.02, seed=0, ex
                 total = 2 * steps                 # extend once
     m.load(best[1])
     return best[0], best[2], total, time.time() - t0
+
+
+def train_fixed(m, Ztr, ytr, steps_list, lr=0.02, seed=0, l2=0.0, batch=512, warm=True):
+    """fixed-length Adam training with state snapshots at the requested step counts (no validation / early stopping; for small-data studies).
+    Returns {steps: state}. Adam is deterministic given the seed, so the snapshot at 100 equals a 100-step run."""
+    rng = np.random.default_rng(seed); n_tr = len(ytr); fd = m.bw.fdtype
+    cw = np.array([n_tr / (2 * (n_tr - ytr.sum())), n_tr / (2 * ytr.sum())])
+    yt = torch.tensor(ytr, dtype=fd); swt = torch.tensor(np.where(ytr == 1, cw[1], cw[0]), dtype=fd)
+    if warm:
+        with torch.no_grad():
+            F = m.feats(Ztr).numpy()
+        sd = F.std(0) + 1e-9
+        cw_, b_ = lr_fit(F / sd, ytr)
+        with torch.no_grad():
+            m.h.copy_(torch.tensor(cw_ / sd, dtype=fd)); m.b.copy_(torch.tensor([b_], dtype=fd))
+    opt = torch.optim.Adam(m.params(), lr=lr); snaps = {}
+    for t in range(1, max(steps_list) + 1):
+        ib = torch.tensor(rng.choice(n_tr, size=min(batch, n_tr), replace=False))
+        s = m.score(Ztr[ib.numpy()]); yb, wb = yt[ib], swt[ib]
+        loss = (wb * (torch.nn.functional.softplus(s) - yb * s)).mean()
+        if l2:
+            loss = loss + l2 * (m.h ** 2).sum()
+        opt.zero_grad(); loss.backward(); opt.step()
+        if t in steps_list:
+            snaps[t] = m.state()
+    return snaps
