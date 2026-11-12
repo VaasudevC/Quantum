@@ -6,7 +6,7 @@ def rd(f):
     try: return b.decode('utf-8')
     except UnicodeDecodeError: return b.decode('cp1252')
 BLOCKS = {"P3TABLES": "results/bw/p3_tables.md", "P3ANALYSIS": "results/bw/p3_analysis.md", "P4TABLE": "results/ext/p4_report.md",
-          "P5TABLE": "results/lc/p5_table.md", "P6NOISE": "results/bw/p6_noise.md", "P6COMPILE": "results/bw/p6_compile.md"}
+          "P5TABLE": "results/lc/p5_table.md", "P6NOISE": "results/bw/p6_noise.md", "P6COMPILE": "results/bw/p6_compile.md", "EXTRA": "results/bw/extra_summary.md", "P7": "results/bw/p7_questions.md"}
 s = Path("BRICKWALL.md").read_text(encoding="utf-8")
 for name, f in BLOCKS.items():
     if Path(f).exists() and f"<!--{name}-->" in s:

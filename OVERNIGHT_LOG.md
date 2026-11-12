@@ -41,3 +41,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - EXTRA 2 (n=8, sample-level DeepSets head on 1000/100 shots, results/bw/extra2_samplehead_n8.json): exact linear 0.920; sampled-shot linear 0.831 mean (fold 3 has degenerate head max|h|=14339 -> 0.49; other folds 0.912-0.926); DeepSets on samples 0.894 mean (fold 3: 0.797, other folds ~= exact). EXTRA 3 butterfly verified vs dense sim (9.6e-16); scripts extra1_bw.py, extra3_butterfly.py ready.
 - EXTRA 3 butterfly (n=8; stage 1 on folds 0-1 val; best: k=4, 6 layers (2 butterflies), pi/6): 5-fold test 0.9225 vs brick-wall 0.9204 (5/5 folds slightly higher, +0.002). EXTRA 4 (n=16, k=4, 4 cols, pi/4) launched.
 - Machine CPU-saturated; set EXTRA 1/4 workers to Idle priority so P5 (lc bw/vqc) finishes first.
+- P5 done and reported. EXTRA 5: butterfly n=8 external AUC 0.9069 (val 0.9294); n=16 external launched.

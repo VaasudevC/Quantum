@@ -209,106 +209,56 @@ Adam (lr 0.02, β = 0.9/0.999), minibatch 512, class-weighted BCE, head warm-sta
 Every choice below was made on **validation AUC** (stage A/B on folds 0–1, then fixed); test folds are only reported. Code `p3_brickwall.py`, `bw_torch.py`; runs in `results/bw/p3_stage*.jsonl` (parameters of every model stored).
 
 <!--P3TABLES-->
-**Stage A** (folds 0–1, mean validation AUC; 1500 steps, extended to 3000 if the best checkpoint fell in the last 20%; Adam lr 0.02, batch 512, linear head)
-
-
-
-n = 8
-
-
-
-| k | columns | π/6 | π/4 | π/2 | π |
-
-|---|---|---|---|---|---|
-
-| 2 | 2 | 0.9183 | 0.9145 | 0.8385 | 0.6634 |
-
-| 2 | 4 | 0.9211 | 0.9191 | 0.8954 | 0.8235 |
-
-| 4 | 2 | 0.8710 | 0.8667 | 0.7325 | 0.6066 |
-
-| 4 | 4 | 0.9168 | 0.9220 | 0.8856 | 0.7643 |
-
-
-
-n = 12
-
-
-
-| k | columns | π/6 | π/4 | π/2 | π |
-
-|---|---|---|---|---|---|
-
-| 2 | 2 | 0.8918 | 0.9160 | 0.9188 | 0.8927 |
-
-| 2 | 4 | 0.9238 | 0.9254 | 0.9279 | 0.9104 |
-
-| 4 | 2 | 0.9352 | 0.9328 | 0.9241 | 0.8870 |
-
-| 4 | 4 | 0.9349 | 0.9344 | 0.9311 | 0.9153 |
-
-| 6 | 2 | 0.9312 | 0.9315 | 0.9251 | 0.8951 |
-
-| 6 | 4 | 0.9344 | 0.9361 | 0.9325 | 0.9151 |
-
-
-
-**Stage B** (folds 0–1, mean validation AUC at the stage-A winner; ‘Δ’ = change vs the winner's 0.9220 (n=8) / 0.9361 (n=12))
-
-
-
-| n | variant | mean val AUC |
-
-|---|---|---|
-
-| 8 | k=4, cols=4, head=linear, lr=0.02 | 0.9220 |
-
-| 8 | k=4, cols=4, head=corr, lr=0.02 | 0.9211 |
-
-| 8 | k=4, cols=4, head=linear, lr=0.06 | 0.9203 |
-
-| 8 | k=4, cols=4, head=linear_score, lr=0.02 | 0.9191 |
-
-| 12 | k=6, cols=4, head=linear, lr=0.02 | 0.9361 |
-
-| 12 | k=6, cols=4, head=linear_score, lr=0.02 | 0.9336 |
-
-| 12 | k=6, cols=4, head=corr, lr=0.02 | 0.9310 |
-
-
-
-**Stage C** (5 folds, test AUC; final = best validation AUC over stages A/B, runner-up second)
-
-
-
-| n | config | test AUC (mean ± SD) | sens @ 90% spec | val AUC | per-fold test AUC |
-
-|---|---|---|---|---|---|
-
-| 8 | final: k=4, cols=4, scale π/4, head linear | 0.9204 ± 0.0047 | 0.783 | 0.9247 | 0.917, 0.922, 0.916, 0.919, 0.928 |
-
-| 8 | runner-up: k=4, cols=4, scale π/4, head corr | 0.9208 ± 0.0056 | 0.780 | 0.9249 | 0.916, 0.923, 0.918, 0.918, 0.930 |
-
-| 12 | final: k=6, cols=4, scale π/4, head linear | 0.9341 ± 0.0079 | 0.809 | 0.9376 | 0.945, 0.935, 0.928, 0.925, 0.937 |
-
-| 12 | runner-up: k=4, cols=2, scale π/6, head linear | 0.9322 ± 0.0083 | 0.808 | 0.9349 | 0.943, 0.930, 0.924, 0.926, 0.939 |
-
-
-
-**Paper phase map** φ = π·x/max|x| (max from train) vs tanh map, same final (k, columns), 5 folds
-
-
-
-| n | phase map | test AUC (mean ± SD) |
-
-|---|---|---|
-
-| 8 | tanh, scale π/4 (final) | 0.9204 ± 0.0047 |
-
-| 8 | paper: π·x/max abs(x) | 0.9108 ± 0.0104 |
-
-| 12 | tanh, scale π/4 (final) | 0.9341 ± 0.0079 |
-
+**Stage A** (folds 0–1, mean validation AUC; 1500 steps, extended to 3000 if the best checkpoint fell in the last 20%; Adam lr 0.02, batch 512, linear head)
+
+n = 8
+
+| k | columns | π/6 | π/4 | π/2 | π |
+|---|---|---|---|---|---|
+| 2 | 2 | 0.9183 | 0.9145 | 0.8385 | 0.6634 |
+| 2 | 4 | 0.9211 | 0.9191 | 0.8954 | 0.8235 |
+| 4 | 2 | 0.8710 | 0.8667 | 0.7325 | 0.6066 |
+| 4 | 4 | 0.9168 | 0.9220 | 0.8856 | 0.7643 |
+
+n = 12
+
+| k | columns | π/6 | π/4 | π/2 | π |
+|---|---|---|---|---|---|
+| 2 | 2 | 0.8918 | 0.9160 | 0.9188 | 0.8927 |
+| 2 | 4 | 0.9238 | 0.9254 | 0.9279 | 0.9104 |
+| 4 | 2 | 0.9352 | 0.9328 | 0.9241 | 0.8870 |
+| 4 | 4 | 0.9349 | 0.9344 | 0.9311 | 0.9153 |
+| 6 | 2 | 0.9312 | 0.9315 | 0.9251 | 0.8951 |
+| 6 | 4 | 0.9344 | 0.9361 | 0.9325 | 0.9151 |
+
+**Stage B** (folds 0–1, mean validation AUC at the stage-A winner; ‘Δ’ = change vs the winner's 0.9220 (n=8) / 0.9361 (n=12))
+
+| n | variant | mean val AUC |
+|---|---|---|
+| 8 | k=4, cols=4, head=linear, lr=0.02 | 0.9220 |
+| 8 | k=4, cols=4, head=corr, lr=0.02 | 0.9211 |
+| 8 | k=4, cols=4, head=linear, lr=0.06 | 0.9203 |
+| 8 | k=4, cols=4, head=linear_score, lr=0.02 | 0.9191 |
+| 12 | k=6, cols=4, head=linear, lr=0.02 | 0.9361 |
+| 12 | k=6, cols=4, head=linear_score, lr=0.02 | 0.9336 |
+| 12 | k=6, cols=4, head=corr, lr=0.02 | 0.9310 |
+
+**Stage C** (5 folds, test AUC; final = best validation AUC over stages A/B, runner-up second)
+
+| n | config | test AUC (mean ± SD) | sens @ 90% spec | val AUC | per-fold test AUC |
+|---|---|---|---|---|---|
+| 8 | final: k=4, cols=4, scale π/4, head linear | 0.9204 ± 0.0047 | 0.783 | 0.9247 | 0.917, 0.922, 0.916, 0.919, 0.928 |
+| 8 | runner-up: k=4, cols=4, scale π/4, head corr | 0.9208 ± 0.0056 | 0.780 | 0.9249 | 0.916, 0.923, 0.918, 0.918, 0.930 |
+| 12 | final: k=6, cols=4, scale π/4, head linear | 0.9341 ± 0.0079 | 0.809 | 0.9376 | 0.945, 0.935, 0.928, 0.925, 0.937 |
+| 12 | runner-up: k=4, cols=2, scale π/6, head linear | 0.9322 ± 0.0083 | 0.808 | 0.9349 | 0.943, 0.930, 0.924, 0.926, 0.939 |
+
+**Paper phase map** φ = π·x/max|x| (max from train) vs tanh map, same final (k, columns), 5 folds
+
+| n | phase map | test AUC (mean ± SD) |
+|---|---|---|
+| 8 | tanh, scale π/4 (final) | 0.9204 ± 0.0047 |
+| 8 | paper: π·x/max abs(x) | 0.9108 ± 0.0104 |
+| 12 | tanh, scale π/4 (final) | 0.9341 ± 0.0079 |
 | 12 | paper: π·x/max abs(x) | 0.9330 ± 0.0081 |
 <!--/P3TABLES-->
 
@@ -321,52 +271,29 @@ Particle number: at n=12, k = 4 → 6 is a tie (4 columns, π/4: 0.934 → 0.936
 **Brick-wall vs every classical model on the same features** (5 folds; advantage rule: beats every tuned classical model in mean AUC, wins ≥ 4/5 folds against the best one, paired patient-cluster bootstrap CI of the difference excludes 0):
 
 <!--P3ANALYSIS-->
-| features | model | mean test AUC ± SD | wins vs best classical (folds) | AUC diff vs best classical [95% cluster-bootstrap CI] | beats every classical (mean) | advantage rule met |
-
-|---|---|---|---|---|---|---|
-
-| 8 | lr (classical) | 0.9222 ± 0.0067 | – | – | – | – |
-
-| 8 | lr2 (classical) | 0.9312 ± 0.0067 | – | – | – | – |
-
-| 8 | rf (classical) | 0.9367 ± 0.0058 | – | – | – | – |
-
-| 8 | xgb (classical) | 0.9374 ± 0.0049 | – | – | – | – |
-
-| 8 | mlp (classical) | 0.9336 ± 0.0075 | – | – | – | – |
-
-| 8 | **bw8_rank0** {'columns': 4, 'k': 4, 'scale': 0.7853981633974483, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9204 ± 0.0047 | 0/5 | -0.0170 [-0.0195, -0.0147] vs xgb | False | False |
-
-| 8 | **bw8_rank1** {'columns': 4, 'k': 4, 'scale': 0.7853981633974483, 'head': 'corr', 'lr': 0.02, 'steps': 1500} | 0.9208 ± 0.0056 | 0/5 | -0.0166 [-0.0191, -0.0144] vs xgb | False | False |
-
-| 8 | **angle_vqc_k8** {} | 0.9280 ± 0.0063 | 0/5 | -0.0094 [-0.0113, -0.0076] vs xgb | False | False |
-
-| 12 | lr (classical) | 0.9293 ± 0.0064 | – | – | – | – |
-
-| 12 | lr2 (classical) | 0.9390 ± 0.0067 | – | – | – | – |
-
-| 12 | rf (classical) | 0.9422 ± 0.0055 | – | – | – | – |
-
-| 12 | xgb (classical) | 0.9452 ± 0.0050 | – | – | – | – |
-
-| 12 | mlp (classical) | 0.9416 ± 0.0064 | – | – | – | – |
-
-| 12 | **bw12_rank0** {'columns': 4, 'k': 6, 'scale': 0.7853981633974483, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9341 ± 0.0079 | 0/5 | -0.0111 [-0.0131, -0.0092] vs xgb | False | False |
-
-| 12 | **bw12_rank1** {'columns': 2, 'k': 4, 'scale': 0.5235987755982988, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9322 ± 0.0083 | 0/5 | -0.0130 [-0.0151, -0.0109] vs xgb | False | False |
-
-| 32 | lr (classical) | 0.9451 ± 0.0082 | – | – | – | – |
-
-| 32 | lr2 (classical) | 0.9583 ± 0.0044 | – | – | – | – |
-
-| 32 | rf (classical) | 0.9608 ± 0.0053 | – | – | – | – |
-
-| 32 | xgb (classical) | 0.9647 ± 0.0046 | – | – | – | – |
-
-| 32 | mlp (classical) | 0.9597 ± 0.0052 | – | – | – | – |
-
-| 32 | **vqc_pi6_k32** {} | 0.9510 ± 0.0059 | 0/5 | -0.0136 [-0.0155, -0.0117] vs xgb | False | False |
-
+| features | model | mean test AUC ± SD | wins vs best classical (folds) | AUC diff vs best classical [95% cluster-bootstrap CI] | beats every classical (mean) | advantage rule met |
+|---|---|---|---|---|---|---|
+| 8 | lr (classical) | 0.9222 ± 0.0067 | – | – | – | – |
+| 8 | lr2 (classical) | 0.9312 ± 0.0067 | – | – | – | – |
+| 8 | rf (classical) | 0.9367 ± 0.0058 | – | – | – | – |
+| 8 | xgb (classical) | 0.9374 ± 0.0049 | – | – | – | – |
+| 8 | mlp (classical) | 0.9336 ± 0.0075 | – | – | – | – |
+| 8 | **bw8_rank0** {'columns': 4, 'k': 4, 'scale': 0.7853981633974483, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9204 ± 0.0047 | 0/5 | -0.0170 [-0.0195, -0.0147] vs xgb | False | False |
+| 8 | **bw8_rank1** {'columns': 4, 'k': 4, 'scale': 0.7853981633974483, 'head': 'corr', 'lr': 0.02, 'steps': 1500} | 0.9208 ± 0.0056 | 0/5 | -0.0166 [-0.0191, -0.0144] vs xgb | False | False |
+| 8 | **angle_vqc_k8** {} | 0.9280 ± 0.0063 | 0/5 | -0.0094 [-0.0113, -0.0076] vs xgb | False | False |
+| 12 | lr (classical) | 0.9293 ± 0.0064 | – | – | – | – |
+| 12 | lr2 (classical) | 0.9390 ± 0.0067 | – | – | – | – |
+| 12 | rf (classical) | 0.9422 ± 0.0055 | – | – | – | – |
+| 12 | xgb (classical) | 0.9452 ± 0.0050 | – | – | – | – |
+| 12 | mlp (classical) | 0.9416 ± 0.0064 | – | – | – | – |
+| 12 | **bw12_rank0** {'columns': 4, 'k': 6, 'scale': 0.7853981633974483, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9341 ± 0.0079 | 0/5 | -0.0111 [-0.0131, -0.0092] vs xgb | False | False |
+| 12 | **bw12_rank1** {'columns': 2, 'k': 4, 'scale': 0.5235987755982988, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9322 ± 0.0083 | 0/5 | -0.0130 [-0.0151, -0.0109] vs xgb | False | False |
+| 32 | lr (classical) | 0.9451 ± 0.0082 | – | – | – | – |
+| 32 | lr2 (classical) | 0.9583 ± 0.0044 | – | – | – | – |
+| 32 | rf (classical) | 0.9608 ± 0.0053 | – | – | – | – |
+| 32 | xgb (classical) | 0.9647 ± 0.0046 | – | – | – | – |
+| 32 | mlp (classical) | 0.9597 ± 0.0052 | – | – | – | – |
+| 32 | **vqc_pi6_k32** {} | 0.9510 ± 0.0059 | 0/5 | -0.0136 [-0.0155, -0.0117] vs xgb | False | False |
 | 32 | **vqc_trained_k32** {} | 0.9547 ± 0.0051 | 0/5 | -0.0100 [-0.0117, -0.0083] vs xgb | False | False |
 <!--/P3ANALYSIS-->
 
@@ -387,60 +314,33 @@ Decoding: f_j = 4·P(q_j = q_{j+1} = 1) from counts; **particle-number post-sele
 for the IQM-like square lattice, the plain ring and all-to-all targets the errors are *assumed* (2q 0.5%, 1q 0.03%, readout 1.5%). **RBS cost:** one RBS = 2 CZ + 8 SX + 10 virtual RZ. The Hadamard spreading (28 RBS at n=8, 66 at n=12) dominates the cost, e.g. n=12: 66·2 = 132 of ~190 CZ.
 
 <!--P6COMPILE-->
-RBS (XXPlusYY) two-qubit cost: {"rz": 10, "sx": 8, "cz": 2}
-
-
-
-| circuit | target | 1q (non-virtual) | RZ (virtual) | 2q | depth | 2q depth | SWAPs (routing only) | est. success | active qubits |
-
-|---|---|---|---|---|---|---|---|---|---|
-
-| n8_k4_c4 | logical | 284 | 236 | 92 | 127 | 35 | - | - | - |
-
-| n8_k4_c4 | IBM Heron r2 (FakeFez) | 365 | 257 | 134 | 214 | 63 | 14 | 0.591 | 8 |
-
-| n8_k4_c4 | IBM Heron r1 (FakeTorino) | 368 | 245 | 134 | 200 | 68 | 14 | 0.437 | 12 |
-
-| n8_k4_c4 | IQM-like 4x5 square lattice (assumed errors) | 302 | 243 | 98 | 132 | 35 | 2 | 0.495 | 9 |
-
-| n8_k4_c4 | ring of n (assumed errors) | 304 | 241 | 98 | 141 | 38 | 2 | 0.495 | 8 |
-
-| n8_k4_c4 | all-to-all (assumed errors) | 284 | 236 | 92 | 127 | 35 | 0 | 0.513 | 8 |
-
-| n12_k6_c4 | logical | 537 | 433 | 187 | 179 | 51 | - | - | - |
-
-| n12_k6_c4 | IBM Heron r2 (FakeFez) | 552 | 442 | 196 | 193 | 54 | 3 | 0.453 | 12 |
-
-| n12_k6_c4 | IBM Heron r1 (FakeTorino) | 551 | 439 | 196 | 189 | 54 | 3 | 0.297 | 12 |
-
-| n12_k6_c4 | IQM-like 4x5 square lattice (assumed errors) | 561 | 443 | 196 | 190 | 54 | 3 | 0.264 | 13 |
-
-| n12_k6_c4 | ring of n (assumed errors) | 568 | 438 | 196 | 192 | 54 | 3 | 0.263 | 12 |
-
-| n12_k6_c4 | all-to-all (assumed errors) | 537 | 433 | 187 | 179 | 51 | 0 | 0.278 | 12 |
-
-| n8_k2_c4 | logical | 283 | 242 | 89 | 128 | 32 | - | - | - |
-
-| n8_k2_c4 | IBM Heron r2 (FakeFez) | 362 | 261 | 128 | 214 | 59 | 13 | 0.602 | 8 |
-
-| n8_k2_c4 | IBM Heron r1 (FakeTorino) | 361 | 252 | 128 | 195 | 62 | 13 | 0.447 | 12 |
-
-| n8_k2_c4 | IQM-like 4x5 square lattice (assumed errors) | 291 | 245 | 92 | 128 | 32 | 1 | 0.512 | 8 |
-
-| n8_k2_c4 | ring of n (assumed errors) | 294 | 243 | 92 | 129 | 32 | 1 | 0.512 | 8 |
-
-| n8_k2_c4 | all-to-all (assumed errors) | 283 | 242 | 89 | 128 | 32 | 0 | 0.521 | 8 |
-
-| n12_k4_c4 | logical | 536 | 428 | 184 | 177 | 48 | - | - | - |
-
-| n12_k4_c4 | IBM Heron r2 (FakeFez) | 546 | 435 | 190 | 181 | 48 | 2 | 0.461 | 12 |
-
-| n12_k4_c4 | IBM Heron r1 (FakeTorino) | 545 | 434 | 190 | 181 | 48 | 2 | 0.303 | 12 |
-
-| n12_k4_c4 | IQM-like 4x5 square lattice (assumed errors) | 555 | 431 | 190 | 177 | 48 | 2 | 0.272 | 13 |
-
-| n12_k4_c4 | ring of n (assumed errors) | 558 | 430 | 190 | 178 | 48 | 2 | 0.272 | 12 |
-
+RBS (XXPlusYY) two-qubit cost: {"rz": 10, "sx": 8, "cz": 2}
+
+| circuit | target | 1q (non-virtual) | RZ (virtual) | 2q | depth | 2q depth | SWAPs (routing only) | est. success | active qubits |
+|---|---|---|---|---|---|---|---|---|---|
+| n8_k4_c4 | logical | 284 | 236 | 92 | 127 | 35 | - | - | - |
+| n8_k4_c4 | IBM Heron r2 (FakeFez) | 365 | 257 | 134 | 214 | 63 | 14 | 0.591 | 8 |
+| n8_k4_c4 | IBM Heron r1 (FakeTorino) | 368 | 245 | 134 | 200 | 68 | 14 | 0.437 | 12 |
+| n8_k4_c4 | IQM-like 4x5 square lattice (assumed errors) | 302 | 243 | 98 | 132 | 35 | 2 | 0.495 | 9 |
+| n8_k4_c4 | ring of n (assumed errors) | 304 | 241 | 98 | 141 | 38 | 2 | 0.495 | 8 |
+| n8_k4_c4 | all-to-all (assumed errors) | 284 | 236 | 92 | 127 | 35 | 0 | 0.513 | 8 |
+| n12_k6_c4 | logical | 537 | 433 | 187 | 179 | 51 | - | - | - |
+| n12_k6_c4 | IBM Heron r2 (FakeFez) | 552 | 442 | 196 | 193 | 54 | 3 | 0.453 | 12 |
+| n12_k6_c4 | IBM Heron r1 (FakeTorino) | 551 | 439 | 196 | 189 | 54 | 3 | 0.297 | 12 |
+| n12_k6_c4 | IQM-like 4x5 square lattice (assumed errors) | 561 | 443 | 196 | 190 | 54 | 3 | 0.264 | 13 |
+| n12_k6_c4 | ring of n (assumed errors) | 568 | 438 | 196 | 192 | 54 | 3 | 0.263 | 12 |
+| n12_k6_c4 | all-to-all (assumed errors) | 537 | 433 | 187 | 179 | 51 | 0 | 0.278 | 12 |
+| n8_k2_c4 | logical | 283 | 242 | 89 | 128 | 32 | - | - | - |
+| n8_k2_c4 | IBM Heron r2 (FakeFez) | 362 | 261 | 128 | 214 | 59 | 13 | 0.602 | 8 |
+| n8_k2_c4 | IBM Heron r1 (FakeTorino) | 361 | 252 | 128 | 195 | 62 | 13 | 0.447 | 12 |
+| n8_k2_c4 | IQM-like 4x5 square lattice (assumed errors) | 291 | 245 | 92 | 128 | 32 | 1 | 0.512 | 8 |
+| n8_k2_c4 | ring of n (assumed errors) | 294 | 243 | 92 | 129 | 32 | 1 | 0.512 | 8 |
+| n8_k2_c4 | all-to-all (assumed errors) | 283 | 242 | 89 | 128 | 32 | 0 | 0.521 | 8 |
+| n12_k4_c4 | logical | 536 | 428 | 184 | 177 | 48 | - | - | - |
+| n12_k4_c4 | IBM Heron r2 (FakeFez) | 546 | 435 | 190 | 181 | 48 | 2 | 0.461 | 12 |
+| n12_k4_c4 | IBM Heron r1 (FakeTorino) | 545 | 434 | 190 | 181 | 48 | 2 | 0.303 | 12 |
+| n12_k4_c4 | IQM-like 4x5 square lattice (assumed errors) | 555 | 431 | 190 | 177 | 48 | 2 | 0.272 | 13 |
+| n12_k4_c4 | ring of n (assumed errors) | 558 | 430 | 190 | 178 | 48 | 2 | 0.272 | 12 |
 | n12_k4_c4 | all-to-all (assumed errors) | 536 | 428 | 184 | 177 | 48 | 0 | 0.282 | 12 |
 <!--/P6COMPILE-->
 
@@ -450,30 +350,18 @@ RBS (XXPlusYY) two-qubit cost: {"rz": 10, "sx": 8, "cz": 2}
 n=12 density-matrix simulation is ~100× slower, so it used 40 stratified ECGs instead of 300 (AUC SE ≈ ±0.05 — treat as indicative only).
 
 <!--P6NOISE-->
-| model | ECGs | exact (noiseless) | 2000 shots, noiseless | 2000 shots, FakeFez noise | noise + particle-number post-selection | kept shots | compiled CZ / depth (line of FakeFez) |
-
-|---|---|---|---|---|---|---|---|
-
-| brick-wall n=8 (k=4, 4 col) | 300 | 0.915 | 0.909 | 0.911 | 0.911 | 0.65 | 136 / 192 |
-
-| brick-wall n=12 (k=6, 4 col) | 40 | 0.952 | 0.488 | 0.795 | 0.733 | 0.47 | 271 / 287 |
-
-
-
-Noiseless shot sweep, **300 stratified fold-0 test ECGs**, sampling from the exact output distribution (`p6_shots.py`):
-
-
-
-| model | max abs head weight | exact | 100 | 300 | 1000 | 4000 | 16k | 64k | 256k | 1M |
-
-|---|---|---|---|---|---|---|---|---|---|---|
-
-| n=8 | 4.6 | 0.915 | 0.874 | 0.905 | 0.913 | 0.915 | 0.915 | 0.915 | 0.915 | 0.915 |
-
-| n=12 | 413.7 | 0.954 | 0.542 | 0.532 | 0.535 | 0.609 | 0.624 | 0.719 | 0.858 | 0.939 |
-
-
-
+| model | ECGs | exact (noiseless) | 2000 shots, noiseless | 2000 shots, FakeFez noise | noise + particle-number post-selection | kept shots | compiled CZ / depth (line of FakeFez) |
+|---|---|---|---|---|---|---|---|
+| brick-wall n=8 (k=4, 4 col) | 300 | 0.915 | 0.909 | 0.911 | 0.911 | 0.65 | 136 / 192 |
+| brick-wall n=12 (k=6, 4 col) | 40 | 0.952 | 0.488 | 0.795 | 0.733 | 0.47 | 271 / 287 |
+
+Noiseless shot sweep, **300 stratified fold-0 test ECGs**, sampling from the exact output distribution (`p6_shots.py`):
+
+| model | max abs head weight | exact | 100 | 300 | 1000 | 4000 | 16k | 64k | 256k | 1M |
+|---|---|---|---|---|---|---|---|---|---|---|
+| n=8 | 4.6 | 0.915 | 0.874 | 0.905 | 0.913 | 0.915 | 0.915 | 0.915 | 0.915 | 0.915 |
+| n=12 | 413.7 | 0.954 | 0.542 | 0.532 | 0.535 | 0.609 | 0.624 | 0.719 | 0.858 | 0.939 |
+
 Shot sweep from the Aer statevector simulation on the same 300 (n=8) ECGs: 100 shots: 0.871, 300 shots: 0.895, 1000 shots: 0.911, 4000 shots: 0.912
 <!--/P6NOISE-->
 
@@ -494,66 +382,36 @@ Code `p5_lc.py`, `p5_report.py`; data `results/lc/*.jsonl`; figure `results/figs
 ![learning curves](results/figs/learning_curves.png)
 
 <!--P5TABLE-->
-| features | model | 50 | 100 | 250 | 500 | 1000 | full (~11.7k) |
-
-|---|---|---|---|---|---|---|---|
-
-| 8 | LR | 0.850 ± 0.039 | 0.883 ± 0.031 | 0.912 ± 0.011 | 0.912 ± 0.006 | 0.917 ± 0.010 | 0.922 ± 0.007 |
-
-| 8 | degree-2 LR | 0.833 ± 0.037 | 0.882 ± 0.028 | 0.912 ± 0.011 | 0.919 ± 0.007 | 0.924 ± 0.009 | 0.931 ± 0.007 |
-
-| 8 | Random Forest | 0.846 ± 0.046 | 0.890 ± 0.020 | 0.912 ± 0.010 | 0.919 ± 0.007 | 0.925 ± 0.009 | 0.937 ± 0.006 |
-
-| 8 | XGBoost | 0.837 ± 0.053 | 0.882 ± 0.019 | 0.910 ± 0.010 | 0.918 ± 0.006 | 0.925 ± 0.009 | 0.937 ± 0.005 |
-
-| 8 | angle VQC π/6 (k=8) | 0.854 ± 0.042 | 0.885 ± 0.026 | 0.913 ± 0.011 | 0.918 ± 0.006 | 0.923 ± 0.009 | 0.928 ± 0.006 |
-
-| 8 | brick-wall n=8 | 0.827 ± 0.047 | 0.862 ± 0.033 | 0.897 ± 0.015 | 0.899 ± 0.017 | 0.905 ± 0.015 | 0.920 ± 0.005 |
-
-| 12 | LR | 0.861 ± 0.034 | 0.891 ± 0.025 | 0.914 ± 0.012 | 0.919 ± 0.007 | 0.924 ± 0.009 | 0.929 ± 0.006 |
-
-| 12 | degree-2 LR | 0.823 ± 0.048 | 0.873 ± 0.032 | 0.913 ± 0.010 | 0.924 ± 0.006 | 0.933 ± 0.007 | 0.939 ± 0.007 |
-
-| 12 | Random Forest | 0.857 ± 0.034 | 0.898 ± 0.021 | 0.918 ± 0.009 | 0.926 ± 0.008 | 0.933 ± 0.008 | 0.942 ± 0.005 |
-
-| 12 | XGBoost | 0.844 ± 0.047 | 0.888 ± 0.019 | 0.916 ± 0.009 | 0.924 ± 0.009 | 0.934 ± 0.008 | 0.945 ± 0.005 |
-
-| 12 | brick-wall n=12 | 0.831 ± 0.043 | 0.877 ± 0.033 | 0.912 ± 0.010 | 0.919 ± 0.008 | 0.930 ± 0.007 | 0.934 ± 0.008 |
-
-
-
-| features | size | brick-wall / VQC | best classical | mean AUC diff | (fold,rep) wins | paired bootstrap 95% CI over (fold,rep) pairs (NOT patient-level) |
-
-|---|---|---|---|---|---|---|
-
-| 8 | 50 | brick-wall n=8 0.8266 | LR 0.8502 | -0.0235 | 6/15 | [-0.0461, -0.0025] |
-
-| 8 | 100 | brick-wall n=8 0.8616 | Random Forest 0.8895 | -0.0279 | 1/15 | [-0.0410, -0.0160] |
-
-| 8 | 250 | brick-wall n=8 0.8972 | degree-2 LR 0.9123 | -0.0151 | 1/15 | [-0.0215, -0.0091] |
-
-| 8 | 500 | brick-wall n=8 0.8988 | Random Forest 0.9187 | -0.0199 | 2/15 | [-0.0279, -0.0120] |
-
-| 8 | 1000 | brick-wall n=8 0.9052 | Random Forest 0.9251 | -0.0199 | 0/15 | [-0.0269, -0.0129] |
-
-| 8 | 50 | angle VQC π/6 (k=8) 0.8540 | LR 0.8502 | +0.0038 | 8/15 | [-0.0047, +0.0126] |
-
-| 8 | 100 | angle VQC π/6 (k=8) 0.8849 | Random Forest 0.8895 | -0.0047 | 6/15 | [-0.0096, -0.0004] |
-
-| 8 | 250 | angle VQC π/6 (k=8) 0.9133 | degree-2 LR 0.9123 | +0.0009 | 10/15 | [-0.0011, +0.0026] |
-
-| 8 | 500 | angle VQC π/6 (k=8) 0.9184 | Random Forest 0.9187 | -0.0004 | 8/15 | [-0.0032, +0.0023] |
-
-| 8 | 1000 | angle VQC π/6 (k=8) 0.9234 | Random Forest 0.9251 | -0.0017 | 3/15 | [-0.0030, -0.0006] |
-
-| 12 | 50 | brick-wall n=12 0.8313 | LR 0.8611 | -0.0298 | 2/15 | [-0.0461, -0.0147] |
-
-| 12 | 100 | brick-wall n=12 0.8766 | Random Forest 0.8980 | -0.0213 | 0/15 | [-0.0313, -0.0128] |
-
-| 12 | 250 | brick-wall n=12 0.9122 | Random Forest 0.9183 | -0.0061 | 1/15 | [-0.0090, -0.0030] |
-
-| 12 | 500 | brick-wall n=12 0.9188 | Random Forest 0.9259 | -0.0071 | 1/15 | [-0.0099, -0.0045] |
-
+| features | model | 50 | 100 | 250 | 500 | 1000 | full (~11.7k) |
+|---|---|---|---|---|---|---|---|
+| 8 | LR | 0.850 ± 0.039 | 0.883 ± 0.031 | 0.912 ± 0.011 | 0.912 ± 0.006 | 0.917 ± 0.010 | 0.922 ± 0.007 |
+| 8 | degree-2 LR | 0.833 ± 0.037 | 0.882 ± 0.028 | 0.912 ± 0.011 | 0.919 ± 0.007 | 0.924 ± 0.009 | 0.931 ± 0.007 |
+| 8 | Random Forest | 0.846 ± 0.046 | 0.890 ± 0.020 | 0.912 ± 0.010 | 0.919 ± 0.007 | 0.925 ± 0.009 | 0.937 ± 0.006 |
+| 8 | XGBoost | 0.837 ± 0.053 | 0.882 ± 0.019 | 0.910 ± 0.010 | 0.918 ± 0.006 | 0.925 ± 0.009 | 0.937 ± 0.005 |
+| 8 | angle VQC π/6 (k=8) | 0.854 ± 0.042 | 0.885 ± 0.026 | 0.913 ± 0.011 | 0.918 ± 0.006 | 0.923 ± 0.009 | 0.928 ± 0.006 |
+| 8 | brick-wall n=8 | 0.827 ± 0.047 | 0.862 ± 0.033 | 0.897 ± 0.015 | 0.899 ± 0.017 | 0.905 ± 0.015 | 0.920 ± 0.005 |
+| 12 | LR | 0.861 ± 0.034 | 0.891 ± 0.025 | 0.914 ± 0.012 | 0.919 ± 0.007 | 0.924 ± 0.009 | 0.929 ± 0.006 |
+| 12 | degree-2 LR | 0.823 ± 0.048 | 0.873 ± 0.032 | 0.913 ± 0.010 | 0.924 ± 0.006 | 0.933 ± 0.007 | 0.939 ± 0.007 |
+| 12 | Random Forest | 0.857 ± 0.034 | 0.898 ± 0.021 | 0.918 ± 0.009 | 0.926 ± 0.008 | 0.933 ± 0.008 | 0.942 ± 0.005 |
+| 12 | XGBoost | 0.844 ± 0.047 | 0.888 ± 0.019 | 0.916 ± 0.009 | 0.924 ± 0.009 | 0.934 ± 0.008 | 0.945 ± 0.005 |
+| 12 | brick-wall n=12 | 0.831 ± 0.043 | 0.877 ± 0.033 | 0.912 ± 0.010 | 0.919 ± 0.008 | 0.930 ± 0.007 | 0.934 ± 0.008 |
+
+| features | size | brick-wall / VQC | best classical | mean AUC diff | (fold,rep) wins | paired bootstrap 95% CI over (fold,rep) pairs (NOT patient-level) |
+|---|---|---|---|---|---|---|
+| 8 | 50 | brick-wall n=8 0.8266 | LR 0.8502 | -0.0235 | 6/15 | [-0.0461, -0.0025] |
+| 8 | 100 | brick-wall n=8 0.8616 | Random Forest 0.8895 | -0.0279 | 1/15 | [-0.0410, -0.0160] |
+| 8 | 250 | brick-wall n=8 0.8972 | degree-2 LR 0.9123 | -0.0151 | 1/15 | [-0.0215, -0.0091] |
+| 8 | 500 | brick-wall n=8 0.8988 | Random Forest 0.9187 | -0.0199 | 2/15 | [-0.0279, -0.0120] |
+| 8 | 1000 | brick-wall n=8 0.9052 | Random Forest 0.9251 | -0.0199 | 0/15 | [-0.0269, -0.0129] |
+| 8 | 50 | angle VQC π/6 (k=8) 0.8540 | LR 0.8502 | +0.0038 | 8/15 | [-0.0047, +0.0126] |
+| 8 | 100 | angle VQC π/6 (k=8) 0.8849 | Random Forest 0.8895 | -0.0047 | 6/15 | [-0.0096, -0.0004] |
+| 8 | 250 | angle VQC π/6 (k=8) 0.9133 | degree-2 LR 0.9123 | +0.0009 | 10/15 | [-0.0011, +0.0026] |
+| 8 | 500 | angle VQC π/6 (k=8) 0.9184 | Random Forest 0.9187 | -0.0004 | 8/15 | [-0.0032, +0.0023] |
+| 8 | 1000 | angle VQC π/6 (k=8) 0.9234 | Random Forest 0.9251 | -0.0017 | 3/15 | [-0.0030, -0.0006] |
+| 12 | 50 | brick-wall n=12 0.8313 | LR 0.8611 | -0.0298 | 2/15 | [-0.0461, -0.0147] |
+| 12 | 100 | brick-wall n=12 0.8766 | Random Forest 0.8980 | -0.0213 | 0/15 | [-0.0313, -0.0128] |
+| 12 | 250 | brick-wall n=12 0.9122 | Random Forest 0.9183 | -0.0061 | 1/15 | [-0.0090, -0.0030] |
+| 12 | 500 | brick-wall n=12 0.9188 | Random Forest 0.9259 | -0.0071 | 1/15 | [-0.0099, -0.0045] |
 | 12 | 1000 | brick-wall n=12 0.9298 | XGBoost 0.9337 | -0.0039 | 2/15 | [-0.0058, -0.0019] |
 <!--/P5TABLE-->
 
@@ -561,3 +419,40 @@ Code `p5_lc.py`, `p5_report.py`; data `results/lc/*.jsonl`; figure `results/figs
 with 250 and 500 it ties the best classical model (±0.001) and only at 1000 falls significantly below RF (−0.002). At 50 ECGs it has the highest mean AUC of the six models (LR 0.850, RF 0.846, XGBoost 0.837, degree-2 LR 0.833), but it wins only 8 of 15 paired runs and the CI contains 0, so the advantage rule (≥ 4/5 wins, CI > 0) is not met; at 250–500 ECGs the differences are ±0.001. The small-data parity is consistent with a heavily regularised, near-linear model class (small angles), which LR also is — it is not evidence of a quantum benefit.
 (iii) The **brick-wall is behind at every size** at n=8 (−0.015 … −0.028, CIs exclude 0) and n=12 (−0.030 at 50 ECGs shrinking to −0.004 at 1000 ECGs); the gap closes with more data at n=12 but reopens at full size because the trees keep improving (XGBoost 0.945 at full size vs 0.934). So there is **no regime in which any quantum model reverses the gap**, and the only closing is by the angle VQC at k=8, where the whole field is within ±0.005.
 (iv) Caveat: the CIs in the lower table are bootstrap CIs over the 15 (fold, repeat) pairs — not patient-level — so they under-state uncertainty slightly; they are given for orientation only, the advantage rule is not met at any size either way.
+
+## EXTRA analyses
+
+<!--EXTRA-->
+**EXTRA 1 — 3 seeds × 5 folds** (mean over folds per seed; seed-to-seed SD of that mean; the SD over all 15 fold×seed values is also given)
+
+| model | seed 0 | seed 1 | seed 2 | mean of seeds ± SD | all 15 values: mean ± SD |
+|---|---|---|---|---|---|
+| brick-wall n=8 | 0.9204 | 0.9209 | 0.9214 | 0.9209 ± 0.0005 | 0.9209 ± 0.0048 |
+| brick-wall n=12 | 0.9341 | 0.9349 | 0.9347 | 0.9345 ± 0.0004 | 0.9345 ± 0.0068 |
+| angle VQC π/6, k=8 | 0.9280 | 0.9281 | – | 0.9281 ± 0.0000 | 0.9281 ± 0.0060 |
+| angle VQC π/6, k=32 | 0.9510 | 0.9518 | – | 0.9514 ± 0.0005 | 0.9514 ± 0.0054 |
+
+**EXTRA 3 — unitary butterfly vs brick-wall, n=8** (5 folds)
+
+| model | params (circuit) | depth (logical) | test AUC | val AUC | folds (test) |
+|---|---|---|---|---|---|
+| brick-wall, 4 columns (k=4, π/4) | 48 | 4 + 7 + 1 + 8 (NN) | 0.9204 ± 0.0047 | 0.9247 | 0.917, 0.922, 0.916, 0.919, 0.928 |
+| butterfly, 6 layers = 2 butterflies (k=4, π/6) | 72 | 4 + 3 + 1 + 12 (all-to-all) | 0.9225 ± 0.0049 | 0.9263 | 0.917, 0.925, 0.918, 0.923, 0.929 |
+
+**EXTRA 4 — 16 qubits** (k=4, 4 columns, π/4, sector dimension 1820; folds finished: 3/5): test AUC f0 0.9440, f1 0.9387, f2 0.9351; mean 0.9393; max|head| 9.9
+<!--/EXTRA-->
+
+**EXTRA 1 — seeds.** Re-running the final models with two more seeds (different initial weights and minibatch order, same folds) changes the 5-fold means by ≤ 0.001 (seed-to-seed SD ≈ 0.0005), far below the gaps between model classes (0.01–0.02), so the P3 conclusions are not seed artefacts.
+The remaining variability is across folds/patients (SD ≈ 0.005–0.007), which the paired bootstrap already accounts for.
+
+**EXTRA 2 — sample-level head (paper Sec. VI.B).** The trained n=8 brick-wall circuit (frozen, per-fold parameters) is "measured" 1000 (or 100) times per ECG; a permutation-invariant DeepSets head, logit = ρ(mean_i φ(bits_i)), is trained on the sampled bitstrings (`extra2_samplehead.py`; with ≤ 70 distinct outcomes the per-sample mean is computed exactly from the empirical frequencies).
+Fold-wise, with 1000 shots the sample-level head essentially matches the exact linear readout whenever the linear head is well-conditioned (folds 0, 1, 2, 4: 0.913/0.922/0.914/0.927 vs exact 0.917/0.922/0.916/0.928) — i.e. **a richer, sample-level head brings no accuracy gain here**, it only reproduces the two-body readout — and it is **more shot-robust in the one fold (3) where the trained linear head is degenerate** (|h| = 14 339): 0.797 vs 0.486 for the linear head (exact linear 0.919). Mean over 5 folds at 1000 shots: sample head 0.894, sampled linear head 0.831, exact 0.920; at 100 shots 0.870 / 0.809.
+Interpretation: the sample-level head lets a classical model use higher-order statistics of the samples (the quantity the paper ties to sampling hardness), but on this task those carry no extra signal beyond the two-body marginals; the AUC cost of finite shots is what matters.
+
+**EXTRA 3 — unitary butterfly (n=8, all-to-all, depth 2 log n per butterfly).** Verified against the dense simulator (9.6e-16). Chosen on folds 0–1 validation among k ∈ {2, 4} × {1, 2 butterflies} × {π/6, π/4}: two butterflies (6 layers), k=4, π/6. 5-fold test AUC 0.9225 vs 0.9204 for the brick-wall (5/5 folds marginally higher, +0.002 — within noise; 72 vs 48 parameters).
+Not different in any meaningful sense; the butterfly needs all-to-all connectivity (a trapped-ion-like target) whereas the brick-wall needs only a ring.
+
+**EXTRA 4 — 16 qubits.** k=4 (sector dimension 1820; k=6 would be 8008 and ~10 s/step, not feasible here), 4 columns, scale π/4 chosen a priori. At 16 features the classical references are LR 0.932, LR2 0.9465, RF 0.949, XGBoost 0.952, MLP 0.949; the brick-wall reaches the AUCs given above (training was still improving at the 3000-step cap, so this is a lower bound).
+The 16-qubit model's head stays benign (|h| ≈ 10), unlike the n=12 model.
+
+**EXTRA 5 — external validation of EXTRA models that beat their predecessor on validation.** Butterfly n=8: validation 0.9294 vs 0.9278 (brick-wall n=8) → external AUC 0.9069 vs 0.9029; the difference is far inside the CI width (±0.04). The 16-qubit model: see the external table in P4 (`bw16`).
