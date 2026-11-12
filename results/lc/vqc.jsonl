@@ -63,3 +63,6 @@
 {"model": "vqc_pi6", "k": 8, "fold": 2, "size": 1000, "rep": 0, "val_auc": 0.9288339652128614, "test_auc": 0.9181455541728166, "best_step": 1000, "secs": 2010.6}
 {"model": "vqc_pi6", "k": 8, "fold": 3, "size": 1000, "rep": 0, "val_auc": 0.9259167076664834, "test_auc": 0.9144038645219803, "best_step": 1000, "secs": 1835.9}
 {"model": "vqc_pi6", "k": 8, "fold": 4, "size": 1000, "rep": 0, "val_auc": 0.9285715663859386, "test_auc": 0.9287838730202156, "best_step": 1000, "secs": 1797.1}
+{"model": "vqc_pi6", "k": 8, "fold": 0, "size": 1000, "rep": 1, "val_auc": 0.9281278036639365, "test_auc": 0.9353027976725738, "best_step": 975, "secs": 1630.6}
+{"model": "vqc_pi6", "k": 8, "fold": 1, "size": 1000, "rep": 1, "val_auc": 0.915411107573872, "test_auc": 0.9226478760839331, "best_step": 950, "secs": 1804.7}
+{"model": "vqc_pi6", "k": 8, "fold": 2, "size": 1000, "rep": 1, "val_auc": 0.9237519173443696, "test_auc": 0.9079462468285437, "best_step": 850, "secs": 1840.0}
