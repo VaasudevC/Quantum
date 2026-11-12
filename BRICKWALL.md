@@ -3,12 +3,21 @@
 Branch `brickwall-overnight`. Chronological log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). This report is updated after every phase.
 Status: **P0 ✔ · P1 ✔ · P2 ✔ · P3 … · P4 … · P5 … · P6 … · P7 …** (see the bottom of this file for what is still open).
 
-## Headline (updated after each phase)
+## Headline (best quantum vs best classical; advantage rule applied)
 
-* **P1 (classical benchmarks, mentor request).** Tuned XGBoost is the best model at every feature count (5-fold test AUC: 0.937 at k=8, 0.945 at k=12,
-  0.952 at k=16, 0.965 at k=32, **0.973 with all 249 features**). Random Forest and an 8/16/32-unit MLP are within ~0.003 of each other and of
-  degree-2 LR at k ≥ 12. Our earlier angle VQC (π/6) is below XGBoost, RF and MLP at k=8 (0.928 vs 0.937) and at k=32 (0.951 / 0.955 trained scales vs 0.965).
-* Remaining headline items (brick-wall results, external validation, learning curves, advantage-rule verdicts) are filled in below as the phases finish.
+| features | best classical (5-fold test AUC) | best quantum (5-fold test AUC) | gap | advantage rule |
+|---|---|---|---|---|
+| 8 | XGBoost 0.9374 ± 0.0049 (RF 0.9367, MLP 0.9336, LR2 0.9312, LR 0.9222) | angle VQC π/6 0.9280 ± 0.0063; brick-wall n=8 0.9204 ± 0.0047 | −0.009 / −0.017 | **not met** (brick-wall ≈ LR: 3/5 folds, CI [−0.004, +0.0004]) |
+| 12 | XGBoost 0.9452 ± 0.0050 (RF 0.9422, MLP 0.9416, LR2 0.9390, LR 0.9293) | brick-wall n=12 0.9341 ± 0.0079 (no 12-feature angle VQC exists) | −0.011 | **not met** (beats LR by +0.0047, CI [+0.003, +0.0065], 4/5 folds; loses to LR2/MLP/RF/XGB) |
+| 32 | XGBoost 0.9647 ± 0.0046 (RF 0.9608, MLP 0.9597, LR2 0.9583, LR 0.9451) | angle VQC π/6 0.9510 ± 0.0059; trained scales 0.9547 ± 0.0051 | −0.014 / −0.010 | **not met** (beats LR, loses to the rest) |
+| external PTB (n = 445 records, 52 healthy + 148 MI patients) | k=8: LR 0.912; k=12: LR 0.921; k=32: XGBoost 0.946 (CIs ±0.03) | angle VQC k=8 0.909, brick-wall n=8 0.903, n=12 0.910; angle VQC k=32 0.934 | −0.003 … −0.013 | **not met** (every CI of the difference includes 0 at k = 8, 12; XGBoost significantly better than the angle VQC at k = 32) |
+
+* **No quantum model outperforms the tuned classical baselines on any feature set**, in cross-validation or externally. At best a quantum model ties logistic regression (brick-wall n=8) or beats plain LR (brick-wall n=12, angle VQCs at k=32) while degree-2 LR, MLP, RF and XGBoost remain ahead. This is an empirical statement on this task, in simulation, with these grids.
+* **Simulability note (paper Prop. 8, Sec. VI.B–C):** two-body nearest-neighbour expectation values of this encoding are additively classically tractable at every particle number; our simulator uses exactly that structure (sector dimension ≤ 924), so even a quantum performance advantage on this readout would not have implied hardness. The paper's hardness claims concern sampling (sample-level head, EXTRA 2).
+* **XGBoost on all 249 features reaches 0.973** (sens@90% spec 0.924); fewer features (8/12, the quantum-friendly regime) cost 0.03–0.04 AUC for every model.
+* **π/6 lesson transfers qualitatively:** small phase scales (π/6–π/4) beat the paper's π scaling; π is worst everywhere (P3).
+* **Hardware readiness:** the n=8 brick-wall is robust to shots, FakeFez noise and post-selection (AUC 0.915 → 0.911); the n=12 model needs ~10⁶ shots because its head amplifies shot noise (P6).
+* **Extractor issue found and fixed:** the stored ST features come from a 0.5–40 Hz filter, not the script's current 0.05 Hz one; the recovered version reproduces the table to 1e-13 (P4). A real V4–V6 population shift between PTB-XL and PTB healthy controls remains.
 
 ## P0 — setup and sanity
 
