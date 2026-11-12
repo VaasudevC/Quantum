@@ -74,3 +74,12 @@ Execution order (SD0–SD5, then exploratory EXTRA, then DX) is as in the task s
 
 P5 refitted median imputation, z-scoring and the L1 selection on each **subsample only**, so those steps did not leak. It did, however, (i) choose hyper-parameters and the early-stopping checkpoint on the **full-size validation rows of the fold** (~1.8k ECGs, far more than the N=50–1000 training ECGs), which is information beyond the N-ECG training set,
 and (ii) draw patient-grouped subsamples with several ECGs per patient rather than one per patient. P5 is therefore **superseded by SD** (all choices inside the N-ECG subset only, inner CV, one ECG per patient, 40 paired subsets per fold and size).
+
+## Execution log (not analysis changes)
+
+* **Execution-order change (user instruction, 2026-11-12):** after N = 100, the sizes N = 50, 200, 25, 500 are run for Q1–Q3 and all classical models FIRST, and Q4 (brick-wall, the slow family) at those sizes LAST. The analysis stays exactly as pre-registered above.
+  The primary-endpoint analysis at N = 100 is run as soon as all models are finished at N = 100.
+* **C7 TabPFN skipped** for now (needs an interactive licence login; v1 weights are not downloadable). If the licence login works later, C7 is run as a catch-up under the same plan; until then the classical side has C1–C6 and the multiplicity count excludes C7.
+* Workers: independent processes each taking every W-th unit (`sd_launch.py`); a freshly started process that measures numpy ~60× slower than normal restarts itself (an OS-scheduling effect we could not explain). Results of one unit are written only after all its models finish.
+* Hardware note: the first ~2 h ran on battery with a 40 % processor cap; later on AC power.
+* Paused until N = 100 and its analysis are committed: EXTRA 6 (shot-robust heads), EXTRA 1 VQC seeds, n = 16 external.
