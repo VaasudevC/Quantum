@@ -132,3 +132,14 @@ The best classical models (random forest, GP classifier) are nevertheless slight
 * Generalisation gap: Q1/Q3 have a significantly **smaller** train-test gap than RF (−0.03), XGBoost (−0.05) and kNN (−0.07), and an equal gap to LR, SVM-RBF and GP (CIs include 0). Q2's gap is significantly larger than LR/SVM/GP (+0.01).
 
 This is an empirical result on classical ECG features (8 hand-crafted features, 100 training ECGs); the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict classical hardness at this size — the angle-encoding kernel used by Q3 is a product of cos² terms that a classical computer evaluates exactly, and the models that matched the classical ones are of that kind.
+
+## Throughput check (2026-11-13, after machine clean-up: reboot, apps closed, more RAM free)
+
+`sd_bench_workers.py`: W concurrent workers each run the same unit (k=8, N=50, fold 0, r=39); nothing is written to the SD results. Free RAM during the runs: 5.7–5.8 GB.
+
+| family | W=1 | W=2 | W=4 | W=6 | W=8 |
+|---|---|---|---|---|---|
+| main (Q1–Q3, C1–C6): s/unit → units/hour | 47 s → 76 | 48 s → 148 | 51 s → 275 | 59 s → 357 | 72 s → **392** |
+| brick-wall (Q4): s/unit → units/hour | 19 s → 186 | 19 s → 361 | 22 s → 636 | 24 s → 847 | 30 s → **934** |
+
+Chosen: **8 workers per family** (best measured), never more; one worker is dropped whenever free RAM falls below 3 GB. Before the clean-up the same main-family N=50 unit took >10 min in a 10-worker run — the earlier slowness was a machine-state problem (memory pressure), not the code.
