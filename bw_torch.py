@@ -16,12 +16,13 @@ torch.set_num_threads(1)
 
 
 class BW:
-    def __init__(self, n, columns, k=None, dtype=torch.complex64, W=None):
+    def __init__(self, n, columns, k=None, dtype=torch.complex64, W=None, arch="brick"):
         self.n, self.columns = n, columns
+        pf = B.pairs_butterfly if arch == "butterfly" else B.pairs
         self.k = B.particle_count(n, k)
         self.cdtype = dtype
         self.fdtype = torch.float32 if dtype == torch.complex64 else torch.float64
-        sec = B.Sector(n, columns, self.k, W)
+        sec = B.Sector(n, columns, self.k, W, pair_fn=pf)
         self.D = sec.D
         self.occ = torch.tensor(sec.occ, dtype=self.fdtype)                       # (D, n)
         self.phi0 = torch.tensor(sec.phi0, dtype=dtype)
@@ -29,7 +30,7 @@ class BW:
         self.M_adj = torch.tensor(sec.M, dtype=self.fdtype)                       # (D, n)   <n_j n_{j+1}>
         iu = [(i, j) for i in range(n) for j in range(i + 1, n)]
         self.M_all = torch.tensor(np.stack([sec.occ[:, i] * sec.occ[:, j] for i, j in iu], 1), dtype=self.fdtype)
-        self.pairs_list = [B.pairs(n, c) for c in range(columns)]
+        self.pairs_list = [pf(n, c) for c in range(columns)]
         self.n_w = columns * 3 * n // 2
 
     def psi(self, theta, w):
@@ -88,8 +89,8 @@ def lr_fit(F, y, C=1.0, iters=60):
 
 class Model:
     """phase map + circuit + head.  head: 'linear' (n features), 'linear_score' (same, MSE on +-1, no sigmoid), 'corr' (n(n-1)/2)."""
-    def __init__(self, n, columns, k, scale, head="linear", phase="tanh", xmax=None, dtype=torch.complex64, seed=0):
-        self.bw = BW(n, columns, k, dtype)
+    def __init__(self, n, columns, k, scale, head="linear", phase="tanh", xmax=None, dtype=torch.complex64, seed=0, arch="brick"):
+        self.bw = BW(n, columns, k, dtype, arch=arch)
         self.n, self.scale, self.head_kind, self.phase, self.xmax = n, scale, head, phase, xmax
         g = torch.Generator().manual_seed(seed)
         fd = self.bw.fdtype

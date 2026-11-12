@@ -35,6 +35,12 @@ def particle_count(n, k=None):
     return k
 
 
+def pairs_butterfly(n, layer):
+    """paper Sec. III.C: layer l (0-based) pairs modes at stride 2^l (all-to-all hardware); layers repeat cyclically."""
+    stride = 2 ** (layer % int(np.log2(n)))
+    return [(i, i + stride) for i in range(n) if (i // stride) % 2 == 0]
+
+
 def pairs(n, col):
     out = [(j, j + 1) for j in range(col % 2, n - 1, 2)]
     return out + ([(n - 1, 0)] if col % 2 else [])
@@ -139,14 +145,15 @@ def phi0_sector(n, k, W=None):
 
 class Sector:
     """numpy reference simulator in the k-particle sector (used for verification; training uses bw_torch)."""
-    def __init__(self, n, columns, k=None, W=None):
+    def __init__(self, n, columns, k=None, W=None, pair_fn=None):
+        self.pair_fn = pair_fn or pairs
         self.n, self.columns, self.k = n, columns, particle_count(n, k)
         self.occ, self.phi0 = phi0_sector(n, self.k, W)
         self.D = len(self.occ)
         idx = sector_index(self.occ)
         self.pair_idx = {}
         for col in range(columns):
-            for (a, b) in pairs(n, col):
+            for (a, b) in self.pair_fn(n, col):
                 if (a, b) in self.pair_idx:
                     continue
                 i01, i10 = [], []
@@ -165,7 +172,7 @@ class Sector:
         for col in range(self.columns):
             th = -w[col, n // 2:]
             psi = psi * np.exp(-1j * th.sum() / 2 + 1j * (self.occ @ th))
-            for j, (a, b) in enumerate(pairs(n, col)):
+            for j, (a, b) in enumerate(self.pair_fn(n, col)):
                 phi = -2 * w[col, j]
                 c, s = np.cos(phi / 2), np.sin(phi / 2)
                 i01, i10 = self.pair_idx[(a, b)]

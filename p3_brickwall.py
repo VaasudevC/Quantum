@@ -35,7 +35,7 @@ def run_one(cfg):
     n = cfg["n"]; Zs = Z[:, :n]
     xmax = np.abs(Zs[tr]).max(0)
     m = T.Model(n, cfg["columns"], cfg["k"], cfg["scale"] if cfg["phase"] == "tanh" else None, head=cfg["head"],
-                phase=cfg["phase"], xmax=xmax, seed=cfg["seed"] + cfg["fold"])
+                phase=cfg["phase"], xmax=xmax, seed=cfg["seed"] + cfg["fold"], arch=cfg.get("arch", "brick"))
     vauc, bstep, tot, secs = T.train_model(m, Zs[tr], y[tr], Zs[va], y[va], steps=cfg["steps"], batch=cfg["batch"],
                                            lr=cfg["lr"], seed=cfg["seed"] + cfg["fold"])
     s = m.predict(Zs[te])

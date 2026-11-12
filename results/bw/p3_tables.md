@@ -48,3 +48,4 @@ n = 12
 | 8 | tanh, scale π/4 (final) | 0.9204 ± 0.0047 |
 | 8 | paper: π·x/max abs(x) | 0.9108 ± 0.0104 |
 | 12 | tanh, scale π/4 (final) | 0.9341 ± 0.0079 |
+| 12 | paper: π·x/max abs(x) | 0.9330 ± 0.0081 |

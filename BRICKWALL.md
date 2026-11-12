@@ -249,7 +249,8 @@ n = 12
 |---|---|---|
 | 8 | tanh, scale π/4 (final) | 0.9204 ± 0.0047 |
 | 8 | paper: π·x/max abs(x) | 0.9108 ± 0.0104 |
-| 12 | tanh, scale π/4 (final) | 0.9341 ± 0.0079 |
+| 12 | tanh, scale π/4 (final) | 0.9341 ± 0.0079 |
+| 12 | paper: π·x/max abs(x) | 0.9330 ± 0.0081 |
 <!--/P3TABLES-->
 
 **Does the π/6 lesson transfer to phase encoding? Qualitatively yes, quantitatively the optimum moves to π/4.** At every (n, k, columns) the largest scale π is the worst (validation AUC 0.66–0.92) and small scales π/6–π/4 are best
