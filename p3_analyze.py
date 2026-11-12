@@ -19,7 +19,7 @@ def main(tag="stageC", out="p3_analysis"):
     vq = json.load(open("results/bw/vqc_scores.json")) if Path("results/bw/vqc_scores.json").exists() else {}
     info = [fold_info(f) for f in range(5)]
     res = {}
-    for n in (8, 12):
+    for n in (8, 12, 32):
         cls = {}
         for m in ("lr", "lr2", "rf", "xgb", "mlp"):
             rs = {r["fold"]: r for r in P1 if r["selector"] == "l1" and r["k"] == n and r["model"] == m}
@@ -29,6 +29,9 @@ def main(tag="stageC", out="p3_analysis"):
             rs = {r["fold"]: r for r in C if r["n"] == n and r.get("rank") == rank}
             if len(rs) == 5:
                 q[f"bw{n}_rank{rank}"] = ([np.array(rs[f]["test_scores"]) for f in range(5)], {kk: rs[0][kk] for kk in ("columns", "k", "scale", "head", "lr", "steps")})
+        if n == 32:
+            for nm in ("vqc_pi6_k32", "vqc_trained_k32"):
+                if nm in vq: q[nm] = ([np.array(s) for s in vq[nm]], {})
         if n == 8 and "vqc_pi6_k8" in vq: q["angle_vqc_k8"] = ([np.array(s) for s in vq["vqc_pi6_k8"]], {})
         aucs = lambda sc: [A.auc(info[f][0], sc[f]) for f in range(5)]
         cl_auc = {m: aucs(s) for m, s in cls.items()}

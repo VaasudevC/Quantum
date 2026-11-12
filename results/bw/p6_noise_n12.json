@@ -1,0 +1,39 @@
+{
+ "n": 12,
+ "cfg": {
+  "columns": 4,
+  "k": 6,
+  "scale": 0.7853981633974483,
+  "head": "linear"
+ },
+ "n_ecgs": 40,
+ "shots": 2000,
+ "auc_noiseless_exact": 0.952,
+ "shot_sweep_noiseless_auc": {
+  "100": 0.5066666666666667,
+  "300": 0.376,
+  "1000": 0.44266666666666665,
+  "4000": 0.472
+ },
+ "auc_noiseless_shots": 0.488,
+ "compile_line_path": [
+  146,
+  147,
+  137,
+  127,
+  126,
+  125,
+  124,
+  123,
+  136,
+  143,
+  142,
+  141
+ ],
+ "compiled_cz": 271,
+ "compiled_depth": 287,
+ "auc_noisy_raw": 0.7946666666666666,
+ "auc_noisy_postselected": 0.7333333333333333,
+ "postselect_kept_fraction_mean": 0.47036250000000007,
+ "noisy_secs": 393.4
+}

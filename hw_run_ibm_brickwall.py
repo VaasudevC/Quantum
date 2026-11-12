@@ -98,6 +98,8 @@ def save_counts(d, name, result):
 
 def run(local, yes, n_ecg, shots, models, max_min, tag):
     d = outdir(tag); be, svc = get_backend(local)
+    if "bw12" in models:
+        print("WARNING: the n=12 brick-wall model has max|head weight| ~ 414 and needs ~1e6 shots per ECG for AUC 0.94 (0.53 at 1000 shots); results will be shot-noise dominated.", flush=True)
     plan = build_pubs(be, models, n_ecg)
     est = estimate_minutes(plan, shots)
     print(f"backend {be.name}; {len(models)} jobs; ECGs/model {n_ecg}; shots {shots}; ESTIMATED QPU time {est:.2f} min (limit {max_min})", flush=True)
@@ -167,7 +169,7 @@ if __name__ == "__main__":
     for f in ("--local", "--submit", "--retrieve", "--analyze"):
         g.add_argument(f, action="store_true")
     ap.add_argument("--yes", action="store_true"); ap.add_argument("--n", type=int, default=100); ap.add_argument("--shots", type=int, default=1000)
-    ap.add_argument("--models", default=",".join(ALL)); ap.add_argument("--max-minutes", type=float, default=8.0); ap.add_argument("--tag", default=None)
+    ap.add_argument("--models", default="bw8,vqc32")   # bw12 needs ~1e6 shots (p6_shots.json): not sensible on the free 10 QPU minutes; ap.add_argument("--max-minutes", type=float, default=8.0); ap.add_argument("--tag", default=None)
     a = ap.parse_args(); models = a.models.split(",")
     if a.local:
         run(True, True, a.n, a.shots, models, a.max_minutes, a.tag or "local"); analyze(a.tag or "local")

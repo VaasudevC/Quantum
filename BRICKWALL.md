@@ -192,3 +192,104 @@ Brick-wall finals: n=8 (k=4, 4 columns, scale π/4) and n=12 (k=6, 4 columns, sc
 At k=8 and 12 all models are statistically indistinguishable (differences ≤ 0.01, CIs ±0.02); at k=32 XGBoost is significantly better than the angle VQC (−0.013 [−0.026, −0.001]).
 The quantum models are as robust as the classical ones to the dataset shift (external − validation AUC: brick-wall n=8 −0.025, LR k=8 −0.009, XGBoost k=8 −0.024).
 Caveat: 52 healthy patients; these CIs cannot detect differences below ~0.02.
+
+## P3 — brick-wall QNN on ECG (n = 8 and 12 qubits, one feature per qubit)
+
+Setup: L1 top-n features (same folds/inner split as P1), phase φ_j = s·tanh(z_j) (z = standardised feature) on RZ(−φ_j); trainable columns of RBS + Rz as in the notebook; readout f = 4⟨n_j n_{j+1}⟩ (ring), linear head + sigmoid;
+Adam (lr 0.02, β = 0.9/0.999), minibatch 512, class-weighted BCE, head warm-started by logistic regression on the initial features, best-validation-AUC checkpoint every 25 steps, 1500 steps, extended once to 3000 if the best checkpoint lies in the last 20%.
+Every choice below was made on **validation AUC** (stage A/B on folds 0–1, then fixed); test folds are only reported. Code `p3_brickwall.py`, `bw_torch.py`; runs in `results/bw/p3_stage*.jsonl` (parameters of every model stored).
+
+<!--P3TABLES-->
+**Stage A** (folds 0–1, mean validation AUC; 1500 steps, extended to 3000 if the best checkpoint fell in the last 20%; Adam lr 0.02, batch 512, linear head)
+
+n = 8
+
+| k | columns | π/6 | π/4 | π/2 | π |
+|---|---|---|---|---|---|
+| 2 | 2 | 0.9183 | 0.9145 | 0.8385 | 0.6634 |
+| 2 | 4 | 0.9211 | 0.9191 | 0.8954 | 0.8235 |
+| 4 | 2 | 0.8710 | 0.8667 | 0.7325 | 0.6066 |
+| 4 | 4 | 0.9168 | 0.9220 | 0.8856 | 0.7643 |
+
+n = 12
+
+| k | columns | π/6 | π/4 | π/2 | π |
+|---|---|---|---|---|---|
+| 2 | 2 | 0.8918 | 0.9160 | 0.9188 | 0.8927 |
+| 2 | 4 | 0.9238 | 0.9254 | 0.9279 | 0.9104 |
+| 4 | 2 | 0.9352 | 0.9328 | 0.9241 | 0.8870 |
+| 4 | 4 | 0.9349 | 0.9344 | 0.9311 | 0.9153 |
+| 6 | 2 | 0.9312 | 0.9315 | 0.9251 | 0.8951 |
+| 6 | 4 | 0.9344 | 0.9361 | 0.9325 | 0.9151 |
+
+**Stage B** (folds 0–1, mean validation AUC at the stage-A winner; ‘Δ’ = change vs the winner's 0.9220 (n=8) / 0.9361 (n=12))
+
+| n | variant | mean val AUC |
+|---|---|---|
+| 8 | k=4, cols=4, head=linear, lr=0.02 | 0.9220 |
+| 8 | k=4, cols=4, head=corr, lr=0.02 | 0.9211 |
+| 8 | k=4, cols=4, head=linear, lr=0.06 | 0.9203 |
+| 8 | k=4, cols=4, head=linear_score, lr=0.02 | 0.9191 |
+| 12 | k=6, cols=4, head=linear, lr=0.02 | 0.9361 |
+| 12 | k=6, cols=4, head=linear_score, lr=0.02 | 0.9336 |
+| 12 | k=6, cols=4, head=corr, lr=0.02 | 0.9310 |
+
+**Stage C** (5 folds, test AUC; final = best validation AUC over stages A/B, runner-up second)
+
+| n | config | test AUC (mean ± SD) | sens @ 90% spec | val AUC | per-fold test AUC |
+|---|---|---|---|---|---|
+| 8 | final: k=4, cols=4, scale π/4, head linear | 0.9204 ± 0.0047 | 0.783 | 0.9247 | 0.917, 0.922, 0.916, 0.919, 0.928 |
+| 8 | runner-up: k=4, cols=4, scale π/4, head corr | 0.9208 ± 0.0056 | 0.780 | 0.9249 | 0.916, 0.923, 0.918, 0.918, 0.930 |
+| 12 | final: k=6, cols=4, scale π/4, head linear | 0.9341 ± 0.0079 | 0.809 | 0.9376 | 0.945, 0.935, 0.928, 0.925, 0.937 |
+| 12 | runner-up: k=4, cols=2, scale π/6, head linear | 0.9322 ± 0.0083 | 0.808 | 0.9349 | 0.943, 0.930, 0.924, 0.926, 0.939 |
+
+**Paper phase map** φ = π·x/max|x| (max from train) vs tanh map, same final (k, columns), 5 folds
+
+| n | phase map | test AUC (mean ± SD) |
+|---|---|---|
+| 8 | tanh, scale π/4 (final) | 0.9204 ± 0.0047 |
+| 8 | paper: π·x/max abs(x) | 0.9108 ± 0.0104 |
+| 12 | tanh, scale π/4 (final) | 0.9341 ± 0.0079 |
+<!--/P3TABLES-->
+
+**Does the π/6 lesson transfer to phase encoding? Qualitatively yes, quantitatively the optimum moves to π/4.** At every (n, k, columns) the largest scale π is the worst (validation AUC 0.66–0.92) and small scales π/6–π/4 are best
+(e.g. n=8, k=4, 4 columns: π/6 0.917, π/4 0.922, π/2 0.886, π 0.764); at n=12 the scale matters less once k ≥ 4 and columns = 4 (0.934–0.936 for π/6–π/4 vs 0.915 at π). So small angles — which keep the encoding in the regime where the phase map is injective and
+the circuit is not "over-rotated" — help here too, but the optimum is π/4 (π/6 is within 0.002–0.005), and the paper's own map φ = π·x/max|x| (a full π range, outliers set the scale) is worse than the tuned tanh map (table above).
+Other findings: more columns help at n=8, strongly with k=4 (2 → 4 columns: 0.871 → 0.917 at π/6) and slightly with k=2 (0.918 → 0.921); the richer all-pairs head and `linear_score` readout did not help (stage B); more trainable columns (columns = n) were not run at n=12 (too slow) and did not help at n=8 (0.914 vs 0.922); a higher learning rate (0.06) did not help.
+Particle number: at n=12, k = 4 → 6 is a tie (4 columns, π/4: 0.934 → 0.936), k = 2 is clearly worse (0.925); at n=8 with 2 columns k=4 is much worse than k=2 (0.871 vs 0.918), with 4 columns they tie (0.922 vs 0.919).
+
+**Brick-wall vs every classical model on the same features** (5 folds; advantage rule: beats every tuned classical model in mean AUC, wins ≥ 4/5 folds against the best one, paired patient-cluster bootstrap CI of the difference excludes 0):
+
+<!--P3ANALYSIS-->
+| features | model | mean test AUC ± SD | wins vs best classical (folds) | AUC diff vs best classical [95% cluster-bootstrap CI] | beats every classical (mean) | advantage rule met |
+|---|---|---|---|---|---|---|
+| 8 | lr (classical) | 0.9222 ± 0.0067 | – | – | – | – |
+| 8 | lr2 (classical) | 0.9312 ± 0.0067 | – | – | – | – |
+| 8 | rf (classical) | 0.9367 ± 0.0058 | – | – | – | – |
+| 8 | xgb (classical) | 0.9374 ± 0.0049 | – | – | – | – |
+| 8 | mlp (classical) | 0.9336 ± 0.0075 | – | – | – | – |
+| 8 | **bw8_rank0** {'columns': 4, 'k': 4, 'scale': 0.7853981633974483, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9204 ± 0.0047 | 0/5 | -0.0170 [-0.0195, -0.0147] vs xgb | False | False |
+| 8 | **bw8_rank1** {'columns': 4, 'k': 4, 'scale': 0.7853981633974483, 'head': 'corr', 'lr': 0.02, 'steps': 1500} | 0.9208 ± 0.0056 | 0/5 | -0.0166 [-0.0191, -0.0144] vs xgb | False | False |
+| 8 | **angle_vqc_k8** {} | 0.9280 ± 0.0063 | 0/5 | -0.0094 [-0.0113, -0.0076] vs xgb | False | False |
+| 12 | lr (classical) | 0.9293 ± 0.0064 | – | – | – | – |
+| 12 | lr2 (classical) | 0.9390 ± 0.0067 | – | – | – | – |
+| 12 | rf (classical) | 0.9422 ± 0.0055 | – | – | – | – |
+| 12 | xgb (classical) | 0.9452 ± 0.0050 | – | – | – | – |
+| 12 | mlp (classical) | 0.9416 ± 0.0064 | – | – | – | – |
+| 12 | **bw12_rank0** {'columns': 4, 'k': 6, 'scale': 0.7853981633974483, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9341 ± 0.0079 | 0/5 | -0.0111 [-0.0131, -0.0092] vs xgb | False | False |
+| 12 | **bw12_rank1** {'columns': 2, 'k': 4, 'scale': 0.5235987755982988, 'head': 'linear', 'lr': 0.02, 'steps': 1500} | 0.9322 ± 0.0083 | 0/5 | -0.0130 [-0.0151, -0.0109] vs xgb | False | False |
+| 32 | lr (classical) | 0.9451 ± 0.0082 | – | – | – | – |
+| 32 | lr2 (classical) | 0.9583 ± 0.0044 | – | – | – | – |
+| 32 | rf (classical) | 0.9608 ± 0.0053 | – | – | – | – |
+| 32 | xgb (classical) | 0.9647 ± 0.0046 | – | – | – | – |
+| 32 | mlp (classical) | 0.9597 ± 0.0052 | – | – | – | – |
+| 32 | **vqc_pi6_k32** {} | 0.9510 ± 0.0059 | 0/5 | -0.0136 [-0.0155, -0.0117] vs xgb | False | False |
+| 32 | **vqc_trained_k32** {} | 0.9547 ± 0.0051 | 0/5 | -0.0100 [-0.0117, -0.0083] vs xgb | False | False |
+<!--/P3ANALYSIS-->
+
+**Verdict P3: no quantum outperformance at n = 8, 12 (nor at 32 for the angle VQC).** The advantage rule fails everywhere: the best classical model (XGBoost at all of k = 8, 12, 32) is better by 0.017 (n=8), 0.011 (n=12), 0.014 (angle VQC k=32) with CIs far from 0.
+The picture by model class: the brick-wall is **on par with LR at n=8** (0.9204 vs 0.9222; wins 3/5 folds against LR; paired CI [−0.004, +0.0004]) and **significantly better than plain LR at n=12** (+0.0047, CI [+0.003, +0.0065], 4/5 folds)
+but significantly worse than degree-2 LR (−0.005), MLP (−0.008), RF (−0.008) and XGBoost (−0.011). The existing angle VQC with k = 8 (0.928) is better than the brick-wall with n = 8 (0.920) and in between LR and degree-2 LR; no 12-feature angle VQC exists, so the n=12 brick-wall has no angle-VQC counterpart.
+Statement for the record: this is an **empirical** statement on this task and this pipeline (small feature sets, simulation, no tuning beyond the grids above); it does not say anything about other tasks or larger systems.
+Classical simulability (paper Prop. 8, Sec. VI.B–C): the paper states that few-body (here two-body, nearest-neighbour) expectation values of this encoding are additively tractable classically at every particle number — our own simulator exploits exactly this (sector dimension ≤ 924) — so a performance
+difference on this readout could not be attributed to quantum hardness; the hardness claims in the paper concern *sampling* (the sample-level head, EXTRA 2).
