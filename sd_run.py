@@ -209,30 +209,43 @@ def unit(a):
     return out
 
 
+def slow_process():
+    """Some freshly started processes run numpy ~60x slower for unknown OS-scheduling reasons; detect that so the launcher can restart them."""
+    st = np.random.randn(50, 256) + 0j; a = np.random.randn(50)
+    import Vqc_fast8 as V
+    V._ry(st, 2, a); t = time.time()
+    for _ in range(100):
+        V._ry(st, 2, a)
+    return (time.time() - t) / 100 > 0.001
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--family", required=True); ap.add_argument("--k", type=int, default=8)
-    ap.add_argument("--sizes", default="100,50,200,25,500"); ap.add_argument("--jobs", type=int, default=4); ap.add_argument("--reps", type=int, default=40)
-    ap.add_argument("--folds", default="0,1,2,3,4"); ap.add_argument("--only", default=""); ap.add_argument("--out", default=None); ap.add_argument("--seedoff", type=int, default=0)
+    ap.add_argument("--sizes", default="100,50,200,25,500"); ap.add_argument("--reps", type=int, default=40)
+    ap.add_argument("--folds", default="0,1,2,3,4"); ap.add_argument("--only", default=""); ap.add_argument("--seedoff", type=int, default=0)
+    ap.add_argument("--workers", type=int, default=1); ap.add_argument("--worker-id", type=int, default=0); ap.add_argument("--tag", default="")
     a = ap.parse_args()
-    out = Path(a.out or f"results/sd_runs_{a.family}.jsonl"); only = set(filter(None, a.only.split(",")))
+    only = set(filter(None, a.only.split(",")))
+    if slow_process():
+        print("slow process detected, exiting 99", flush=True); sys.exit(99)
+    base = f"results/sd_runs_{a.family}{a.tag}"
     done = set()
-    if out.exists():
-        for l in open(out):
+    for p in Path("results").glob(Path(base).name + "*.jsonl"):
+        for l in open(p):
             r = json.loads(l); done.add((r["model"], r["fold"], r["N"], r["r"], r["k"], r.get("seedoff", 0)))
     names = [M.name for M in models_for(a.family, a.k) if not only or M.name in only]
     units = [(a.family, a.k, f, N, r, only, a.seedoff) for N in map(int, a.sizes.split(",")) for r in range(a.reps) for f in map(int, a.folds.split(","))
              if any((n, f, N, r, a.k, a.seedoff) not in done for n in names)]
-    print(len(units), "units to run", flush=True)
-    with ProcessPoolExecutor(a.jobs) as ex:
-        futs = [ex.submit(unit, u) for u in units]
-        for fu in as_completed(futs):
-            for rec in fu.result():
-                if rec.get("error"):
-                    print("ERROR", rec, flush=True); continue
-                if (rec["model"], rec["fold"], rec["N"], rec["r"], rec["k"], rec["seedoff"]) in done:
-                    continue
-                open(out, "a").write(json.dumps(rec) + "\n")
-            print("done unit", rec["fold"], rec["N"], rec["r"], flush=True)
+    mine = units[a.worker_id::a.workers]
+    out = Path(f"{base}.w{a.worker_id}.jsonl")
+    print(f"worker {a.worker_id}/{a.workers}: {len(mine)} of {len(units)} units", flush=True)
+    for u in mine:
+        for rec in unit(u):
+            if rec.get("error"):
+                print("ERROR", rec, flush=True); continue
+            with open(out, "a") as fo:
+                fo.write(json.dumps(rec) + chr(10))
+        print("done unit", u[2:5], flush=True)
 
 
 if __name__ == "__main__":

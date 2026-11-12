@@ -1,0 +1,1 @@
+{"model": "Q4_brickwall8", "test_auc": 0.7860677312992932, "train_auc": 0.8493923611111112, "gap": 0.06332462981181797, "inner_cv_auc": 0.8315897065897065, "chosen": "scale=0.5236,l2=0.01,steps=300", "n_params": 57, "secs": 423.2, "fold": 0, "N": 100, "r": 0, "k": 8, "family": "torch", "seedoff": 0}
