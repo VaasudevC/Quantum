@@ -8,7 +8,9 @@ from pathlib import Path
 import numpy as np
 
 K = int(sys.argv[1]) if len(sys.argv) > 1 else 8
-B = 5000; MARGIN = -0.02; SIZES = (25, 50, 100, 200, 500)
+B = 5000; MARGIN = -0.02
+SIZES = tuple(int(x) for x in sys.argv[2].split(",")) if len(sys.argv) > 2 else (25, 50, 100, 200, 500)
+TAG = sys.argv[3] if len(sys.argv) > 3 else ""
 QN = ["Q1_vqc", "Q2_vqc_trained_scales", "Q3_qkernel_svm", "Q4_brickwall8"]
 CN = ["C1_lr", "C2_svm_rbf", "C3_gpc", "C4_knn", "C5_rf", "C6_xgb", "C7_tabpfn"]
 SHORT = {"Q1_vqc": "Q1 angle VQC", "Q2_vqc_trained_scales": "Q2 VQC trained scales", "Q3_qkernel_svm": "Q3 quantum-kernel SVM", "Q4_brickwall8": "Q4 brick-wall n=8",
@@ -35,10 +37,20 @@ def boot_indices(seed=0):
     return rng.integers(0, 5, (B, 5)), rng.integers(0, 40, (B, 5, 40))
 
 
+_IX = {}
+
+
 def boot_mean(D, ix):
-    """hierarchical bootstrap means of D (5, R<=40): resample folds, then subsets within fold; NaN-aware (uses available subsets)."""
-    f, r = ix
-    G = D[f[:, :, None], r]                      # (B, 5, 40)
+    """hierarchical bootstrap means of D (5, 40): resample folds, then subsets within fold.  Cells run with fewer subsets (pre-logged compute
+    deviation: r = 0..R-1 only) are resampled among their R available subsets, with the same seed for every pair of that size."""
+    have = np.isfinite(D).any(0); R = int(have.sum())
+    if R == 0:
+        return np.full(B, np.nan)
+    assert have[:R].all(), "subsets must be r = 0..R-1"
+    if R not in _IX:
+        rng = np.random.default_rng(R); _IX[R] = (rng.integers(0, 5, (B, 5)), rng.integers(0, R, (B, 5, R)))
+    f, r = _IX[R] if R != 40 else ix
+    G = D[:, :R][f[:, :, None], r]               # (B, 5, R)
     return np.nanmean(G.reshape(B, -1), axis=1)
 
 
@@ -73,7 +85,7 @@ def main():
                 if ok.sum() < 20: continue
                 bm = boot_mean(d, ix); lo, hi = ci(bm)
                 dg = Dq["gap"] - Dc["gap"]; bg = boot_mean(dg, ix); glo, ghi = ci(bg)
-                rows.append(dict(q=q, c=c, N=N, n=int(ok.sum()), mean_d=float(np.nanmean(d)), ci=[lo, hi], win_frac=float((d[ok] > 0).mean()),
+                rows.append(dict(q=q, c=c, N=N, n=int(ok.sum()), reduced=bool(ok.sum() < 200), mean_d=float(np.nanmean(d)), ci=[lo, hi], win_frac=float((d[ok] > 0).mean()),
                                  p_sup=float((np.sum(bm <= 0) + 1) / (B + 1)), p_ni=float((np.sum(bm <= MARGIN) + 1) / (B + 1)),
                                  gap_d=float(np.nanmean(dg)), gap_ci=[glo, ghi]))
     if rows:
@@ -92,7 +104,7 @@ def main():
         pr = [r for r in rows if r["q"] == q and r["c"] == c and r["N"] == N]
         if pr: bb.append(dict(N=N, best_q=q, best_c=c, **{k: pr[0][k] for k in ("mean_d", "ci", "win_frac", "p_sup_holm", "superiority", "noninferior_ci", "gap_d", "gap_ci")}))
     res["best_vs_best"] = bb
-    Path("results").mkdir(exist_ok=True); json.dump(res, open(f"results/sd_analysis_k{K}.json", "w"), indent=1)
+    Path("results").mkdir(exist_ok=True); json.dump(res, open(f"results/sd_analysis_k{K}{TAG}.json", "w"), indent=1)
     # ---- tables
     L = [f"### k = {K}: mean test AUC [95% hierarchical-bootstrap CI] (5 folds x up to 40 subsets), generalisation gap in parentheses\n", "| model | " + " | ".join(f"N={N}" for N in sizes) + " |", "|---|" + "---|" * len(sizes)]
     for m in qs + cs:
@@ -103,7 +115,7 @@ def main():
     L += ["", f"### All {len(rows)} quantum × classical × size comparisons (Holm over {len(rows)}; d = quantum − classical)\n", "| N | quantum | classical | mean d [95% CI] | wins | p_sup (Holm) | superior | non-inf. | gap diff [CI] |", "|---|---|---|---|---|---|---|---|---|"]
     for r in sorted(rows, key=lambda r: (r["N"], r["q"], r["c"])):
         L.append(f"| {r['N']} | {SHORT[r['q']]} | {SHORT[r['c']]} | {r['mean_d']:+.4f} [{r['ci'][0]:+.4f}, {r['ci'][1]:+.4f}] | {r['win_frac']:.2f} | {r['p_sup_holm']:.3f} | {r['superiority']} | {r['noninferior_ci']} | {r['gap_d']:+.3f} [{r['gap_ci'][0]:+.3f}, {r['gap_ci'][1]:+.3f}] |")
-    Path(f"results/sd_tables_k{K}.md").write_text("\n".join(L), encoding="utf-8")
+    Path(f"results/sd_tables_k{K}{TAG}.md").write_text("\n".join(L), encoding="utf-8")
     # ---- figures
     try:
         import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
@@ -122,13 +134,13 @@ def main():
             if key == "mean":
                 lo = np.array([res["mean_auc"][f"{m}|{N}"]["ci"][0] for N in xs]); hi = np.array([res["mean_auc"][f"{m}|{N}"]["ci"][1] for N in xs]); ax.fill_between(xs, lo, hi, color=col[m], alpha=0.12)
         ax.set_xscale("log"); ax.set_xlabel("training ECGs N (one per patient)"); ax.set_ylabel(ylab); ax.set_title(f"k = {K} features"); ax.grid(alpha=.3); ax.legend(fontsize=7, ncol=2)
-        plt.tight_layout(); plt.savefig(f"results/figs/{fname}{'' if K == 8 else f'_k{K}'}.png", dpi=150); plt.close()
+        plt.tight_layout(); plt.savefig(f"results/figs/{fname}{'' if K == 8 else f'_k{K}'}{TAG}.png", dpi=150); plt.close()
     if bb:
         fig, ax = plt.subplots(figsize=(6.5, 4.5)); xs = [b["N"] for b in bb]
         ax.errorbar(xs, [b["mean_d"] for b in bb], yerr=[[b["mean_d"] - b["ci"][0] for b in bb], [b["ci"][1] - b["mean_d"] for b in bb]], marker="o", capsize=3, color="#cc3311")
         ax.axhline(0, color="k", lw=1); ax.axhline(MARGIN, color="k", lw=1, ls="--"); ax.set_xscale("log"); ax.set_xlabel("training ECGs N"); ax.set_ylabel("best quantum − best classical (test AUC)")
         ax.set_title(f"k = {K}: paired difference, 95% hierarchical-bootstrap CI\n(dashed: non-inferiority margin −0.02)"); ax.grid(alpha=.3)
-        plt.tight_layout(); plt.savefig(f"results/figs/sd_diff_vs_N{'' if K == 8 else f'_k{K}'}.png", dpi=150); plt.close()
+        plt.tight_layout(); plt.savefig(f"results/figs/sd_diff_vs_N{'' if K == 8 else f'_k{K}'}{TAG}.png", dpi=150); plt.close()
     print("\n".join(L[:30]))
 
 

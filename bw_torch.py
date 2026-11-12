@@ -215,3 +215,61 @@ def train_fixed(m, Ztr, ytr, steps_list, lr=0.02, seed=0, l2=0.0, batch=512, war
         if t in steps_list:
             snaps[t] = m.state()
     return snaps
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Fast path (2026-11-13): same circuit, fewer autograd nodes.  Within one column the RBS gates act on disjoint pairs, so their generators
+# commute and the column's RBS layer is EXACTLY matrix_exp(sum_j (phi_j/2) K_j) with K_j the (sector) generator of SingleExcitation on pair j
+# (K|01> = |10>, K|10> = -|01>).  The trainable part U(w) is sample-independent, so psi = (data phases * phi0) @ U^T.  Verified against BW.psi in
+# bw_fast_check() (complex128: <1e-12).
+# ---------------------------------------------------------------------------------------------------------------------
+def _attach_fast(bw):
+    if hasattr(bw, "_K"):
+        return
+    D = bw.D; Ks = []
+    for col in range(bw.columns):
+        Kc = []
+        for (a, b) in bw.pairs_list[col]:
+            i01, i10 = bw.pidx[(a, b)]
+            K = torch.zeros(D, D, dtype=bw.fdtype)
+            K[i10, i01] = 1.0; K[i01, i10] = -1.0
+            Kc.append(K)
+        Ks.append(torch.stack(Kc))
+    bw._K = Ks
+
+
+def psi_fast(bw, theta, w):
+    _attach_fast(bw)
+    n = bw.n; U = None
+    for col in range(bw.columns):
+        phi = -2 * w[col, : len(bw.pairs_list[col])]
+        G = torch.einsum("j,jab->ab", phi / 2, bw._K[col])
+        R = torch.linalg.matrix_exp(G).to(bw.cdtype)                                          # RBS layer (real orthogonal)
+        ph = torch.polar(torch.ones(bw.D, dtype=bw.fdtype), bw.occ @ (-w[col, n // 2:]))     # Rz layer (diagonal)
+        C = R * ph[None, :]                                                                  # R @ diag(ph)
+        U = C if U is None else C @ U
+    ph = theta @ bw.occ.T
+    psi0 = bw.phi0 * torch.polar(torch.ones_like(ph), ph)
+    return psi0 if U is None else psi0 @ U.T
+
+
+def use_fast(flag=True):
+    """switch BW.psi to the fast implementation globally (training code unchanged)."""
+    if flag and not hasattr(BW, "_psi_slow"):
+        BW._psi_slow = BW.psi
+        BW.psi = lambda self, theta, w: psi_fast(self, theta, w)
+    elif not flag and hasattr(BW, "_psi_slow"):
+        BW.psi = BW._psi_slow; del BW._psi_slow
+
+
+def bw_fast_check(trials=5, seed=0):
+    rng = np.random.default_rng(seed); worst = 0.0
+    for (n, cols, k) in ((8, 4, 4), (8, 2, 2), (12, 4, 6), (8, 6, 4)):
+        for arch in ("brick", "butterfly") if n == 8 else ("brick",):
+            bw = BW(n, cols, k, dtype=torch.complex128, arch=arch)
+            for _ in range(trials):
+                th = torch.tensor(rng.uniform(-2, 2, (7, n))); w = torch.tensor(rng.normal(0, 0.8, (cols, 3 * n // 2)))
+                a = bw.psi(th, w); b = psi_fast(bw, th, w)
+                ph = (torch.conj(b) * a).sum(1); ph = ph / ph.abs()                                   # global phase per sample
+                worst = max(worst, float((a - b * ph[:, None]).abs().max()))
+    return worst

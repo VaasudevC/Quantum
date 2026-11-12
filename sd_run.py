@@ -216,7 +216,7 @@ def slow_process():
     V._ry(st, 2, a); t = time.time()
     for _ in range(100):
         V._ry(st, 2, a)
-    return (time.time() - t) / 100 > 0.001
+    return (time.time() - t) / 100 > 0.00025
 
 
 def main():

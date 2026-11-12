@@ -83,3 +83,22 @@ and (ii) draw patient-grouped subsamples with several ECGs per patient rather th
 * Workers: independent processes each taking every W-th unit (`sd_launch.py`); a freshly started process that measures numpy ~60× slower than normal restarts itself (an OS-scheduling effect we could not explain). Results of one unit are written only after all its models finish.
 * Hardware note: the first ~2 h ran on battery with a 40 % processor cap; later on AC power.
 * Paused until N = 100 and its analysis are committed: EXTRA 6 (shot-robust heads), EXTRA 1 VQC seeds, n = 16 external.
+
+## Deviations from the pre-registered plan (compute) — logged 2026-11-13, BEFORE any SD analysis was run
+
+The analysis method (paired hierarchical bootstrap, one-sided superiority with Holm, non-inferiority margin −0.02, win fractions, gap comparison, claim language) is **unchanged**.
+Only the amount of data at the secondary cells is reduced, because the available compute (~1–2 effective cores; N = 100 alone took ~12 h) makes the full grid infeasible:
+
+| cell | pre-registered | executed |
+|---|---|---|
+| N = 100, k = 8 (primary endpoint), all models | 40 subsets × 5 folds | **unchanged**: 40 × 5 |
+| Q4 brick-wall at N ∈ {25, 50, 200, 500}, k = 8 | 40 subsets × 5 folds | **first 10 subsets** (r = 0–9) × 5 folds |
+| all models at N = 500 (k = 8 and k = 4) | 40 × 5 | **first 10 subsets** (r = 0–9) × 5 folds |
+| Q4 brick-wall at k = 4 | all N | **dropped** |
+| C7 TabPFN | all cells | **pending** (licence login; catch-up run under the same plan if it becomes available) |
+
+Consequences, stated now: (1) the subsets were drawn before any result was seen, so r = 0–9 is a fixed, outcome-independent subsample;
+(2) in reduced cells the hierarchical bootstrap resamples folds and then only the available subsets (10 per fold), so those CIs are wider and those tests have less power;
+(3) the Holm family still counts every quantum × classical × size comparison that is actually run (reported with each table); at k = 4 the quantum side is Q1–Q3 only;
+(4) claim language: a superiority or non-inferiority result in a reduced cell is reported with the label "reduced sample (10 of 40 subsets)"; a failure to reach either in a reduced cell is reported as "inconclusive at reduced sample size", not as evidence that classical models were better, unless the CI excludes the margin on the classical side.
+(5) Implementation note (no effect on results): an exact faster brick-wall formulation (column unitary = matrix_exp of commuting generators; verified to 1e-15) was profiled and NOT adopted — it is only ~15 % faster and not bit-identical in complex64, so all Q4 runs use the same code as N = 100.
