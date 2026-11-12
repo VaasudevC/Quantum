@@ -49,3 +49,8 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - THROUGHPUT FINDING: the laptop is on battery (BatteryStatus=discharging) and the active Balanced plan caps 'maximum processor state' at 40% on DC power (powercfg PROCTHROTTLEMAX DC=0x28); AC is 99%. Plugging in would give ~2.5x throughput. I did not change the user's power settings. SD N=100: Q1 ~10 min/unit, Q4 ~7 min/unit under this cap; full SD (all N, k=8) projected at days. Order N=100,50,200,25,500 retained so the primary answer exists first.
 - Memory pressure (commit 29.7/31.4 GB, free RAM <1 GB) throttled SD workers to ~35% CPU each; X2 geometry job stopped (to be rerun later); SD continues with 6+4 workers.
 - CPU finding: with ~14 CPU-bound processes running, each of them runs ~10x slower than a solo process -> total usable capacity is only ~1.2 cores (session-level throttling; not affinity, not EcoQoS (opt-out tested), not battery after plugging in). Projected N=100 completion ~6 h.
+- 2026-11-13 ~01:30: SD N=100 complete (all models). Stopped the N=50/200/25/500 launcher (16 units kept, resumable) per instruction "fix throughput before launching anything else".
+  Brick-wall profiling: ~100 tiny autograd ops/step (gate gather/clone/scatter), 40 ms/step solo; exact matrix_exp column formulation verified (1e-15) but only ~15% faster and
+  not bit-identical in complex64 -> not adopted. Solo Q4 unit ~3 min vs ~7 min in 10-process runs => contention is the main cost.
+  Compute deviations logged in SMALLDATA.md and committed (66b5b5f) BEFORE analysis; primary endpoint analysed and committed (6eef855).
+  sd_bench_workers.py written to time 1/2/4 workers after the machine clean-up (reboot, close Chrome/VS Code, wsl --shutdown — user actions).
