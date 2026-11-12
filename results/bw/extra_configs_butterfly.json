@@ -1,0 +1,1 @@
+{"8": {"n": 8, "columns": 6, "k": 4, "scale": 0.5235987755982988, "head": "linear", "lr": 0.02, "steps": 1500, "batch": 512, "phase": "tanh", "arch": "butterfly"}}

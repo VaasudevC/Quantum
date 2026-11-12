@@ -14,7 +14,7 @@ cfgs = json.load(open(a.configs))
 for key, cfg in cfgs.items():
     n = cfg["n"]
     for seed in a.seeds:
-        mdl = T.Model(n, cfg["columns"], cfg["k"], cfg["scale"], head=cfg["head"], seed=seed)
+        mdl = T.Model(n, cfg["columns"], cfg["k"], cfg["scale"], head=cfg["head"], seed=seed, arch=cfg.get("arch", "brick"))
         v, bstep, tot, secs = T.train_model(mdl, Z[tr][:, :n], y[tr], Z[va][:, :n], y[va], steps=cfg["steps"], batch=cfg["batch"], lr=cfg["lr"], seed=seed)
         s = mdl.predict(Z[te][:, :n])
         r = dict(model=f"{a.tag}{n}" + (f"_s{seed}" if seed else ""), k=n, family="brickwall", cfg=cfg, seed=seed, val_auc=float(v), best_step=bstep,
