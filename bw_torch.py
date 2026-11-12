@@ -87,6 +87,22 @@ def lr_fit(F, y, C=1.0, iters=60):
     return w.detach().numpy(), float(b)
 
 
+@torch.no_grad()
+def shot_auc(m, Z, y, shots=1000, reps=5, seed=0, chunk=1000):
+    """mean AUC over `reps` repeats of finite-shot estimates (multinomial sampling from the exact output distribution) of the two-body features."""
+    g = torch.Generator().manual_seed(seed); M = m.bw.M_adj.double() if m.kind == "adj" else m.bw.M_all.double()
+    h = m.h.detach().double().numpy(); b = float(m.b); out = []
+    P = []
+    for i in range(0, len(Z), chunk):
+        psi = m.bw.psi(m.theta(Z[i:i + chunk]), m.w); p = (psi.real ** 2 + psi.imag ** 2).double(); P.append(p / p.sum(1, keepdim=True))
+    P = torch.cat(P)
+    for _ in range(reps):
+        idx = torch.multinomial(P, shots, replacement=True, generator=g)
+        fr = torch.zeros_like(P).scatter_add_(1, idx, torch.ones_like(idx, dtype=torch.double)) / shots
+        out.append(auc(y, ((4 * fr @ M).numpy() @ h + b)))
+    return float(np.mean(out))
+
+
 class Model:
     """phase map + circuit + head.  head: 'linear' (n features), 'linear_score' (same, MSE on +-1, no sigmoid), 'corr' (n(n-1)/2)."""
     def __init__(self, n, columns, k, scale, head="linear", phase="tanh", xmax=None, dtype=torch.complex64, seed=0, arch="brick"):
@@ -129,7 +145,7 @@ class Model:
             self.w.copy_(torch.tensor(st["w"])); self.h.copy_(torch.tensor(st["h"])); self.b.fill_(st["b"])
 
 
-def train_model(m, Ztr, ytr, Zva, yva, steps=600, batch=512, lr=0.02, seed=0, extend=True, warm=True, log=None):
+def train_model(m, Ztr, ytr, Zva, yva, steps=600, batch=512, lr=0.02, seed=0, extend=True, warm=True, log=None, l2=0.0, maxnorm=None, select="exact", shots=1000):
     """Adam, class-weighted BCE (or MSE for linear_score), best-val-AUC checkpoint every 25 steps; if the best checkpoint lies in the last 20% of the run, the run is extended once by the same number of steps."""
     rng = np.random.default_rng(seed)
     n_tr = len(ytr); cw = np.array([n_tr / (2 * (n_tr - ytr.sum())), n_tr / (2 * ytr.sum())])
@@ -157,9 +173,14 @@ def train_model(m, Ztr, ytr, Zva, yva, steps=600, batch=512, lr=0.02, seed=0, ex
             loss = (wb * 0.5 * (s - (2 * yb - 1)) ** 2).mean()
         else:
             loss = (wb * (torch.nn.functional.softplus(s) - yb * s)).mean()
+        if l2:
+            loss = loss + l2 * (m.h ** 2).sum()
         opt.zero_grad(); loss.backward(); opt.step()
+        if maxnorm:
+            with torch.no_grad():
+                m.h.clamp_(-maxnorm, maxnorm)
         if t % 25 == 0 or t == total:
-            v = auc(yva, m.predict(Zva))
+            v = auc(yva, m.predict(Zva)) if select == "exact" else shot_auc(m, Zva, yva, shots, 5, seed=t)
             if v > best[0]:
                 best = (v, m.state(), t)
             if log:
