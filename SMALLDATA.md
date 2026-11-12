@@ -79,7 +79,7 @@ and (ii) draw patient-grouped subsamples with several ECGs per patient rather th
 
 * **Execution-order change (user instruction, 2026-11-12):** after N = 100, the sizes N = 50, 200, 25, 500 are run for Q1–Q3 and all classical models FIRST, and Q4 (brick-wall, the slow family) at those sizes LAST. The analysis stays exactly as pre-registered above.
   The primary-endpoint analysis at N = 100 is run as soon as all models are finished at N = 100.
-* **C7 TabPFN skipped** for now (needs an interactive licence login; v1 weights are not downloadable). If the licence login works later, C7 is run as a catch-up under the same plan; until then the classical side has C1–C6 and the multiplicity count excludes C7.
+* **C7 TabPFN: not run (licence login required).** tabpfn ≥ 2 needs an interactive browser licence login, and the v1 weights are no longer downloadable; it was not attempted unattended. The classical side is C1–C6 and the multiplicity count excludes C7. (Status changed from "pending" on 2026-11-13.)
 * Workers: independent processes each taking every W-th unit (`sd_launch.py`); a freshly started process that measures numpy ~60× slower than normal restarts itself (an OS-scheduling effect we could not explain). Results of one unit are written only after all its models finish.
 * Hardware note: the first ~2 h ran on battery with a 40 % processor cap; later on AC power.
 * Paused until N = 100 and its analysis are committed: EXTRA 6 (shot-robust heads), EXTRA 1 VQC seeds, n = 16 external.
@@ -95,7 +95,7 @@ Only the amount of data at the secondary cells is reduced, because the available
 | Q4 brick-wall at N ∈ {25, 50, 200, 500}, k = 8 | 40 subsets × 5 folds | **first 10 subsets** (r = 0–9) × 5 folds |
 | all models at N = 500 (k = 8 and k = 4) | 40 × 5 | **first 10 subsets** (r = 0–9) × 5 folds |
 | Q4 brick-wall at k = 4 | all N | **dropped** |
-| C7 TabPFN | all cells | **pending** (licence login; catch-up run under the same plan if it becomes available) |
+| C7 TabPFN | all cells | **not run (licence login required)** |
 
 Consequences, stated now: (1) the subsets were drawn before any result was seen, so r = 0–9 is a fixed, outcome-independent subsample;
 (2) in reduced cells the hierarchical bootstrap resamples folds and then only the available subsets (10 per fold), so those CIs are wider and those tests have less power;
@@ -143,3 +143,27 @@ This is an empirical result on classical ECG features (8 hand-crafted features, 
 | brick-wall (Q4): s/unit → units/hour | 19 s → 186 | 19 s → 361 | 22 s → 636 | 24 s → 847 | 30 s → **934** |
 
 Chosen: **8 workers per family** (best measured), never more; one worker is dropped whenever free RAM falls below 3 GB. Before the clean-up the same main-family N=50 unit took >10 min in a 10-worker run — the earlier slowness was a machine-state problem (memory pressure), not the code.
+
+## Sensitivity analyses at N = 100 (added 2026-11-13 AFTER the primary result; the primary result and claim level above stay as recorded)
+
+Code `sd_sensitivity.py`; numbers `results/sd_sensitivity_N100.json`. C7 TabPFN, listed as "pending" in the primary section, is **not run (licence login required)**.
+
+**(1) Bootstrap levels.** hierarchical bootstrap (sd_analyze.boot_mean): level 1 = the 5 outer folds, resampled with replacement; level 2 = the 40 subsets within each resampled fold, resampled with replacement; level 3 = test ECGs: NOT resampled (each subset's test AUC on the full outer test fold is treated as fixed). All 40 subsets of a fold share the same test ECGs, so test-set sampling noise enters as a common fold-level shift, which the fold level of the bootstrap resamples (with only 5 folds, coarsely).
+
+Primary pair Q3 quantum-kernel SVM − C5 random forest: per-fold mean differences fold 0: -0.0023, fold 1: -0.0028, fold 2: -0.0045, fold 3: -0.0008, fold 4: -0.0039; mean -0.0028; hierarchical-bootstrap 95% CI [-0.0049, -0.0010]; fold-level t-interval over the 5 fold means (4 df) [-0.0046, -0.0010].
+
+**(2) Best models chosen by inner-CV AUC** (on the N-ECG subsets, no test data): best quantum = Q3 quantum-kernel SVM (mean inner-CV AUC 0.9428), best classical = C2 SVM-RBF (0.9469). Difference on the test folds -0.0006, 95% CI [-0.0024, +0.0013], fold-level t-interval [-0.0026, +0.0014], quantum wins 0.45 of subsets, per-fold +0.0007, +0.0007, -0.0026, -0.0021, +0.0004. Inner-CV means: C2 SVM-RBF 0.9469, C1 LR 0.9454, Q3 quantum-kernel SVM 0.9428, Q1 angle VQC 0.9413, C3 GP classifier 0.9391, C5 random forest 0.9296, Q2 VQC trained scales 0.9260, C4 kNN 0.9150, Q4 brick-wall n=8 0.9102, C6 XGBoost 0.9091.
+
+**(3) Train–test gap, angle VQC (Q1) vs logistic regression (C1).** Parameters: Q1 81 (72 circuit angles + 8 readout weights + 1 bias), plus 0 trained encoding scales; C1 9 (8 weights + 1 bias) — the VQC has 9× more trainable parameters. Gap Q1 +0.0673, C1 +0.0682; difference -0.0010 [-0.0038, +0.0017] (per fold +0.0010, -0.0035, +0.0018, -0.0019, -0.0021); test AUC difference +0.0020 [-0.0003, +0.0041].
+
+Reading: (1) every fold shows the best classical model (random forest) slightly ahead of the best quantum model; the fold-level interval, which does not rely on resampling subsets, agrees with the hierarchical CI.
+(2) If "best" is chosen without looking at test data (inner-CV AUC), the comparison becomes Q3 quantum-kernel SVM vs C2 SVM-RBF and is a tie (CI includes 0) — the small significant deficit in the primary comparison depends on picking random forest by test AUC.
+(3) The angle VQC generalises exactly like logistic regression (gap difference −0.001, CI includes 0) and reaches the same test AUC, with 81 trainable parameters against LR's 9; the comparison is therefore not parameter-matched, and per parameter LR is the more efficient model.
+
+## Limitations
+
+* Single dataset (PTB-XL, MI vs NORM, 8 hand-crafted features); results may not transfer to other tasks or raw signals.
+* All quantum models are simulated exactly on a classical computer; the angle-encoding kernel (Q3) is a product of cos² terms that is classically computable in O(k) per pair, and the brick-wall (Q4) is our reimplementation of Antonio's model (`quantum_utils.py` was not available). No hardware noise or shot noise is included.
+* C7 TabPFN, the strongest pre-registered small-data tabular baseline, was **not run** (licence login required).
+* Subset variance is large at small N (CIs per model ±0.006 at N=100), and only 5 outer folds carry test-set variation.
+* Compute deviations (logged before analysis): Q4 at secondary sizes and all models at N=500 on 10 of the 40 subsets; Q4 at k=4 dropped.

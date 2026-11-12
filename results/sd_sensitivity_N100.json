@@ -1,0 +1,82 @@
+{
+ "bootstrap_levels": "hierarchical bootstrap (sd_analyze.boot_mean): level 1 = the 5 outer folds, resampled with replacement; level 2 = the 40 subsets within each resampled fold, resampled with replacement; level 3 = test ECGs: NOT resampled (each subset's test AUC on the full outer test fold is treated as fixed). All 40 subsets of a fold share the same test ECGs, so test-set sampling noise enters as a common fold-level shift, which the fold level of the bootstrap resamples (with only 5 folds, coarsely).",
+ "primary_by_test_auc": {
+  "q": "Q3_qkernel_svm",
+  "c": "C5_rf",
+  "mean_d": -0.0028432055002264186,
+  "ci_hier": [
+   -0.004860931225754599,
+   -0.0009828059827873496
+  ],
+  "p_sup_raw": 0.999000199960008,
+  "per_fold": [
+   -0.002280952029847491,
+   -0.002761427018305773,
+   -0.004482648636394329,
+   -0.0007810835909135228,
+   -0.003909916225670976
+  ],
+  "ci_fold_t": [
+   -0.004642345751419444,
+   -0.001044065249033393
+  ],
+  "win_frac": 0.42
+ },
+ "inner_cv_means": {
+  "Q1_vqc": 0.9412620250120249,
+  "Q2_vqc_trained_scales": 0.9259701178451177,
+  "Q3_qkernel_svm": 0.9428117484367484,
+  "Q4_brickwall8": 0.9101512145262146,
+  "C1_lr": 0.9454133597883597,
+  "C2_svm_rbf": 0.9469032587782589,
+  "C3_gpc": 0.9391275853775853,
+  "C4_knn": 0.9150345719095719,
+  "C5_rf": 0.9295723605098606,
+  "C6_xgb": 0.9090631012506014
+ },
+ "best_by_inner_cv": {
+  "q": "Q3_qkernel_svm",
+  "c": "C2_svm_rbf",
+  "mean_d": -0.0005971541459748142,
+  "ci_hier": [
+   -0.0023529473068501848,
+   0.0013212424368695519
+  ],
+  "p_sup_raw": 0.73625274945011,
+  "per_fold": [
+   0.0006565945345774343,
+   0.0006585703601110742,
+   -0.002589843863050964,
+   -0.002071508499423158,
+   0.0003604167379115425
+  ],
+  "ci_fold_t": [
+   -0.00258060613188221,
+   0.0013862978399325817
+  ],
+  "win_frac": 0.445
+ },
+ "gap_Q1_vs_C1": {
+  "gap_Q1": 0.06725985910638159,
+  "gap_C1": 0.06823136845486685,
+  "gap_diff": -0.0009715093484852761,
+  "gap_diff_ci": [
+   -0.00377113858337253,
+   0.0017120152586939704
+  ],
+  "gap_diff_per_fold": [
+   0.0009684303539972489,
+   -0.0035439386401356745,
+   0.0017524532561893735,
+   -0.00189616195237505,
+   -0.0021383297601022784
+  ],
+  "test_auc_diff": 0.0019524121262630512,
+  "test_auc_ci": [
+   -0.00030523334186100166,
+   0.0040762665675710946
+  ],
+  "params_Q1": "81 (72 circuit angles + 8 readout weights + 1 bias), plus 0 trained encoding scales",
+  "params_C1": "9 (8 weights + 1 bias)"
+ }
+}

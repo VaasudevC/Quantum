@@ -54,3 +54,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
   not bit-identical in complex64 -> not adopted. Solo Q4 unit ~3 min vs ~7 min in 10-process runs => contention is the main cost.
   Compute deviations logged in SMALLDATA.md and committed (66b5b5f) BEFORE analysis; primary endpoint analysed and committed (6eef855).
   sd_bench_workers.py written to time 1/2/4 workers after the machine clean-up (reboot, close Chrome/VS Code, wsl --shutdown — user actions).
+- 2026-11-13 01:49 Phase 2 launched: main family k=8 N=50,200,25 (40 subsets) then N=500 (subsets 0-9), 8 workers, tag _s2 (16 earlier N=50 units resumed).
