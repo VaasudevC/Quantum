@@ -55,3 +55,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
   Compute deviations logged in SMALLDATA.md and committed (66b5b5f) BEFORE analysis; primary endpoint analysed and committed (6eef855).
   sd_bench_workers.py written to time 1/2/4 workers after the machine clean-up (reboot, close Chrome/VS Code, wsl --shutdown — user actions).
 - 2026-11-13 01:49 Phase 2 launched: main family k=8 N=50,200,25 (40 subsets) then N=500 (subsets 0-9), 8 workers, tag _s2 (16 earlier N=50 units resumed).
+- 2026-11-13 01:51 RAM guard started (stops one sd_run worker if free RAM < 3 GB; log results/sd_ramguard.log).
