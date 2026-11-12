@@ -1,7 +1,7 @@
 # BRICKWALL — Antonio's magic-state brick-wall QNN vs tuned classical models on PTB-XL (MI vs NORM)
 
 Branch `brickwall-overnight`. Chronological log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). This report is updated after every phase.
-Status: **P0 ✔ · P1 ✔ · P2 ✔ · P3 … · P4 … · P5 … · P6 … · P7 …** (see the bottom of this file for what is still open).
+Status: **P0–P7 ✔; EXTRA 1–5 ✔ except where marked pending in the EXTRA section** (see OVERNIGHT_LOG.md for what finished last).
 
 ## Headline (best quantum vs best classical; advantage rule applied)
 
@@ -633,7 +633,7 @@ from a classical model on grounds of hardness, and indeed none does: the brick-w
 
 **Questions for Antonio.**
 1. **`quantum_utils.py` conventions.** Is `spreading_matrix(n)` the exact Walsh–Hadamard matrix? For n = 12 (not a power of 2) what is used? Our literal "n−1 columns of chain-pair RBS(π/4)" is orthogonal but not uniform (max ||W_ij|²−1/n| = 0.35 at n=8), contradicting Lemma 2 — which circuit does `UniformSpreading` implement? How are the weights initialised in `initial_weights` (scale/distribution), and are the `phases` it returns used?
-2. **Particle number.** What is the intended default `particle_count(n, k=None)` at n=12 (we guess 2)? In our runs k=4–6 at n=12 beat k=2 slightly; at n=8 k=4 only helps with ≥ 4 columns. Is there a principled rule for k at small n?
+2. **Particle number.** What is the intended default `particle_count(n, k=None)` at n=12 (we guess 2)? In our runs k=4–6 at n=12 beat k=2 slightly; at n=8 k=4 ties k=2 with 4 columns and is much worse with 2 columns. Is there a principled rule for k at small n?
 3. **Sample-level head.** Should the head that the paper ties to hardness be trained jointly with the circuit (our version trains the head on samples with the circuit frozen)? Any recommended permutation-invariant architecture and shot budget?
 4. **Data encoding scale.** The paper's φ = π·x/max|x| let outliers set the scale; small tanh-scaled phases (π/6–π/4) were better at n=8 and equal at n=12. Is the full-π range important for the hardness arguments (anticoncentration), i.e. is there a conflict between "hard" and "accurate" angle scales?
 5. **Head conditioning / shots.** Unregularised linear heads on the two-body features reached |w| ≈ 400 (n=12) and in one fold 1.4e4 (n=8), making the model unusable at < 10⁶ shots. Is a shot-aware or regularised head part of the intended pipeline?
