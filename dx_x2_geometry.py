@@ -1,128 +1,75 @@
-"""DX / X2: kernel-geometry diagnostic (Huang et al. 2021, "Power of data in quantum machine learning"), DISCOVERY folds 0-2 only, no SD data touched.
+"""DX / X2 (exploratory, DISCOVERY folds 0-2 only): geometric difference (Huang et al. 2021, "Power of data in quantum machine learning")
+between classical kernels and the pi/6 angle-encoding quantum kernel.
 
-For a random stratified sample of M ECGs from the outer-train part of each discovery fold (features = the first k L1-selected, standardised columns of the cached fold arrays):
-  K_Q  : quantum fidelity kernels  (angle encoding a = s*tanh(z): K = prod_i cos^2((a_i-a'_i)/2);  brick-wall encoding state |psi(x)> = D(phi(x))|phi0>, n=8, k=4, phase s*tanh(z))
-  K_C  : classical RBF kernel exp(-gamma |x-x'|^2) with gamma tuned by 5-fold CV AUC of an SVC (C=1) on the same sample (labels used for tuning only)
-  g(K_C || K_Q) = sqrt( || sqrt(K_Q) (K_C + lam I)^-1 sqrt(K_Q) ||_inf ),  both kernels with unit diagonal (Tr K = M), lam in {1e-4, 1e-3, 1e-2}
-  also the reverse g(K_Q || K_C) and the projected quantum kernels (angle encoding: 1-qubit RDMs; brick-wall: adjacent-pair 2-RDMs; the 1-RDMs of the particle-number
-  sector are diagonal and data-independent, hence useless as features), with gamma tuned the same way.
-Small g  => no quantum-kernel advantage possible for ANY labelling; large g => possible (necessary, not sufficient).
-  python dx_x2_geometry.py [M=600]  ->  results/dx_x2_geometry.json, appended to results/dx_registry.csv"""
-import json, sys, time
+  K_Q(x,x') = |<phi(x)|phi(x')>|^2 for the encoding-only angle circuit, a_i = (pi/6) tanh(z_i):  K_Q = prod_i cos^2((a_i - a'_i)/2)
+             (a classically computable product kernel; unit diagonal)
+  K_C      : (a) RBF exp(-gamma |x-x'|^2), gamma tuned by 5-fold CV AUC of an SVC (C=1) on the same sample; (b) linear x.x', rescaled to Tr K = N
+  g(K_C || K_Q) = sqrt( || sqrt(K_Q) (K_C + lam I)^-1 sqrt(K_Q) ||_inf ),  lam in {1e-4, 1e-3, 1e-2, 1e-1}
+Interpretation (Huang et al.): if g is small compared with sqrt(N), a classical model with kernel K_C can match the quantum kernel's prediction error for ANY labelling
+(no room for a quantum prediction advantage); g ~ sqrt(N) is necessary (not sufficient) for an advantage.
+Samples: N in {100, 500} ECGs drawn at random (class-stratified, seed per fold/N) from the outer-train part of folds 0, 1, 2; features = first 8 L1-selected,
+standardised columns of the cached fold arrays.  No test fold, no folds 3-4, no external data.
+  ..\\.venv\\Scripts\\python.exe dx_x2_geometry.py   ->  results/dx_x2_geometry.json, rows appended to results/dx_registry.csv"""
+import json
 import numpy as np
-import bw_utils as B
 from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import roc_auc_score
 
-M = int(sys.argv[1]) if len(sys.argv) > 1 else 600
-SCALES = (np.pi / 8, np.pi / 6, np.pi / 4, np.pi / 2)
+S = np.pi / 6; K = 8; LAMS = (1e-4, 1e-3, 1e-2, 1e-1)
 
 
-def fid_angle(Z, s):
-    A = s * np.tanh(Z); K = np.ones((len(A), len(A)))
+def k_angle(Z):
+    A = S * np.tanh(Z); Kq = np.ones((len(A), len(A)))
     for i in range(A.shape[1]):
-        K *= np.cos((A[:, i][:, None] - A[:, i][None, :]) / 2) ** 2
-    return K
+        Kq *= np.cos((A[:, i][:, None] - A[:, i][None, :]) / 2) ** 2
+    return Kq
 
 
-def bw_states(Z, s, sec):
-    """|psi(x)> in the k=4 sector of n=8 qubits (RZ(-phi) data layer on |phi0>): amplitudes (M, D)."""
-    th = -s * np.tanh(Z)
-    return sec.phi0[None, :] * np.exp(1j * (th @ sec.occ.T))
+def cv_auc(Kmat, y):
+    aucs = []
+    for tr, te in StratifiedKFold(5, shuffle=True, random_state=0).split(Kmat, y):
+        m = SVC(C=1, kernel="precomputed").fit(Kmat[np.ix_(tr, tr)], y[tr]); aucs.append(roc_auc_score(y[te], m.decision_function(Kmat[np.ix_(te, tr)])))
+    return float(np.mean(aucs))
 
 
-def fid_bw(psi):
-    G = np.conj(psi) @ psi.T
-    return np.abs(G) ** 2
+def sqrtm_psd(Km):
+    w, V = np.linalg.eigh((Km + Km.T) / 2); return (V * np.sqrt(np.clip(w, 0, None))) @ V.T
 
 
-def rdm1_angle(Z, s):
-    a = s * np.tanh(Z); c, sn = np.cos(a / 2), np.sin(a / 2)
-    return np.stack([c * c, c * sn, c * sn, sn * sn], -1)          # (M, k, 4) real RDM entries
-
-
-def rdm2_bw(psi, sec, n=8):
-    feats = []
-    idx = {tuple(r): i for i, r in enumerate(sec.occ)}
-    for j in range(n):
-        a, b = j, (j + 1) % n
-        p = np.abs(psi) ** 2
-        f00 = p[:, (sec.occ[:, a] == 0) & (sec.occ[:, b] == 0)].sum(1); f11 = p[:, (sec.occ[:, a] == 1) & (sec.occ[:, b] == 1)].sum(1)
-        f01 = p[:, (sec.occ[:, a] == 0) & (sec.occ[:, b] == 1)].sum(1); f10 = p[:, (sec.occ[:, a] == 1) & (sec.occ[:, b] == 0)].sum(1)
-        i01 = [i for i, r in enumerate(sec.occ) if r[a] == 0 and r[b] == 1]; i10 = [idx[tuple(np.where((np.arange(n) == a) | (np.arange(n) == b), 1 - sec.occ[i], sec.occ[i]))] for i in i01]
-        coh = (psi[:, i01] * np.conj(psi[:, i10])).sum(1)
-        feats.append(np.stack([f00, f01, f10, f11, coh.real, coh.imag], -1))
-    return np.stack(feats, 1)
-
-
-def proj_kernel(F, gamma):
-    X = F.reshape(len(F), -1); sq = (X ** 2).sum(1)
-    D = sq[:, None] + sq[None, :] - 2 * X @ X.T
-    return np.exp(-gamma * np.maximum(D, 0))
-
-
-def tune_gamma(Kfun, gammas, y):
-    best = (-1, None)
-    for g in gammas:
-        K = Kfun(g); aucs = []
-        for tr, te in StratifiedKFold(5, shuffle=True, random_state=0).split(K, y):
-            m = SVC(C=1, kernel="precomputed").fit(K[np.ix_(tr, tr)], y[tr]); aucs.append(roc_auc_score(y[te], m.decision_function(K[np.ix_(te, tr)])))
-        if np.mean(aucs) > best[0]: best = (float(np.mean(aucs)), g)
-    return best
-
-
-def sqrtm_psd(K):
-    w, V = np.linalg.eigh((K + K.conj().T) / 2); w = np.clip(w, 0, None); return (V * np.sqrt(w)) @ V.conj().T
-
-
-def geom(KC, KQ, lam):
-    S = sqrtm_psd(KQ); inv = np.linalg.inv(KC + lam * np.eye(len(KC)))
-    return float(np.sqrt(np.linalg.eigvalsh((S @ inv @ S + (S @ inv @ S).conj().T) / 2).max()))
+def g(KC, KQ, lam):
+    Sq = sqrtm_psd(KQ); M = Sq @ np.linalg.solve(KC + lam * np.eye(len(KC)), Sq)
+    return float(np.sqrt(np.linalg.eigvalsh((M + M.T) / 2).max()))
 
 
 def main():
-    sec = B.Sector(8, 0, 4); out = {}; reg = []
-    for k in (4, 8):
+    out = {}; reg = []
+    for N in (100, 500):
         for fold in (0, 1, 2):
-            d = np.load(f"C:/bwcache/l1_f{fold}.npz"); Z0, y0, tr = d["Z"].astype(float)[:, :k], d["y"], d["tr"]
-            rng = np.random.default_rng(100 + fold); pos = rng.choice(tr[y0[tr] == 1], M // 3, replace=False); neg = rng.choice(tr[y0[tr] == 0], M - M // 3, replace=False)
-            idx = np.concatenate([pos, neg]); Z = Z0[idx]; y = y0[idx]
-            d2 = ((Z[:, None, :] - Z[None, :, :]) ** 2).sum(-1); med = np.median(d2[d2 > 0]); gl = [0.25 / med, 0.5 / med, 1 / med, 2 / med, 4 / med, 8 / med, 16 / med]
-            cv, gC = tune_gamma(lambda g: np.exp(-g * d2), gl, y); KC = np.exp(-gC * d2)
-            res = dict(rbf_gamma=gC, rbf_cv_auc=cv)
-            def add(name, KQ, extra=None):
-                cvq = None
-                try:
-                    cvq = tune_gamma(lambda g: KQ, [1.0], y)[0]            # CV AUC of the quantum kernel itself (no tuning)
-                except Exception: pass
-                res[name] = dict(cv_auc_quantum_kernel=cvq, **{f"g_C_to_Q_lam{l}": geom(KC, KQ, l) for l in (1e-4, 1e-3, 1e-2)}, **{f"g_Q_to_C_lam{l}": geom(KQ, KC, l) for l in (1e-3,)}, **(extra or {}))
-                reg.append(dict(k=k, fold=fold, kernel=name, **{kk: vv for kk, vv in res[name].items()}))
-            for s in SCALES:
-                add(f"angle_fid_s{s:.3f}", fid_angle(Z, s))
-            if k >= 4:
-                for s in SCALES[1:]:
-                    Zp = np.concatenate([Z, np.zeros((len(Z), 8 - k))], 1); psi = bw_states(Zp, s, sec)
-                    add(f"bw8_fid_s{s:.3f}", fid_bw(psi))
-            # projected kernels (angle encoding 1-RDM; brick-wall 2-RDM)
-            for s in (np.pi / 6, np.pi / 4):
-                F = rdm1_angle(Z, s); Fm = F.reshape(len(F), -1); dm = ((Fm[:, None] - Fm[None]) ** 2).sum(-1); md = np.median(dm[dm > 0])
-                cvp, gp = tune_gamma(lambda g: np.exp(-g * dm), [0.25 / md, 1 / md, 4 / md, 16 / md], y)
-                add(f"angle_proj1rdm_s{s:.3f}", np.exp(-gp * dm), dict(proj_gamma=gp))
-                Zp = np.concatenate([Z, np.zeros((len(Z), 8 - k))], 1); F2 = rdm2_bw(bw_states(Zp, s, sec), sec); Fm = F2.reshape(len(F2), -1); dm = ((Fm[:, None] - Fm[None]) ** 2).sum(-1); md = np.median(dm[dm > 0]) if (dm > 0).any() else 1
-                cvp, gp = tune_gamma(lambda g: np.exp(-g * dm), [0.25 / md, 1 / md, 4 / md, 16 / md], y)
-                add(f"bw8_proj2rdm_s{s:.3f}", np.exp(-gp * dm), dict(proj_gamma=gp))
-            out[f"k{k}_fold{fold}"] = res; print(k, fold, {n: round(v["g_C_to_Q_lam0.001"], 2) for n, v in res.items() if isinstance(v, dict)}, flush=True)
+            d = np.load(f"C:/bwcache/l1_f{fold}.npz"); Z0, y0, tr = d["Z"].astype(float)[:, :K], d["y"], d["tr"]
+            rng = np.random.default_rng(1000 * fold + N); npos = int(round(N * y0[tr].mean()))
+            idx = np.concatenate([rng.choice(tr[y0[tr] == 1], npos, replace=False), rng.choice(tr[y0[tr] == 0], N - npos, replace=False)])
+            Z, y = Z0[idx], y0[idx]
+            KQ = k_angle(Z)
+            d2 = ((Z[:, None, :] - Z[None, :, :]) ** 2).sum(-1); med = np.median(d2[d2 > 0])
+            best = max(((cv_auc(np.exp(-gm * d2), y), gm) for gm in (0.125 / med, 0.25 / med, 0.5 / med, 1 / med, 2 / med, 4 / med, 8 / med)))
+            KR = np.exp(-best[1] * d2)
+            KL = Z @ Z.T; KL *= N / np.trace(KL)
+            rec = dict(N=N, fold=fold, sqrtN=float(np.sqrt(N)), cv_auc_quantum=cv_auc(KQ, y), cv_auc_rbf=best[0], rbf_gamma_over_median=float(best[1] * med),
+                       cv_auc_linear=cv_auc(KL, y), rank_linear=int(np.linalg.matrix_rank(KL)),
+                       eff_dim_quantum=float(np.trace(KQ) ** 2 / (KQ ** 2).sum()))
+            for name, KC in (("rbf", KR), ("linear", KL)):
+                for lam in LAMS:
+                    rec[f"g_{name}_lam{lam}"] = g(KC, KQ, lam)
+            out[f"N{N}_fold{fold}"] = rec
+            print(N, fold, {k: round(v, 3) if isinstance(v, float) else v for k, v in rec.items()}, flush=True)
+            for name in ("rbf", "linear"):
+                for lam in LAMS:
+                    reg.append(f"X2_g_{name}_N{N}_f{fold}_lam{lam},kernel-geometry (exploratory),g(K_{name}||K_Q angle pi/6) = {rec[f'g_{name}_lam{lam}']:.2f} vs sqrt(N) = {np.sqrt(N):.1f};"
+                               f" CV AUC quantum {rec['cv_auc_quantum']:.3f} / rbf {rec['cv_auc_rbf']:.3f} / linear {rec['cv_auc_linear']:.3f},{fold},Q3-kernel,{rec['cv_auc_quantum']:.4f},"
+                               f"{name},{rec['cv_auc_rbf' if name == 'rbf' else 'cv_auc_linear']:.4f},{rec['cv_auc_quantum'] - rec['cv_auc_rbf' if name == 'rbf' else 'cv_auc_linear']:+.4f},no,diagnostic only")
     json.dump(out, open("results/dx_x2_geometry.json", "w"), indent=1)
-    # summary: mean over folds
-    names = sorted({r["kernel"] for r in reg}); lines = []
-    for k in (4, 8):
-        for n in names:
-            rs = [r for r in reg if r["k"] == k and r["kernel"] == n]
-            if rs:
-                g = np.mean([r["g_C_to_Q_lam0.001"] for r in rs]); cv = np.mean([r["cv_auc_quantum_kernel"] or np.nan for r in rs])
-                lines.append(f"X2_geometry_k{k}_{n},kernel-geometry,g(K_C||K_Q) lam=1e-3 mean over folds 0-2 = {g:.2f}; CV AUC of the quantum kernel SVM(C=1) = {cv:.3f},0-2,,,,,,no,diagnostic only (no quantum-vs-classical AUC test)")
-    open("results/dx_registry.csv", "a").write("\n".join(lines) + "\n")
+    open("results/dx_registry.csv", "a").write("\n".join(reg) + "\n")
 
 
 if __name__ == "__main__":
