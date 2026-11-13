@@ -19,7 +19,7 @@ while len(done) < len(cmds):
         else: log(f"exited rc={rc}, will relaunch: {cmds[i]}")
     f = free_gb()
     if f < 3.0 and running:
-        i = max(running, key=lambda j: running[j][1]); running[i][0].kill(); log(f"free {f:.2f} GB < 3: stopped {cmds[i]}"); time.sleep(30); continue
+        i = max(running, key=lambda j: running[j][1]); subprocess.run(["taskkill", "/T", "/F", "/PID", str(running[i][0].pid)], capture_output=True); log(f"free {f:.2f} GB < 3: stopped {cmds[i]}"); time.sleep(30); continue
     for i, c in enumerate(cmds):
         if i in done or i in running or len(running) >= MAXP or free_gb() < 3.5: continue
         running[i] = (subprocess.Popen(shlex.split(c, posix=False), env=env, stdout=open(f"results/qb_sched_job{i}.log", "a"), stderr=subprocess.STDOUT), time.time()); log(f"start: {c}"); time.sleep(30)

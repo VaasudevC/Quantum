@@ -66,3 +66,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-13 13:29 QB4 training stopped (6-hour rule; incomplete); QB5 now on 3 processes (folds 0,1,2).
 - 2026-11-13 13:39 Free RAM fell to 0.67 GB (user apps); stopped QB5 folds 1-2 (resumable), fold 0 continues alone.
 - 2026-11-13 14:30 free RAM 2.6 GB < 3: stopped QB5 fold 1 (resumable); fold 0 continues.
+- 2026-11-13 17:27 QB5 fold 0 complete; scheduler bug (killed only the venv launcher stub, leaving orphans) fixed with taskkill /T; orphans stopped; scheduler relaunched for folds 1-2 (RAM-gated, free RAM currently ~1.9 GB).
