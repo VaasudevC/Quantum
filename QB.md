@@ -122,3 +122,40 @@ The spread of the training-free score over placements is ±0.02–0.03 around th
 
 **Training part: INCOMPLETE (stopped 2026-11-13 13:29 under the 6-hour rule).** Each 1000-step k = 32 run took > 72 min wall at ~20–66 % of a core while the machine was in use (1.46 s/step at batch 1000 vs 0.38 s originally). None of the 21 planned runs finished. Projected total ≈ 21 runs × 40–60 CPU-min ≈ 14–21 CPU-h (≈ 5–7 h with 3 free cores on an idle machine).
 **Resume:** `sh qb4_run.sh 0`, `sh qb4_run.sh 1`, `sh qb4_run.sh 2` (resumable; the L1 order must reproduce `results/stage2_steps1000.jsonl`). Whether placement changes test AUC by more than 0.002 is therefore **not answered**.
+
+### QB5 — other kinds of benefit (N = 100, discovery folds 0–2; `qb5_robust.py`, `qb5_analyze.py`, `results/qb5.jsonl`) — **PARTIAL: 18 of 30 units** (fold 0 complete, folds 1–2 partial; remaining units wait for free RAM)
+
+Best classical by inner CV (clean SD subsets, folds 0–2, r 0–9): **C2_svm_rbf**. 18 units (fold × subset). d = quantum − comparator on the perturbed AUC; Δdrop = comparator drop − quantum drop (> 0: quantum loses less).
+
+| setting | quantum | mean AUC quantum / best classical | d vs best classical [95% CI] | Δdrop vs best classical [95% CI] | d vs TW_LR / TW_LR2 / TW_SVM | candidate |
+|---|---|---|---|---|---|---|
+| testnoise_0.1 | Q1 | 0.894 / 0.897 | -0.0021 [-0.0058, +0.0030] | +0.0001 [-0.0005, +0.0023] | +0.0019 / +0.0002 / +0.0000 | no |
+| testnoise_0.1 | Q3 | 0.895 / 0.897 | -0.0015 [-0.0080, +0.0038] | -0.0008 [-0.0040, -0.0001] | +0.0024 / +0.0008 / +0.0006 | no |
+| testnoise_0.3 | Q1 | 0.884 / 0.887 | -0.0030 [-0.0071, +0.0066] | -0.0009 [-0.0036, +0.0081] | +0.0016 / +0.0007 / -0.0004 | no |
+| testnoise_0.3 | Q3 | 0.882 / 0.887 | -0.0047 [-0.0155, +0.0023] | -0.0041 [-0.0116, -0.0015] | -0.0001 / -0.0010 / -0.0021 | no |
+| testnoise_0.5 | Q1 | 0.868 / 0.873 | -0.0056 [-0.0102, +0.0104] | -0.0035 [-0.0082, +0.0124] | +0.0012 / +0.0037 / +0.0004 | no |
+| testnoise_0.5 | Q3 | 0.865 / 0.873 | -0.0085 [-0.0195, -0.0007] | -0.0078 [-0.0155, -0.0037] | -0.0017 / +0.0008 / -0.0025 | no |
+| leaddrop_mean | Q1 | 0.886 / 0.888 | -0.0024 [-0.0069, +0.0028] | -0.0003 [-0.0010, +0.0006] | +0.0017 / -0.0010 / -0.0002 | no |
+| leaddrop_mean | Q3 | 0.887 / 0.888 | -0.0009 [-0.0056, +0.0054] | -0.0002 [-0.0017, +0.0014] | +0.0032 / +0.0006 / +0.0014 | no |
+| leaddrop_worst | Q1 | 0.865 / 0.872 | -0.0067 [-0.0134, +0.0000] | -0.0046 [-0.0084, -0.0014] | -0.0012 / -0.0064 / -0.0042 | no |
+| leaddrop_worst | Q3 | 0.868 / 0.872 | -0.0036 [-0.0109, +0.0057] | -0.0029 [-0.0082, +0.0030] | +0.0020 / -0.0033 / -0.0011 | no |
+| labelnoise_0.1 | Q1 | 0.889 / 0.897 | -0.0077 [-0.0141, +0.0007] | -0.0056 [-0.0108, +0.0020] | -0.0026 / +0.0083 / -0.0054 | no |
+| labelnoise_0.1 | Q3 | 0.893 / 0.897 | -0.0046 [-0.0106, +0.0019] | -0.0039 [-0.0086, +0.0016] | +0.0005 / +0.0115 / -0.0022 | no |
+| labelnoise_0.2 | Q1 | 0.877 / 0.885 | -0.0080 [-0.0180, +0.0062] | -0.0059 [-0.0154, +0.0092] | -0.0087 / +0.0201 / -0.0119 | no |
+| labelnoise_0.2 | Q3 | 0.882 / 0.885 | -0.0026 [-0.0165, +0.0102] | -0.0020 [-0.0136, +0.0091] | -0.0033 / +0.0255 / -0.0065 | no |
+| labelnoise_0.3 | Q1 | 0.832 / 0.857 | -0.0254 [-0.0519, +0.0158] | -0.0233 [-0.0485, +0.0171] | -0.0300 / +0.0501 / -0.0325 | no |
+| labelnoise_0.3 | Q3 | 0.859 / 0.857 | +0.0013 [-0.0217, +0.0339] | +0.0020 [-0.0190, +0.0340] | -0.0032 / +0.0769 / -0.0057 | no |
+| imbalance_0.05 | Q1 | 0.800 / 0.834 | -0.0335 [-0.0755, -0.0025] | -0.0314 [-0.0742, -0.0003] | +0.0019 / +0.0446 / -0.0126 | no |
+| imbalance_0.05 | Q3 | 0.826 / 0.834 | -0.0077 [-0.0248, +0.0067] | -0.0070 [-0.0267, +0.0086] | +0.0277 / +0.0705 / +0.0133 | no |
+| imbalance_0.1 | Q1 | 0.852 / 0.853 | -0.0017 [-0.0238, +0.0231] | +0.0005 [-0.0227, +0.0247] | +0.0102 / +0.0317 / +0.0019 | no |
+| imbalance_0.1 | Q3 | 0.848 / 0.853 | -0.0057 [-0.0172, +0.0107] | -0.0050 [-0.0152, +0.0101] | +0.0062 / +0.0277 / -0.0021 | no |
+| site | Q1 | 0.886 / 0.890 | -0.0046 [-0.0148, +0.0010] | +0.0000 [-0.0093, +0.0065] | +0.0032 / -0.0013 / +0.0011 | no |
+| site | Q3 | 0.889 / 0.890 | -0.0014 [-0.0085, +0.0025] | +0.0000 [-0.0072, +0.0053] | +0.0064 / +0.0019 / +0.0043 | no |
+| date | Q1 | 0.891 / 0.891 | +0.0002 [-0.0078, +0.0042] | +0.0020 [-0.0093, +0.0072] | +0.0040 / +0.0049 / +0.0006 | no |
+| date | Q3 | 0.890 / 0.891 | -0.0005 [-0.0087, +0.0065] | -0.0011 [-0.0066, +0.0036] | +0.0033 / +0.0043 / -0.0001 | no |
+| subtype_IMI | Q1 | 0.908 / 0.906 | +0.0025 [-0.0075, +0.0101] | – | +0.0028 / +0.0237 / +0.0009 | no |
+| subtype_IMI | Q3 | 0.910 / 0.906 | +0.0037 [-0.0065, +0.0108] | – | +0.0040 / +0.0248 / +0.0021 | no |
+
+**Interim reading (18/30 units):** no setting yields a candidate. The quantum models are never ahead of the best classical model (SVM-RBF by inner CV) by ≥ 0.005 with a CI above 0; most differences are small and negative, and several CIs exclude 0 on the classical side (Q3 under test-time noise 0.5 SD; Q1 at 5 % MI prevalence).
+Against the dequantized twins the picture is mixed and small, except that both quantum models beat the bounded-input degree-2 LR twin under label noise and class imbalance (that twin overfits at N = 100), which is not a win over the best classical model.
+QB5 will be re-analysed when all 30 units are done; the candidate rule is applied only then.

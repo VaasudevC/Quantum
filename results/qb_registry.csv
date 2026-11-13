@@ -235,3 +235,29 @@ QB3,FM_rank2_classical_bounded_twin_f0,FM_rank2,pi/6 (twin) or z,params=97,full,
 QB3,MLP_32-2-1_classical_bounded_twin_f0,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,0,test=0.9565;val=0.9510,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
 QB3,MLP_32-3-1_classical_bounded_twin_f0,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,0,test=0.9581;val=0.9524,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
 QB3,L1_deg2_LR_le81_classical_bounded_twin_f0,L1_deg2_LR_le81,pi/6 (twin) or z,params=70,full,32,0,test=0.9623;val=0.9582,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB5,testnoise_0.1_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0021 [-0.0058;+0.0030],no,interim
+QB5,testnoise_0.1_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0015 [-0.0080;+0.0038],no,interim
+QB5,testnoise_0.3_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0030 [-0.0071;+0.0066],no,interim
+QB5,testnoise_0.3_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0047 [-0.0155;+0.0023],no,interim
+QB5,testnoise_0.5_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0056 [-0.0102;+0.0104],no,interim
+QB5,testnoise_0.5_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0085 [-0.0195;-0.0007],no,interim
+QB5,leaddrop_mean_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0024 [-0.0069;+0.0028],no,interim
+QB5,leaddrop_mean_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0009 [-0.0056;+0.0054],no,interim
+QB5,leaddrop_worst_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0067 [-0.0134;+0.0000],no,interim
+QB5,leaddrop_worst_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0036 [-0.0109;+0.0057],no,interim
+QB5,labelnoise_0.1_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0077 [-0.0141;+0.0007],no,interim
+QB5,labelnoise_0.1_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0046 [-0.0106;+0.0019],no,interim
+QB5,labelnoise_0.2_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0080 [-0.0180;+0.0062],no,interim
+QB5,labelnoise_0.2_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0026 [-0.0165;+0.0102],no,interim
+QB5,labelnoise_0.3_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0254 [-0.0519;+0.0158],no,interim
+QB5,labelnoise_0.3_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=+0.0013 [-0.0217;+0.0339],no,interim
+QB5,imbalance_0.05_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0335 [-0.0755;-0.0025],no,interim
+QB5,imbalance_0.05_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0077 [-0.0248;+0.0067],no,interim
+QB5,imbalance_0.1_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0017 [-0.0238;+0.0231],no,interim
+QB5,imbalance_0.1_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0057 [-0.0172;+0.0107],no,interim
+QB5,site_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0046 [-0.0148;+0.0010],no,interim
+QB5,site_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0014 [-0.0085;+0.0025],no,interim
+QB5,date_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=+0.0002 [-0.0078;+0.0042],no,interim
+QB5,date_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=-0.0005 [-0.0087;+0.0065],no,interim
+QB5,subtype_IMI_Q1_vqc,Q1_vqc,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=+0.0025 [-0.0075;+0.0101],no,interim
+QB5,subtype_IMI_Q3_qkernel_svm,Q3_qkernel_svm,pi/6 twins,N=100,100,8,0-2 (partial 18/30 units),d_vs_C2_svm_rbf=+0.0037 [-0.0065;+0.0108],no,interim
