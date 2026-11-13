@@ -47,3 +47,10 @@ Only with an almost unregularised K_RBF (λ = 1e-4) does g reach ~21–24 ≈ �
 Against the **linear** kernel g is large (26–1900) simply because the linear Gram matrix has rank 8 and cannot represent the quantum kernel's functions; since the RBF kernel already closes that gap, this does not open room for an advantage.
 The quantum kernel itself is effectively low-dimensional (participation ratio of its spectrum ≈ 1.8): at the π/6 scale all angles stay small, the kernel stays close to a constant plus low-order terms, which is consistent with the earlier finding that the π/6 VQC is ~99% quadratic in its angles (`RESULTS.md` Stage 4b).
 This diagnostic is exploratory (discovery folds only), makes no confirmation claim, and nothing from it goes to the confirmation stage.
+
+## Search stopped after X2 (decision recorded 2026-11-13)
+
+The distinguisher search is **stopped after X2**. For the π/6 angle feature map the geometric difference to a tuned RBF kernel is well below √N at both sizes tested
+(1.7–3.3 vs √N = 10 at N = 100; 2.6–11.5 vs √N = 22.4 at N = 500, λ ≥ 1e-3), so by the Huang et al. criterion a classical kernel can match this quantum kernel for any labelling of these inputs,
+and **no further settings (X1, X3–X8) will be run with this feature map**. No candidate was sent to confirmation; there are no confirmation results.
+**Folds 3–4 and the external PTB set remain untouched by exploratory work.**
