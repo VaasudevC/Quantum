@@ -13,7 +13,7 @@ def roc_auc(y, s):
     if n1 == 0 or n0 == 0: return float('nan')
     r = np.empty_like(s)
     order = np.argsort(s)
-    ties = np.concatenate([[True], s[order[1:]] == s[order[:-1]], [True]])
+    ties = np.concatenate([[True], s[order[1:]] != s[order[:-1]], [True]])
     start = np.where(ties[:-1])[0]; end = np.where(ties[1:])[0]
     for s_, e_ in zip(start, end): r[order[s_:e_+1]] = (s_ + e_) / 2.0 + 1
     n1f = y.sum()

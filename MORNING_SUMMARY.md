@@ -1,15 +1,15 @@
-1. PUSH NOT DONE: `git push -u origin smalldata` / `brickwall-overnight` was refused by Claude Code's permission check (needs your approval); all work is committed locally.
-2. QB (pre-registered, QB.md) claim level: NO BENEFIT FOUND; confirmation not run (no candidate); folds 3-4 and PTB untouched by QB.
-3. QB1: 1,200 feature-map settings screened; none passes the gate — g >= sqrt(N)/2 only at s = pi/2 where label alignment collapses (Table 4, Fig 4).
-4. QB3: rank-2 factorization machine / sparse deg-2 LR (<= the VQC's parameters, same bounded inputs) match the trained-scale VQC (0.956) -> win over LR = non-linearity.
-5. QB5 (18/30 units): no perturbation/shift/imbalance/subtype setting gives quantum >= +0.005 over the best classical model.
-6. Small-data study (k=8, final): non-inferior to the best classical model at every N, superior at none; Q3 = SVM-RBF within +-0.005 at N=50-500 (exploratory).
-7. Full data: XGBoost best at every feature count; encoding rule pi/6 (k=32: 0.791 at pi -> 0.951) replicated in the brick-wall. results/paper/ = Tables 1-4, Figs 1-4.
-8. INCOMPLETE: k=4 SD endpoint (207/850 units), VQC seeds (5 runs), QB5 folds 1-2 (12 units), QB4 training (6-hour rule), QB5 full-data part.
-9. Why: free RAM stays < 3.5 GB while Chrome/Claude/VS Code are open; the RAM-gated queue (qb_sched.py, <= 4 processes) resumes them automatically when memory frees.
-10. INCOMPLETE (blocked): brick-wall at N != 100, EXTRA 6, n=16 external — torch blocked by Windows Application Control. C7 TabPFN — licence login. IBM run — yours.
-11. Check progress: `tail results/qb_sched.log`; `wc -l results/qb5.jsonl` (target 30).
-12. When the queue is done: `C:\bwvenv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _main` then `C:\bwvenv\Scripts\python.exe make_paper.py`
-13. then `..\.venv\Scripts\python.exe qb5_analyze.py` (final QB5 table; apply the candidate rule).
-14. QB4 training resume (optional, ~5-7 h on an idle machine): `sh qb4_run.sh 0`, `sh qb4_run.sh 1`, `sh qb4_run.sh 2`.
-15. Please delete C:\tvenv (test venv; removal was blocked by a safety check).
+1. PUSH NOT DONE: `git push -u origin smalldata` needs your approval; all work is committed locally (branch smalldata).
+2. QB: NO BENEFIT FOUND; no candidate; QB3 now 5-fold (exploratory folds 3-4 consistent: deg-2 LR matches/exceeds VQC in all 5 folds).
+3. QB3 exploratory: degree-2 surrogate R²=0.9865 (fold 0 VQC); sparse L1 deg-2 LR (65 nonzero) ≥ VQC_pi6 in every fold; Fig5 heatmap → results/figs/fig5_qb3_coef_heatmap.png.
+4. QB5: 18/30 units (fold 0 done; folds 1-2 running in queue); no perturbation/shift/subtype gives quantum >= +0.005 over best classical.
+5. Phase 4 bootstrap (exploratory, running): full-data per-ECG bootstrap CI for k=32 AUC diffs (VQC vs LR, LR2, XGB); results/p4_bootstrap.json when done.
+6. k=4 SD queue: 279/850 units (N=100 done 200/200; N=50 at 79/200; N=25/200/500 not started). Queue running with MAXP=8.
+7. Phase 2 done: README (no-advantage statement), docs/REPRODUCE.md, requirements-lock.txt, HARDWARE.md (IBM command). IBM dry run INCOMPLETE: Qiskit DLL blocked by WDAC.
+8. When Phase 4 done: check results/p4_bootstrap.json (VQC_pi6 mean ~0.9510, XGB ~0.9622 — XGB leads; CIs pending).
+9. When k=4 queue done: `..\.venv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _main` then `make_paper.py` to update Table 3.
+10. Then `..\.venv\Scripts\python.exe qb5_analyze.py` (apply QB5 candidate rule; target 30/30 units).
+11. INCOMPLETE (blocked): brick-wall at N!=100; torch blocked by WDAC. C7 TabPFN: licence login. IBM run: yours (command in HARDWARE.md).
+12. Roc_auc bug found and fixed in p4_full_bootstrap.py: tie detection was inverted (== vs !=); LR AUC was 0.5000 before fix.
+13. QB4 training resume (optional, ~5-7 h idle): `sh qb4_run.sh 0`, `sh qb4_run.sh 1`, `sh qb4_run.sh 2`.
+14. seed=3 VQC runs (5 runs for stage3_selectors.jsonl): queued, will start when SD workers exit.
+15. Please delete C:\tvenv (test venv; removal blocked by safety check).
