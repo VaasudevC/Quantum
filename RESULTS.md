@@ -218,7 +218,22 @@ k=8 to k=32, and the ranking pi/6 > pi/2 > pi holds at k=32.
 
 ### Phase 4 — full-data paired bootstrap (not pre-registered; logged 2026-11-14 BEFORE running)
 
-Per the overnight prompt: get per-ECG out-of-fold test scores at k=32 for LR, degree-2 LR (L1 penalty, ≤81 params), π/6 VQC, trained-scale VQC, XGBoost; compute 95% bootstrap CIs on AUC differences (2000 resamples, fold-stratified) and DeLong's test per fold. VQC scores from `results/bw/vqc_scores.json`; classical scores recomputed by refitting on each fold's L1-selected k=32 features using the stored feature list. Script: `p4_full_bootstrap.py`. Output: `results/p4_bootstrap.json`, table appended to `results/paper/table1_encoding.md`.
+Per the overnight prompt: get per-ECG out-of-fold test scores at k=32 for LR, degree-2 LR (L1 penalty, ≤81 params), π/6 VQC, trained-scale VQC, XGBoost; compute 95% bootstrap CIs on AUC differences (2000 resamples, fold-stratified) and DeLong's test per fold. VQC scores from `results/bw/vqc_scores.json`; classical scores recomputed by refitting on each fold's L1-selected k=32 features using the stored feature list. Script: `p4_full_bootstrap.py`. Output: `results/p4_bootstrap.json`, `results/p4_bootstrap_table.md`.
+
+**Results (mean AUC across 5 folds, d = A − B, 95% bootstrap CI):**
+
+| comparison | A | B | mean d [95% CI] |
+|---|---|---|---|
+| VQC_pi6 vs LR | 0.9510 | 0.9451 | +0.0060 [+0.0042, +0.0078] |
+| VQC_pi6 vs LR2 | 0.9510 | 0.9532 | −0.0022 [−0.0046, +0.0002] |
+| VQC_pi6 vs XGB | 0.9510 | 0.9622 | −0.0112 [−0.0130, −0.0095] |
+| VQC_trained vs LR | 0.9547 | 0.9451 | +0.0096 [+0.0076, +0.0116] |
+| VQC_trained vs LR2 | 0.9547 | 0.9532 | +0.0015 [−0.0007, +0.0036] |
+| VQC_trained vs XGB | 0.9547 | 0.9622 | −0.0075 [−0.0091, −0.0059] |
+| LR2 vs LR | 0.9532 | 0.9451 | +0.0081 [+0.0052, +0.0109] |
+| LR2 vs VQC_pi6 | 0.9532 | 0.9510 | +0.0022 [−0.0002, +0.0045] |
+
+**Interpretation**: VQC ≈ degree-2 LR (CI spans zero in both directions); XGBoost significantly outperforms both VQC variants. Confirms QB3 nonlinearity finding with calibrated CIs. Note: roc_auc bug (== vs != in tie detection) found and fixed; corrected values above.
 
 Motivation: the existing evidence is 5/5 folds with no p-value or CI; this gives calibrated uncertainty around the main claim.
 No claim wording is changed; CIs are added next to existing numbers.
