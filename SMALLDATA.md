@@ -17,7 +17,7 @@ the quantum models **matched classical performance within 0.02 AUC at N = 25, 50
 
 Choosing "best" by inner-CV AUC instead of test AUC makes the N = 100 comparison a tie with SVM-RBF (−0.0006 [−0.0024, +0.0013]). Holm-adjusted superiority (96 comparisons) holds only against weaker classical models:
 the quantum model outperformed **kNN** (all sizes), **XGBoost** (all sizes for Q1/Q3) and **plain LR** at N = 25 (Q3, +0.010) and N = 500 (Q1/Q3, +0.0045, reduced sample) — never SVM-RBF, the GP classifier or random forest.
-One cell is **inconclusive**: Q2 (trained scales) vs GP at N = 25 (d = −0.018, CI straddles −0.02). The brick-wall (Q4, N = 100 only) was worse than five of six classical models. LR (9 parameters) matches the angle VQC (81) on AUC and train–test gap.
+One full-sample cell meets neither claim: Q2 (trained scales) vs GP at N = 25 — the classical model was better at that size; the CI straddles the margin (d = −0.018 [−0.025, −0.012]). The brick-wall (Q4, N = 100 only) was worse than five of six classical models. LR (9 parameters) matches the angle VQC (81) on AUC and train–test gap.
 This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the best quantum models here use a classically computable product kernel (geometric difference to RBF ≪ √N, `DISTINGUISHER.md`).
 **Incomplete:** k = 4 (secondary endpoint; runs stalled by low free RAM), Q4 at N ≠ 100 (torch blocked by Windows Application Control), C7 TabPFN (licence login required).
 
@@ -231,7 +231,7 @@ figures `results/figs/sd_auc_vs_N_main.png` (mean test AUC vs N, 95% CI bands), 
 it outperformed **C4 kNN** at every size (Q1, Q2, Q3; +0.013 to +0.042) and **C6 XGBoost** at every size for Q1 and Q3 and at N = 25, 100, 200 for Q2 (+0.002 to +0.043). There is **no superiority over C2 SVM-RBF, C3 GP or C5 random forest at any size**, and none over the best classical model at any size.
 Q1 vs LR has small raw-p advantages at N = 50 and 200 (+0.004, +0.002) that do not survive Holm.
 
-**Cells meeting neither claim:** Q2 (trained scales) vs C3 GP at N = 25: d = −0.0183 [−0.0251, −0.0121] — **inconclusive** for non-inferiority (CI straddles −0.02); pre-registered wording: the classical model was better at that size.
+**Cells meeting neither claim:** Q2 (trained scales) vs C3 GP at N = 25 (a full-sample cell, 200 pairs): d = −0.0183 [−0.0251, −0.0121] — pre-registered wording: the classical model was better at that size; the CI straddles the margin. (The "inconclusive" label is reserved by the logged deviation for reduced cells only.)
 (Q4 at N = 100 vs LR, SVM-RBF, GP, RF and XGBoost also meets neither, as recorded in the primary section.)
 
 **Generalisation gap:** Q1 and Q3 have a significantly smaller train–test gap than kNN and XGBoost at every size and than random forest at every size (Q3) or at N ≥ 50 (Q1); smaller than LR at N = 25 only; equal to SVM-RBF everywhere; Q1's gap is larger than GP's at N = 25 (equal elsewhere); the gaps of Q1/Q3 and LR, SVM-RBF and GP converge from ~0.17 at N = 25 to ~0.02 at N = 500.

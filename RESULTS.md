@@ -8,7 +8,7 @@
 
 The 8-qubit re-uploading VQC encodes each feature as an angle `s·tanh(z)`. At the original scale s = pi, about 10% of the angles
 are pushed to ±pi, and the classifier collapses as more features are re-uploaded (k=32: test AUC 0.79). **Shrinking the scale to
-s = pi/6 removes the collapse.** AUC now **rises** with the number of re-uploaded features: **0.928 (k=8) → 0.940 (k=16) → 0.951 (k=32)**.
+s = pi/6 removes the collapse.** AUC now **rises** with the number of re-uploaded features: **0.928 (k=8) → 0.939 (k=16) → 0.951 (k=32)**.
 k=32 beats k=8 in 5/5 folds, and pi/6 beats pi in 5/5 folds at every k (+0.16 at k=32). At pi/6 the VQC is **ahead of logistic regression on the same
 features by +0.006–0.007 at every k** (k=32: 0.951 vs 0.945, 5/5 folds), and 2000 steps give 0.953. A shuffle control shows the
 later re-uploading rounds carry information (+0.023 over k=8, while shuffled later features cost only −0.006). A degree-2 polynomial LR
@@ -21,7 +21,7 @@ PTB-XL split (train folds 1–8, val fold 9, test fold 10), pi/6 gives 0.942 at 
 |---|---|---|---|
 | VQC, s=pi (1000 steps)   | 0.910 | 0.892 | 0.791 |
 | VQC, s=pi/2 (1000 steps) | 0.928 | 0.923 | 0.910 |
-| **VQC, s=pi/6 (1000 steps)** | **0.928** | **0.940** | **0.951** |
+| **VQC, s=pi/6 (1000 steps)** | **0.928** | **0.939** | **0.951** |
 | LR, same features        | 0.922 | 0.932 | 0.945 |
 | degree-2 LR, same features | – | – | 0.958 |
 
@@ -50,7 +50,7 @@ Command: `scale_cv.py --scales "pi/8,pi/6,pi/4,pi/3,pi/2,2*pi/3,pi" --ks 32 --st
 | **pi/6** | 5 | **0.9502** | **0.950 ± 0.006** | 0.945 | **+0.005** | 0.6 |
 | pi/4   | 5 | 0.9448 | 0.943 ± 0.007 | 0.945 | −0.002 | 0.8 |
 | pi/3   | 5 | 0.9360 | 0.933 ± 0.007 | 0.945 | −0.012 | 0.2 |
-| pi/2   | 5 | 0.9114 | 0.909 ± 0.009 | 0.945 | −0.037 | 0.6 |
+| pi/2   | 5 | 0.9114 | 0.908 ± 0.009 | 0.945 | −0.037 | 0.6 |
 | 2*pi/3 | 5 | 0.8495 | 0.850 ± 0.020 | 0.945 | −0.095 | 0.2 |
 | pi     | 5 | 0.7960 | 0.794 ± 0.072 | 0.945 | −0.151 | 0.4 |
 
@@ -73,14 +73,14 @@ Command: `scale_cv.py --scales "pi/6,pi/2,pi" --ks 8,16,32 --steps 1000 --jobs 3
 | 8  | pi/6 | 0.929 | 0.928 ± 0.006 | 0.922 | +0.006 | 0.4 | – |
 | 8  | pi/2 | 0.931 | 0.928 ± 0.006 | 0.922 | +0.006 | 0.2 | 0.919 |
 | 8  | pi   | 0.910 | 0.910 ± 0.009 | 0.922 | −0.012 | 0.2 | 0.904 |
-| 16 | pi/6 | 0.941 | 0.940 ± 0.006 | 0.932 | +0.007 | 0.4 | – |
+| 16 | pi/6 | 0.941 | 0.939 ± 0.006 | 0.932 | +0.007 | 0.4 | – |
 | 16 | pi/2 | 0.926 | 0.923 ± 0.010 | 0.932 | −0.009 | 0.4 | 0.908 |
 | 16 | pi   | 0.891 | 0.892 ± 0.015 | 0.932 | −0.040 | 0.4 | 0.864 |
 | 32 | pi/6 | 0.952 | 0.951 ± 0.006 | 0.945 | +0.006 | 0.6 | – |
 | 32 | pi/2 | 0.911 | 0.910 ± 0.012 | 0.945 | −0.035 | 0.4 | 0.896 |
 | 32 | pi   | 0.789 | 0.791 ± 0.078 | 0.945 | −0.154 | 0.2 | 0.787 |
 
-**Key question: at s\* = pi/6, does AUC fall, stay flat or rise from k=8 to k=32? It RISES:** 0.928 → 0.940 → 0.951.
+**Key question: at s\* = pi/6, does AUC fall, stay flat or rise from k=8 to k=32? It RISES:** 0.928 → 0.939 → 0.951.
 k=32 beats k=8 in 5/5 folds (mean +0.023). Re-uploading extra features now helps, whereas at pi it hurts (0.910 → 0.791).
 pi/6 beats pi in 5/5 folds at every k, and beats pi/2 in 5/5 folds at k=16 (+0.016) and k=32 (+0.041); at k=8 the two are tied (−0.000).
 Going from 300 to 1000 steps helps pi/2 (about +0.01) but does not rescue pi at k=32.

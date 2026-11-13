@@ -15,7 +15,7 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 
 ## 3. Encoding design rule: angle saturation and s = π/6
 * Claim: with angle = s·tanh(z) and s = π, ~10% of angles saturate near ±π and re-uploading more features *lowers* AUC (k = 32: 0.791). — `README.md`, `RESULTS.md` Stage 1–2 (a4b81a7, 7891a4c).
-* Claim: s = π/6 removes the collapse: AUC rises with k (0.928 → 0.940 → 0.951) and π/6 beats π in 5/5 folds at every k. — `RESULTS.md` Stage 2, `results/stage2_steps1000.jsonl` (7891a4c).
+* Claim: s = π/6 removes the collapse: AUC rises with k (0.928 → 0.939 → 0.951) and π/6 beats π in 5/5 folds at every k. — `RESULTS.md` Stage 2, `results/stage2_steps1000.jsonl` (7891a4c).
 * Claim: shuffling the later features costs ~0 at π/6, while real later features add +0.023 — the gain is information, the π drop is noise damage. — `RESULTS.md` Stage 4 (72b5dcf).
 * Claim: at π/6 the VQC is 98.6% quadratic in its angles and sits between linear LR (0.945) and degree-2 LR (0.958). — `RESULTS.md` Stage 4b (86e66a9).
 * Claim (replication in a second architecture): in the magic-state brick-wall QNN, small phase scales (π/6–π/4) are best and s = π is worst at every (n, k, columns). — `BRICKWALL.md` §P3, `results/bw/p3_stageA2.jsonl` (97e25f9).
@@ -53,6 +53,8 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * TabPFN, a strong small-data baseline in the pre-registration, was not run (licence login required).
 * No real-device run yet; all hardware statements are simulations (fake backends, noise models).
 * Single dataset and hand-crafted features; 5 outer folds carry the test-set variation; N = 500 is a reduced sample (10 of 40 subsets).
+* By construction the small-data study could not have shown an advantage: at k ≤ 8 the angle VQC (Q1) loads each feature once (no re-uploading), and the quantum-kernel SVM (Q3) uses a product kernel that a classical computer evaluates exactly. This motivates the QB study (`QB.md`), which screens entangling and re-uploading feature maps.
+* The 0.02 non-inferiority margin is wide compared with the spread of the good models: LR, SVM-RBF, GP, random forest, Q1 and Q3 all lie within about 0.005 AUC of each other at every N, so "non-inferior" is a weak statement; an exploratory ±0.005 equivalence check is reported in `SMALLDATA.md`.
 
 ## Tables
 1. Feature-selection comparison (L1 / cohen_dedup / random) — `RESULTS.md` Stage 3.

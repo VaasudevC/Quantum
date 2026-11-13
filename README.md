@@ -6,7 +6,7 @@ An 8-qubit, 4-layer data-re-uploading variational quantum classifier (VQC) for m
 ## Results at a glance (patient-grouped 5-fold CV, test AUC)
 
 **The angle scale caused the re-uploading collapse.** With s = π about 10% of angles saturate near ±π, and AUC falls as more features are re-uploaded.
-With **s = π/6**, AUC *rises* with the number of features (0.928 → 0.940 → 0.951 for k = 8/16/32) and the VQC beats logistic regression on the
+With **s = π/6**, AUC *rises* with the number of features (0.928 → 0.939 → 0.951 for k = 8/16/32) and the VQC beats logistic regression on the
 same features at every k. A classical **degree-2 polynomial LR still beats every VQC** (0.958).
 
 | model, k = 32 features | test AUC | source |
