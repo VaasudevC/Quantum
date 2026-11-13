@@ -122,8 +122,42 @@ def figures():
     fig.text(0.01, 0.005, STAMP + " Exploratory; λ = 1e-4 (grey) = nearly unregularised RBF Gram.", fontsize=6, color="#666666"); plt.tight_layout(rect=(0, 0.03, 1, 1)); plt.savefig(OUT / "fig3_geometric_difference.png", dpi=200); plt.close()
 
 
+def table4():
+    if not Path("results/qb1_table.md").exists(): return
+    t = open("results/qb1_table.md", encoding="utf-8").read(); gate = json.load(open("results/qb1_gate.json"))
+    L = ["# Table 4 — Training-free screen of quantum feature maps (QB1, pre-registered in QB.md; discovery folds 0–2, k = 8)", "", STAMP, "",
+         "F0 product map, F1 re-uploading (L loads, CNOT ring), F2 IQP/ZZ (ring), F3 IQP with clinically paired RZZ, F4 Heisenberg-ring evolution (T Trotter steps), F5 brick-wall encoding state. "
+         "g = geometric difference to a CV-tuned RBF kernel (Huang et al. 2021). Gate (N = 500, k = 8, ≥ 2 of 3 folds): g ≥ √N/2 at λ ∈ {1e-3, 1e-2, 1e-1}, mean off-diagonal > 0.05, centered alignment ≥ 90 % of RBF.",
+         f"**Maps passing the gate: {len(gate['passed'])}.** Source `results/qb1_screen.jsonl`.", "", t]
+    (OUT / "table4_feature_maps.md").write_text("
+".join(L) + "
+", encoding="utf-8")
+
+
+def fig4():
+    if not Path("results/qb1_screen.jsonl").exists(): return
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt, matplotlib.ticker
+    R = rows("results/qb1_screen.jsonl"); R = [r for r in R if r["k"] == 8]
+    mk = {"F0": "o", "F1": "s", "F2": "^", "F3": "v", "F4": "D", "F5": "P"}; cs = {"pi/8": "#4477aa", "pi/6": "#228833", "pi/4": "#ccbb44", "pi/3": "#ee6677", "pi/2": "#aa3377"}
+    fig, ax = plt.subplots(1, 2, figsize=(11, 4.4))
+    for r in R:
+        jit = np.exp(np.random.default_rng(hash((r["map"], r["params"], r["scale"], r["fold"])) % 2**32).normal(0, 0.04))
+        ax[0].scatter(r["N"] * jit, r["fid"]["g_lam0.01"], marker=mk[r["map"]], color=cs[r["scale"]], s=14, alpha=0.6)
+        if r["N"] == 500:
+            ax[1].scatter(r["fid"]["calign"] / r["rbf"]["calign"], r["fid"]["g_lam0.01"], marker=mk[r["map"]], color=cs[r["scale"]], s=16, alpha=0.7)
+    Ns = np.array([80, 620]); ax[0].plot(Ns, np.sqrt(Ns), "k-", label="√N"); ax[0].plot(Ns, np.sqrt(Ns) / 2, "k--", label="√N / 2 (gate)")
+    ax[0].set_xscale("log"); ax[0].set_yscale("log"); ax[0].xaxis.set_minor_locator(matplotlib.ticker.NullLocator()); ax[0].set_xticks((100, 500)); ax[0].set_xticklabels(["100", "500"])
+    ax[0].set_xlabel("N (discovery ECGs)"); ax[0].set_ylabel("g(K_RBF‖K_Q), λ = 1e-2"); ax[0].set_title("(a) all maps × scales × folds"); ax[0].grid(alpha=.3, which="both")
+    ax[1].axhline(np.sqrt(500) / 2, color="k", ls="--"); ax[1].axvline(0.9, color="k", ls=":"); ax[1].set_yscale("log")
+    ax[1].set_xlabel("centered alignment, quantum / RBF (N = 500)"); ax[1].set_ylabel("g, λ = 1e-2"); ax[1].set_title("(b) expressivity vs label alignment (gate: upper right)"); ax[1].grid(alpha=.3, which="both")
+    from matplotlib.lines import Line2D
+    h = [Line2D([], [], marker=mk[m], ls="", color="k", label=m) for m in mk] + [Line2D([], [], marker="o", ls="", color=cs[s], label=s.replace("pi", "π")) for s in cs]
+    ax[0].legend(handles=h + ax[0].get_legend_handles_labels()[0], fontsize=7, ncol=2)
+    fig.text(0.01, 0.005, STAMP + " Pre-registered QB1 screen; no map passed the gate.", fontsize=6, color="#666666"); plt.tight_layout(rect=(0, 0.03, 1, 1)); plt.savefig(OUT / "fig4_g_all_maps.png", dpi=200); plt.close()
+
+
 if __name__ == "__main__":
-    table1(); table2(); table3(); figures()
+    table1(); table2(); table3(); figures(); table4(); fig4()
     (OUT / "README.md").write_text(f"# results/paper\n\n{STAMP}\n\n* `table1_encoding.md` — encoding study (angle scale; brick-wall replication)\n* `table2_benchmark.md` — full-data benchmark by feature count\n"
                                    f"* `table3_smalldata.md` — pre-registered small-data differences with CIs by N\n* `fig1_scale_sweep.png` — scale sweep and AUC vs k\n* `fig2_learning_curves.png` — SD learning curves and best-vs-best difference\n"
                                    f"* `fig3_geometric_difference.png` — g(K_RBF‖K_Q) vs √N (exploratory)\n\nRebuild: `C:/bwvenv/Scripts/python.exe make_paper.py`\n", encoding="utf-8")

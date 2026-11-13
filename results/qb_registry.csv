@@ -1,1 +1,201 @@
 phase,setting_id,map,scale,params,N,k,fold,metric_summary,passed_gate,notes
+QB1,F0__pi/8_N100,F0,pi/8,,100,8,0-2,g1e-2=2.37;offmean=0.829;calign=0.419;cvauc=0.925,no (gate at N=500),gate folds 0/3
+QB1,F0__pi/8_N500,F0,pi/8,,500,8,0-2,g1e-2=4.13;offmean=0.829;calign=0.439;cvauc=0.935,no,gate folds 0/3
+QB1,F0__pi/6_N100,F0,pi/6,,100,8,0-2,g1e-2=2.17;offmean=0.722;calign=0.419;cvauc=0.924,no (gate at N=500),gate folds 0/3
+QB1,F0__pi/6_N500,F0,pi/6,,500,8,0-2,g1e-2=4.84;offmean=0.723;calign=0.436;cvauc=0.937,no,gate folds 0/3
+QB1,F0__pi/4_N100,F0,pi/4,,100,8,0-2,g1e-2=2.57;offmean=0.507;calign=0.408;cvauc=0.926,no (gate at N=500),gate folds 0/3
+QB1,F0__pi/4_N500,F0,pi/4,,500,8,0-2,g1e-2=6.48;offmean=0.508;calign=0.420;cvauc=0.937,no,gate folds 0/3
+QB1,F0__pi/3_N100,F0,pi/3,,100,8,0-2,g1e-2=3.68;offmean=0.336;calign=0.378;cvauc=0.913,no (gate at N=500),gate folds 0/3
+QB1,F0__pi/3_N500,F0,pi/3,,500,8,0-2,g1e-2=9.21;offmean=0.338;calign=0.388;cvauc=0.934,no,gate folds 0/3
+QB1,F0__pi/2_N100,F0,pi/2,,100,8,0-2,g1e-2=6.98;offmean=0.150;calign=0.288;cvauc=0.877,no (gate at N=500),gate folds 0/3
+QB1,F0__pi/2_N500,F0,pi/2,,500,8,0-2,g1e-2=17.01;offmean=0.152;calign=0.293;cvauc=0.925,no,gate folds 0/3
+QB1,F1_L=2_pi/8_N100,F1,pi/8,L=2,100,8,0-2,g1e-2=2.25;offmean=0.704;calign=0.412;cvauc=0.922,no (gate at N=500),gate folds 0/3
+QB1,F1_L=2_pi/8_N500,F1,pi/8,L=2,500,8,0-2,g1e-2=5.34;offmean=0.706;calign=0.432;cvauc=0.937,no,gate folds 0/3
+QB1,F1_L=2_pi/6_N100,F1,pi/6,L=2,100,8,0-2,g1e-2=2.64;offmean=0.557;calign=0.401;cvauc=0.917,no (gate at N=500),gate folds 0/3
+QB1,F1_L=2_pi/6_N500,F1,pi/6,L=2,500,8,0-2,g1e-2=6.85;offmean=0.560;calign=0.419;cvauc=0.937,no,gate folds 0/3
+QB1,F1_L=2_pi/4_N100,F1,pi/4,L=2,100,8,0-2,g1e-2=4.51;offmean=0.325;calign=0.356;cvauc=0.901,no (gate at N=500),gate folds 0/3
+QB1,F1_L=2_pi/4_N500,F1,pi/4,L=2,500,8,0-2,g1e-2=11.42;offmean=0.330;calign=0.373;cvauc=0.933,no,gate folds 0/3
+QB1,F1_L=2_pi/3_N100,F1,pi/3,L=2,100,8,0-2,g1e-2=7.02;offmean=0.190;calign=0.293;cvauc=0.885,no (gate at N=500),gate folds 0/3
+QB1,F1_L=2_pi/3_N500,F1,pi/3,L=2,500,8,0-2,g1e-2=17.06;offmean=0.195;calign=0.309;cvauc=0.928,no,gate folds 0/3
+QB1,F1_L=2_pi/2_N100,F1,pi/2,L=2,100,8,0-2,g1e-2=11.26;offmean=0.077;calign=0.204;cvauc=0.856,no (gate at N=500),gate folds 0/3
+QB1,F1_L=2_pi/2_N500,F1,pi/2,L=2,500,8,0-2,g1e-2=25.09;offmean=0.081;calign=0.205;cvauc=0.913,no,gate folds 0/3
+QB1,F1_L=3_pi/8_N100,F1,pi/8,L=3,100,8,0-2,g1e-2=2.55;offmean=0.603;calign=0.402;cvauc=0.919,no (gate at N=500),gate folds 0/3
+QB1,F1_L=3_pi/8_N500,F1,pi/8,L=3,500,8,0-2,g1e-2=6.45;offmean=0.606;calign=0.423;cvauc=0.937,no,gate folds 0/3
+QB1,F1_L=3_pi/6_N100,F1,pi/6,L=3,100,8,0-2,g1e-2=3.43;offmean=0.436;calign=0.380;cvauc=0.914,no (gate at N=500),gate folds 0/3
+QB1,F1_L=3_pi/6_N500,F1,pi/6,L=3,500,8,0-2,g1e-2=8.86;offmean=0.442;calign=0.401;cvauc=0.936,no,gate folds 0/3
+QB1,F1_L=3_pi/4_N100,F1,pi/4,L=3,100,8,0-2,g1e-2=6.30;offmean=0.215;calign=0.315;cvauc=0.889,no (gate at N=500),gate folds 0/3
+QB1,F1_L=3_pi/4_N500,F1,pi/4,L=3,500,8,0-2,g1e-2=15.59;offmean=0.223;calign=0.335;cvauc=0.930,no,gate folds 0/3
+QB1,F1_L=3_pi/3_N100,F1,pi/3,L=3,100,8,0-2,g1e-2=9.12;offmean=0.114;calign=0.252;cvauc=0.879,no (gate at N=500),gate folds 0/3
+QB1,F1_L=3_pi/3_N500,F1,pi/3,L=3,500,8,0-2,g1e-2=21.76;offmean=0.119;calign=0.265;cvauc=0.921,no,gate folds 0/3
+QB1,F1_L=3_pi/2_N100,F1,pi/2,L=3,100,8,0-2,g1e-2=12.50;offmean=0.046;calign=0.181;cvauc=0.844,no (gate at N=500),gate folds 0/3
+QB1,F1_L=3_pi/2_N500,F1,pi/2,L=3,500,8,0-2,g1e-2=26.80;offmean=0.049;calign=0.176;cvauc=0.911,no,gate folds 0/3
+QB1,F1_L=4_pi/8_N100,F1,pi/8,L=4,100,8,0-2,g1e-2=2.90;offmean=0.522;calign=0.393;cvauc=0.919,no (gate at N=500),gate folds 0/3
+QB1,F1_L=4_pi/8_N500,F1,pi/8,L=4,500,8,0-2,g1e-2=7.46;offmean=0.526;calign=0.415;cvauc=0.937,no,gate folds 0/3
+QB1,F1_L=4_pi/6_N100,F1,pi/6,L=4,100,8,0-2,g1e-2=4.28;offmean=0.352;calign=0.363;cvauc=0.905,no (gate at N=500),gate folds 0/3
+QB1,F1_L=4_pi/6_N500,F1,pi/6,L=4,500,8,0-2,g1e-2=10.80;offmean=0.359;calign=0.384;cvauc=0.933,no,gate folds 0/3
+QB1,F1_L=4_pi/4_N100,F1,pi/4,L=4,100,8,0-2,g1e-2=7.65;offmean=0.161;calign=0.286;cvauc=0.879,no (gate at N=500),gate folds 0/3
+QB1,F1_L=4_pi/4_N500,F1,pi/4,L=4,500,8,0-2,g1e-2=18.65;offmean=0.167;calign=0.304;cvauc=0.926,no,gate folds 0/3
+QB1,F1_L=4_pi/3_N100,F1,pi/3,L=4,100,8,0-2,g1e-2=10.38;offmean=0.085;calign=0.224;cvauc=0.854,no (gate at N=500),gate folds 0/3
+QB1,F1_L=4_pi/3_N500,F1,pi/3,L=4,500,8,0-2,g1e-2=24.00;offmean=0.090;calign=0.234;cvauc=0.921,no,gate folds 0/3
+QB1,F1_L=4_pi/2_N100,F1,pi/2,L=4,100,8,0-2,g1e-2=13.04;offmean=0.034;calign=0.162;cvauc=0.823,no (gate at N=500),gate folds 0/3
+QB1,F1_L=4_pi/2_N500,F1,pi/2,L=4,500,8,0-2,g1e-2=27.25;offmean=0.037;calign=0.154;cvauc=0.911,no,gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/8_N100,F2,pi/8,reps=1;c=0.5,100,8,0-2,g1e-2=2.36;offmean=0.827;calign=0.419;cvauc=0.924,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/8_N500,F2,pi/8,reps=1;c=0.5,500,8,0-2,g1e-2=4.13;offmean=0.827;calign=0.439;cvauc=0.935,no,gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/6_N100,F2,pi/6,reps=1;c=0.5,100,8,0-2,g1e-2=2.16;offmean=0.718;calign=0.418;cvauc=0.925,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/6_N500,F2,pi/6,reps=1;c=0.5,500,8,0-2,g1e-2=4.85;offmean=0.718;calign=0.435;cvauc=0.937,no,gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/4_N100,F2,pi/4,reps=1;c=0.5,100,8,0-2,g1e-2=2.66;offmean=0.494;calign=0.404;cvauc=0.923,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/4_N500,F2,pi/4,reps=1;c=0.5,500,8,0-2,g1e-2=6.70;offmean=0.496;calign=0.416;cvauc=0.937,no,gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/3_N100,F2,pi/3,reps=1;c=0.5,100,8,0-2,g1e-2=4.08;offmean=0.318;calign=0.367;cvauc=0.907,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/3_N500,F2,pi/3,reps=1;c=0.5,500,8,0-2,g1e-2=10.11;offmean=0.320;calign=0.376;cvauc=0.933,no,gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/2_N100,F2,pi/2,reps=1;c=0.5,100,8,0-2,g1e-2=8.08;offmean=0.134;calign=0.267;cvauc=0.874,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=0.5_pi/2_N500,F2,pi/2,reps=1;c=0.5,500,8,0-2,g1e-2=19.36;offmean=0.135;calign=0.270;cvauc=0.923,no,gate folds 0/3
+QB1,F2_reps=1;c=1_pi/8_N100,F2,pi/8,reps=1;c=1,100,8,0-2,g1e-2=2.34;offmean=0.821;calign=0.417;cvauc=0.925,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=1_pi/8_N500,F2,pi/8,reps=1;c=1,500,8,0-2,g1e-2=4.14;offmean=0.822;calign=0.437;cvauc=0.936,no,gate folds 0/3
+QB1,F2_reps=1;c=1_pi/6_N100,F2,pi/6,reps=1;c=1,100,8,0-2,g1e-2=2.16;offmean=0.704;calign=0.415;cvauc=0.927,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=1_pi/6_N500,F2,pi/6,reps=1;c=1,500,8,0-2,g1e-2=4.92;offmean=0.705;calign=0.431;cvauc=0.936,no,gate folds 0/3
+QB1,F2_reps=1;c=1_pi/4_N100,F2,pi/4,reps=1;c=1,100,8,0-2,g1e-2=3.13;offmean=0.460;calign=0.390;cvauc=0.918,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=1_pi/4_N500,F2,pi/4,reps=1;c=1,500,8,0-2,g1e-2=7.73;offmean=0.462;calign=0.400;cvauc=0.936,no,gate folds 0/3
+QB1,F2_reps=1;c=1_pi/3_N100,F2,pi/3,reps=1;c=1,100,8,0-2,g1e-2=5.37;offmean=0.273;calign=0.336;cvauc=0.894,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=1_pi/3_N500,F2,pi/3,reps=1;c=1,500,8,0-2,g1e-2=12.95;offmean=0.275;calign=0.341;cvauc=0.931,no,gate folds 0/3
+QB1,F2_reps=1;c=1_pi/2_N100,F2,pi/2,reps=1;c=1,100,8,0-2,g1e-2=10.74;offmean=0.091;calign=0.222;cvauc=0.870,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=1_pi/2_N500,F2,pi/2,reps=1;c=1,500,8,0-2,g1e-2=24.28;offmean=0.092;calign=0.214;cvauc=0.912,no,gate folds 0/3
+QB1,F2_reps=1;c=2_pi/8_N100,F2,pi/8,reps=1;c=2,100,8,0-2,g1e-2=2.27;offmean=0.800;calign=0.409;cvauc=0.920,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=2_pi/8_N500,F2,pi/8,reps=1;c=2,500,8,0-2,g1e-2=4.38;offmean=0.801;calign=0.427;cvauc=0.936,no,gate folds 0/3
+QB1,F2_reps=1;c=2_pi/6_N100,F2,pi/6,reps=1;c=2,100,8,0-2,g1e-2=2.56;offmean=0.653;calign=0.396;cvauc=0.925,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=2_pi/6_N500,F2,pi/6,reps=1;c=2,500,8,0-2,g1e-2=6.11;offmean=0.656;calign=0.409;cvauc=0.937,no,gate folds 0/3
+QB1,F2_reps=1;c=2_pi/4_N100,F2,pi/4,reps=1;c=2,100,8,0-2,g1e-2=5.08;offmean=0.353;calign=0.341;cvauc=0.900,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=2_pi/4_N500,F2,pi/4,reps=1;c=2,500,8,0-2,g1e-2=12.25;offmean=0.358;calign=0.340;cvauc=0.932,no,gate folds 0/3
+QB1,F2_reps=1;c=2_pi/3_N100,F2,pi/3,reps=1;c=2,100,8,0-2,g1e-2=8.81;offmean=0.160;calign=0.268;cvauc=0.876,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=2_pi/3_N500,F2,pi/3,reps=1;c=2,500,8,0-2,g1e-2=20.57;offmean=0.163;calign=0.255;cvauc=0.920,no,gate folds 0/3
+QB1,F2_reps=1;c=2_pi/2_N100,F2,pi/2,reps=1;c=2,100,8,0-2,g1e-2=14.04;offmean=0.030;calign=0.154;cvauc=0.846,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=1;c=2_pi/2_N500,F2,pi/2,reps=1;c=2,500,8,0-2,g1e-2=29.38;offmean=0.032;calign=0.128;cvauc=0.883,no,gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/8_N100,F2,pi/8,reps=2;c=0.5,100,8,0-2,g1e-2=2.40;offmean=0.836;calign=0.419;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/8_N500,F2,pi/8,reps=2;c=0.5,500,8,0-2,g1e-2=4.35;offmean=0.836;calign=0.438;cvauc=0.935,no,gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/6_N100,F2,pi/6,reps=2;c=0.5,100,8,0-2,g1e-2=2.31;offmean=0.740;calign=0.417;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/6_N500,F2,pi/6,reps=2;c=0.5,500,8,0-2,g1e-2=5.43;offmean=0.741;calign=0.434;cvauc=0.937,no,gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/4_N100,F2,pi/4,reps=2;c=0.5,100,8,0-2,g1e-2=3.83;offmean=0.563;calign=0.402;cvauc=0.924,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/4_N500,F2,pi/4,reps=2;c=0.5,500,8,0-2,g1e-2=9.34;offmean=0.563;calign=0.413;cvauc=0.935,no,gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/3_N100,F2,pi/3,reps=2;c=0.5,100,8,0-2,g1e-2=6.36;offmean=0.432;calign=0.365;cvauc=0.912,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/3_N500,F2,pi/3,reps=2;c=0.5,500,8,0-2,g1e-2=15.02;offmean=0.431;calign=0.371;cvauc=0.932,no,gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/2_N100,F2,pi/2,reps=2;c=0.5,100,8,0-2,g1e-2=11.27;offmean=0.248;calign=0.264;cvauc=0.885,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=0.5_pi/2_N500,F2,pi/2,reps=2;c=0.5,500,8,0-2,g1e-2=25.30;offmean=0.247;calign=0.255;cvauc=0.915,no,gate folds 0/3
+QB1,F2_reps=2;c=1_pi/8_N100,F2,pi/8,reps=2;c=1,100,8,0-2,g1e-2=2.37;offmean=0.830;calign=0.416;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=1_pi/8_N500,F2,pi/8,reps=2;c=1,500,8,0-2,g1e-2=4.40;offmean=0.831;calign=0.435;cvauc=0.936,no,gate folds 0/3
+QB1,F2_reps=2;c=1_pi/6_N100,F2,pi/6,reps=2;c=1,100,8,0-2,g1e-2=2.42;offmean=0.726;calign=0.412;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=1_pi/6_N500,F2,pi/6,reps=2;c=1,500,8,0-2,g1e-2=5.73;offmean=0.727;calign=0.427;cvauc=0.936,no,gate folds 0/3
+QB1,F2_reps=2;c=1_pi/4_N100,F2,pi/4,reps=2;c=1,100,8,0-2,g1e-2=4.81;offmean=0.519;calign=0.384;cvauc=0.923,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=1_pi/4_N500,F2,pi/4,reps=2;c=1,500,8,0-2,g1e-2=11.42;offmean=0.520;calign=0.388;cvauc=0.933,no,gate folds 0/3
+QB1,F2_reps=2;c=1_pi/3_N100,F2,pi/3,reps=2;c=1,100,8,0-2,g1e-2=7.95;offmean=0.350;calign=0.336;cvauc=0.908,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=1_pi/3_N500,F2,pi/3,reps=2;c=1,500,8,0-2,g1e-2=18.61;offmean=0.348;calign=0.329;cvauc=0.926,no,gate folds 0/3
+QB1,F2_reps=2;c=1_pi/2_N100,F2,pi/2,reps=2;c=1,100,8,0-2,g1e-2=12.70;offmean=0.115;calign=0.226;cvauc=0.878,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=1_pi/2_N500,F2,pi/2,reps=2;c=1,500,8,0-2,g1e-2=27.76;offmean=0.114;calign=0.202;cvauc=0.909,no,gate folds 0/3
+QB1,F2_reps=2;c=2_pi/8_N100,F2,pi/8,reps=2;c=2,100,8,0-2,g1e-2=2.30;offmean=0.808;calign=0.407;cvauc=0.929,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=2_pi/8_N500,F2,pi/8,reps=2;c=2,500,8,0-2,g1e-2=4.72;offmean=0.809;calign=0.424;cvauc=0.935,no,gate folds 0/3
+QB1,F2_reps=2;c=2_pi/6_N100,F2,pi/6,reps=2;c=2,100,8,0-2,g1e-2=3.02;offmean=0.673;calign=0.392;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=2_pi/6_N500,F2,pi/6,reps=2;c=2,500,8,0-2,g1e-2=7.30;offmean=0.675;calign=0.400;cvauc=0.935,no,gate folds 0/3
+QB1,F2_reps=2;c=2_pi/4_N100,F2,pi/4,reps=2;c=2,100,8,0-2,g1e-2=6.92;offmean=0.390;calign=0.350;cvauc=0.910,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=2_pi/4_N500,F2,pi/4,reps=2;c=2,500,8,0-2,g1e-2=16.64;offmean=0.390;calign=0.335;cvauc=0.925,no,gate folds 0/3
+QB1,F2_reps=2;c=2_pi/3_N100,F2,pi/3,reps=2;c=2,100,8,0-2,g1e-2=10.74;offmean=0.181;calign=0.288;cvauc=0.883,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=2_pi/3_N500,F2,pi/3,reps=2;c=2,500,8,0-2,g1e-2=25.00;offmean=0.178;calign=0.262;cvauc=0.911,no,gate folds 0/3
+QB1,F2_reps=2;c=2_pi/2_N100,F2,pi/2,reps=2;c=2,100,8,0-2,g1e-2=13.91;offmean=0.023;calign=0.132;cvauc=0.802,no (gate at N=500),gate folds 0/3
+QB1,F2_reps=2;c=2_pi/2_N500,F2,pi/2,reps=2;c=2,500,8,0-2,g1e-2=27.30;offmean=0.023;calign=0.101;cvauc=0.878,no,gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/8_N100,F3,pi/8,reps=1;c=0.5,100,8,0-2,g1e-2=2.36;offmean=0.828;calign=0.419;cvauc=0.926,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/8_N500,F3,pi/8,reps=1;c=0.5,500,8,0-2,g1e-2=4.13;offmean=0.828;calign=0.439;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/6_N100,F3,pi/6,reps=1;c=0.5,100,8,0-2,g1e-2=2.17;offmean=0.720;calign=0.419;cvauc=0.926,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/6_N500,F3,pi/6,reps=1;c=0.5,500,8,0-2,g1e-2=4.85;offmean=0.720;calign=0.436;cvauc=0.936,no,gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/4_N100,F3,pi/4,reps=1;c=0.5,100,8,0-2,g1e-2=2.64;offmean=0.499;calign=0.406;cvauc=0.927,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/4_N500,F3,pi/4,reps=1;c=0.5,500,8,0-2,g1e-2=6.59;offmean=0.501;calign=0.419;cvauc=0.936,no,gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/3_N100,F3,pi/3,reps=1;c=0.5,100,8,0-2,g1e-2=3.95;offmean=0.324;calign=0.373;cvauc=0.906,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/3_N500,F3,pi/3,reps=1;c=0.5,500,8,0-2,g1e-2=9.73;offmean=0.326;calign=0.382;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/2_N100,F3,pi/2,reps=1;c=0.5,100,8,0-2,g1e-2=7.76;offmean=0.139;calign=0.276;cvauc=0.873,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=0.5_pi/2_N500,F3,pi/2,reps=1;c=0.5,500,8,0-2,g1e-2=18.53;offmean=0.141;calign=0.281;cvauc=0.925,no,gate folds 0/3
+QB1,F3_reps=1;c=1_pi/8_N100,F3,pi/8,reps=1;c=1,100,8,0-2,g1e-2=2.35;offmean=0.825;calign=0.419;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=1_pi/8_N500,F3,pi/8,reps=1;c=1,500,8,0-2,g1e-2=4.13;offmean=0.825;calign=0.439;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=1;c=1_pi/6_N100,F3,pi/6,reps=1;c=1,100,8,0-2,g1e-2=2.18;offmean=0.712;calign=0.418;cvauc=0.930,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=1_pi/6_N500,F3,pi/6,reps=1;c=1,500,8,0-2,g1e-2=4.89;offmean=0.713;calign=0.435;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=1;c=1_pi/4_N100,F3,pi/4,reps=1;c=1,100,8,0-2,g1e-2=3.05;offmean=0.477;calign=0.401;cvauc=0.923,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=1_pi/4_N500,F3,pi/4,reps=1;c=1,500,8,0-2,g1e-2=7.50;offmean=0.479;calign=0.413;cvauc=0.936,no,gate folds 0/3
+QB1,F3_reps=1;c=1_pi/3_N100,F3,pi/3,reps=1;c=1,100,8,0-2,g1e-2=5.05;offmean=0.293;calign=0.356;cvauc=0.899,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=1_pi/3_N500,F3,pi/3,reps=1;c=1,500,8,0-2,g1e-2=12.37;offmean=0.294;calign=0.365;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=1;c=1_pi/2_N100,F3,pi/2,reps=1;c=1,100,8,0-2,g1e-2=9.80;offmean=0.114;calign=0.245;cvauc=0.860,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=1_pi/2_N500,F3,pi/2,reps=1;c=1,500,8,0-2,g1e-2=22.93;offmean=0.115;calign=0.243;cvauc=0.921,no,gate folds 0/3
+QB1,F3_reps=1;c=2_pi/8_N100,F3,pi/8,reps=1;c=2,100,8,0-2,g1e-2=2.32;offmean=0.813;calign=0.417;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=2_pi/8_N500,F3,pi/8,reps=1;c=2,500,8,0-2,g1e-2=4.27;offmean=0.813;calign=0.436;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=1;c=2_pi/6_N100,F3,pi/6,reps=1;c=2,100,8,0-2,g1e-2=2.64;offmean=0.682;calign=0.411;cvauc=0.926,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=2_pi/6_N500,F3,pi/6,reps=1;c=2,500,8,0-2,g1e-2=5.93;offmean=0.683;calign=0.426;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=1;c=2_pi/4_N100,F3,pi/4,reps=1;c=2,100,8,0-2,g1e-2=4.85;offmean=0.405;calign=0.370;cvauc=0.908,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=2_pi/4_N500,F3,pi/4,reps=1;c=2,500,8,0-2,g1e-2=11.80;offmean=0.407;calign=0.379;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=1;c=2_pi/3_N100,F3,pi/3,reps=1;c=2,100,8,0-2,g1e-2=7.81;offmean=0.210;calign=0.299;cvauc=0.876,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=2_pi/3_N500,F3,pi/3,reps=1;c=2,500,8,0-2,g1e-2=19.08;offmean=0.210;calign=0.301;cvauc=0.929,no,gate folds 0/3
+QB1,F3_reps=1;c=2_pi/2_N100,F3,pi/2,reps=1;c=2,100,8,0-2,g1e-2=13.56;offmean=0.064;calign=0.179;cvauc=0.838,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=1;c=2_pi/2_N500,F3,pi/2,reps=1;c=2,500,8,0-2,g1e-2=29.86;offmean=0.065;calign=0.157;cvauc=0.909,no,gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/8_N100,F3,pi/8,reps=2;c=0.5,100,8,0-2,g1e-2=2.40;offmean=0.837;calign=0.420;cvauc=0.928,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/8_N500,F3,pi/8,reps=2;c=0.5,500,8,0-2,g1e-2=4.33;offmean=0.837;calign=0.439;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/6_N100,F3,pi/6,reps=2;c=0.5,100,8,0-2,g1e-2=2.33;offmean=0.743;calign=0.420;cvauc=0.929,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/6_N500,F3,pi/6,reps=2;c=0.5,500,8,0-2,g1e-2=5.35;offmean=0.743;calign=0.437;cvauc=0.936,no,gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/4_N100,F3,pi/4,reps=2;c=0.5,100,8,0-2,g1e-2=3.85;offmean=0.568;calign=0.411;cvauc=0.925,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/4_N500,F3,pi/4,reps=2;c=0.5,500,8,0-2,g1e-2=9.20;offmean=0.569;calign=0.425;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/3_N100,F3,pi/3,reps=2;c=0.5,100,8,0-2,g1e-2=6.42;offmean=0.439;calign=0.380;cvauc=0.916,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/3_N500,F3,pi/3,reps=2;c=0.5,500,8,0-2,g1e-2=14.79;offmean=0.442;calign=0.395;cvauc=0.932,no,gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/2_N100,F3,pi/2,reps=2;c=0.5,100,8,0-2,g1e-2=11.23;offmean=0.266;calign=0.266;cvauc=0.890,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=0.5_pi/2_N500,F3,pi/2,reps=2;c=0.5,500,8,0-2,g1e-2=24.33;offmean=0.275;calign=0.266;cvauc=0.911,no,gate folds 0/3
+QB1,F3_reps=2;c=1_pi/8_N100,F3,pi/8,reps=2;c=1,100,8,0-2,g1e-2=2.39;offmean=0.834;calign=0.420;cvauc=0.927,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=1_pi/8_N500,F3,pi/8,reps=2;c=1,500,8,0-2,g1e-2=4.35;offmean=0.834;calign=0.440;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=2;c=1_pi/6_N100,F3,pi/6,reps=2;c=1,100,8,0-2,g1e-2=2.47;offmean=0.734;calign=0.420;cvauc=0.929,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=1_pi/6_N500,F3,pi/6,reps=2;c=1,500,8,0-2,g1e-2=5.59;offmean=0.735;calign=0.437;cvauc=0.935,no,gate folds 0/3
+QB1,F3_reps=2;c=1_pi/4_N100,F3,pi/4,reps=2;c=1,100,8,0-2,g1e-2=4.67;offmean=0.540;calign=0.402;cvauc=0.927,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=1_pi/4_N500,F3,pi/4,reps=2;c=1,500,8,0-2,g1e-2=10.90;offmean=0.542;calign=0.418;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=2;c=1_pi/3_N100,F3,pi/3,reps=2;c=1,100,8,0-2,g1e-2=7.82;offmean=0.379;calign=0.351;cvauc=0.908,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=1_pi/3_N500,F3,pi/3,reps=2;c=1,500,8,0-2,g1e-2=17.29;offmean=0.384;calign=0.367;cvauc=0.929,no,gate folds 0/3
+QB1,F3_reps=2;c=1_pi/2_N100,F3,pi/2,reps=2;c=1,100,8,0-2,g1e-2=12.72;offmean=0.150;calign=0.241;cvauc=0.872,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=1_pi/2_N500,F3,pi/2,reps=2;c=1,500,8,0-2,g1e-2=27.05;offmean=0.157;calign=0.229;cvauc=0.909,no,gate folds 0/3
+QB1,F3_reps=2;c=2_pi/8_N100,F3,pi/8,reps=2;c=2,100,8,0-2,g1e-2=2.35;offmean=0.821;calign=0.419;cvauc=0.930,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=2_pi/8_N500,F3,pi/8,reps=2;c=2,500,8,0-2,g1e-2=4.56;offmean=0.822;calign=0.438;cvauc=0.933,no,gate folds 0/3
+QB1,F3_reps=2;c=2_pi/6_N100,F3,pi/6,reps=2;c=2,100,8,0-2,g1e-2=2.99;offmean=0.703;calign=0.414;cvauc=0.932,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=2_pi/6_N500,F3,pi/6,reps=2;c=2,500,8,0-2,g1e-2=6.85;offmean=0.704;calign=0.430;cvauc=0.932,no,gate folds 0/3
+QB1,F3_reps=2;c=2_pi/4_N100,F3,pi/4,reps=2;c=2,100,8,0-2,g1e-2=6.54;offmean=0.449;calign=0.364;cvauc=0.911,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=2_pi/4_N500,F3,pi/4,reps=2;c=2,500,8,0-2,g1e-2=15.02;offmean=0.453;calign=0.379;cvauc=0.931,no,gate folds 0/3
+QB1,F3_reps=2;c=2_pi/3_N100,F3,pi/3,reps=2;c=2,100,8,0-2,g1e-2=10.34;offmean=0.239;calign=0.293;cvauc=0.885,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=2_pi/3_N500,F3,pi/3,reps=2;c=2,500,8,0-2,g1e-2=22.75;offmean=0.245;calign=0.297;cvauc=0.925,no,gate folds 0/3
+QB1,F3_reps=2;c=2_pi/2_N100,F3,pi/2,reps=2;c=2,100,8,0-2,g1e-2=15.42;offmean=0.068;calign=0.175;cvauc=0.866,no (gate at N=500),gate folds 0/3
+QB1,F3_reps=2;c=2_pi/2_N500,F3,pi/2,reps=2;c=2,500,8,0-2,g1e-2=33.09;offmean=0.070;calign=0.148;cvauc=0.906,no,gate folds 0/3
+QB1,F4_T=1_pi/8_N100,F4,pi/8,T=1,100,8,0-2,g1e-2=2.57;offmean=0.507;calign=0.408;cvauc=0.925,no (gate at N=500),gate folds 0/3
+QB1,F4_T=1_pi/8_N500,F4,pi/8,T=1,500,8,0-2,g1e-2=6.48;offmean=0.508;calign=0.420;cvauc=0.937,no,gate folds 0/3
+QB1,F4_T=1_pi/6_N100,F4,pi/6,T=1,100,8,0-2,g1e-2=3.68;offmean=0.336;calign=0.378;cvauc=0.913,no (gate at N=500),gate folds 0/3
+QB1,F4_T=1_pi/6_N500,F4,pi/6,T=1,500,8,0-2,g1e-2=9.21;offmean=0.338;calign=0.388;cvauc=0.934,no,gate folds 0/3
+QB1,F4_T=1_pi/4_N100,F4,pi/4,T=1,100,8,0-2,g1e-2=6.98;offmean=0.150;calign=0.288;cvauc=0.877,no (gate at N=500),gate folds 0/3
+QB1,F4_T=1_pi/4_N500,F4,pi/4,T=1,500,8,0-2,g1e-2=17.01;offmean=0.152;calign=0.293;cvauc=0.925,no,gate folds 0/3
+QB1,F4_T=1_pi/3_N100,F4,pi/3,T=1,100,8,0-2,g1e-2=10.20;offmean=0.077;calign=0.220;cvauc=0.860,no (gate at N=500),gate folds 0/3
+QB1,F4_T=1_pi/3_N500,F4,pi/3,T=1,500,8,0-2,g1e-2=23.53;offmean=0.080;calign=0.218;cvauc=0.916,no,gate folds 0/3
+QB1,F4_T=1_pi/2_N100,F4,pi/2,T=1,100,8,0-2,g1e-2=13.88;offmean=0.039;calign=0.167;cvauc=0.857,no (gate at N=500),gate folds 0/3
+QB1,F4_T=1_pi/2_N500,F4,pi/2,T=1,500,8,0-2,g1e-2=28.73;offmean=0.042;calign=0.156;cvauc=0.904,no,gate folds 0/3
+QB1,F4_T=2_pi/8_N100,F4,pi/8,T=2,100,8,0-2,g1e-2=2.46;offmean=0.719;calign=0.370;cvauc=0.918,no (gate at N=500),gate folds 0/3
+QB1,F4_T=2_pi/8_N500,F4,pi/8,T=2,500,8,0-2,g1e-2=5.67;offmean=0.720;calign=0.376;cvauc=0.936,no,gate folds 0/3
+QB1,F4_T=2_pi/6_N100,F4,pi/6,T=2,100,8,0-2,g1e-2=2.96;offmean=0.582;calign=0.370;cvauc=0.917,no (gate at N=500),gate folds 0/3
+QB1,F4_T=2_pi/6_N500,F4,pi/6,T=2,500,8,0-2,g1e-2=7.51;offmean=0.582;calign=0.372;cvauc=0.936,no,gate folds 0/3
+QB1,F4_T=2_pi/4_N100,F4,pi/4,T=2,100,8,0-2,g1e-2=4.96;offmean=0.362;calign=0.347;cvauc=0.906,no (gate at N=500),gate folds 0/3
+QB1,F4_T=2_pi/4_N500,F4,pi/4,T=2,500,8,0-2,g1e-2=13.41;offmean=0.363;calign=0.348;cvauc=0.935,no,gate folds 0/3
+QB1,F4_T=2_pi/3_N100,F4,pi/3,T=2,100,8,0-2,g1e-2=7.40;offmean=0.226;calign=0.308;cvauc=0.887,no (gate at N=500),gate folds 0/3
+QB1,F4_T=2_pi/3_N500,F4,pi/3,T=2,500,8,0-2,g1e-2=19.13;offmean=0.227;calign=0.311;cvauc=0.931,no,gate folds 0/3
+QB1,F4_T=2_pi/2_N100,F4,pi/2,T=2,100,8,0-2,g1e-2=11.48;offmean=0.097;calign=0.235;cvauc=0.876,no (gate at N=500),gate folds 0/3
+QB1,F4_T=2_pi/2_N500,F4,pi/2,T=2,500,8,0-2,g1e-2=25.74;offmean=0.099;calign=0.232;cvauc=0.920,no,gate folds 0/3
+QB1,F4_T=3_pi/8_N100,F4,pi/8,T=3,100,8,0-2,g1e-2=2.53;offmean=0.730;calign=0.347;cvauc=0.910,no (gate at N=500),gate folds 0/3
+QB1,F4_T=3_pi/8_N500,F4,pi/8,T=3,500,8,0-2,g1e-2=5.81;offmean=0.732;calign=0.348;cvauc=0.931,no,gate folds 0/3
+QB1,F4_T=3_pi/6_N100,F4,pi/6,T=3,100,8,0-2,g1e-2=3.07;offmean=0.597;calign=0.346;cvauc=0.913,no (gate at N=500),gate folds 0/3
+QB1,F4_T=3_pi/6_N500,F4,pi/6,T=3,500,8,0-2,g1e-2=7.83;offmean=0.599;calign=0.344;cvauc=0.934,no,gate folds 0/3
+QB1,F4_T=3_pi/4_N100,F4,pi/4,T=3,100,8,0-2,g1e-2=5.18;offmean=0.382;calign=0.326;cvauc=0.903,no (gate at N=500),gate folds 0/3
+QB1,F4_T=3_pi/4_N500,F4,pi/4,T=3,500,8,0-2,g1e-2=14.14;offmean=0.383;calign=0.322;cvauc=0.932,no,gate folds 0/3
+QB1,F4_T=3_pi/3_N100,F4,pi/3,T=3,100,8,0-2,g1e-2=7.76;offmean=0.243;calign=0.293;cvauc=0.883,no (gate at N=500),gate folds 0/3
+QB1,F4_T=3_pi/3_N500,F4,pi/3,T=3,500,8,0-2,g1e-2=20.15;offmean=0.245;calign=0.291;cvauc=0.928,no,gate folds 0/3
+QB1,F4_T=3_pi/2_N100,F4,pi/2,T=3,100,8,0-2,g1e-2=12.01;offmean=0.107;calign=0.231;cvauc=0.866,no (gate at N=500),gate folds 0/3
+QB1,F4_T=3_pi/2_N500,F4,pi/2,T=3,500,8,0-2,g1e-2=27.10;offmean=0.110;calign=0.228;cvauc=0.917,no,gate folds 0/3
+QB1,F5__pi/8_N100,F5,pi/8,,100,8,0-2,g1e-2=2.63;offmean=0.830;calign=0.280;cvauc=0.898,no (gate at N=500),gate folds 0/3
+QB1,F5__pi/8_N500,F5,pi/8,,500,8,0-2,g1e-2=5.51;offmean=0.835;calign=0.303;cvauc=0.915,no,gate folds 0/3
+QB1,F5__pi/6_N100,F5,pi/6,,100,8,0-2,g1e-2=2.97;offmean=0.728;calign=0.288;cvauc=0.907,no (gate at N=500),gate folds 0/3
+QB1,F5__pi/6_N500,F5,pi/6,,500,8,0-2,g1e-2=7.08;offmean=0.736;calign=0.305;cvauc=0.918,no,gate folds 0/3
+QB1,F5__pi/4_N100,F5,pi/4,,100,8,0-2,g1e-2=4.63;offmean=0.534;calign=0.292;cvauc=0.908,no (gate at N=500),gate folds 0/3
+QB1,F5__pi/4_N500,F5,pi/4,,500,8,0-2,g1e-2=12.62;offmean=0.543;calign=0.297;cvauc=0.920,no,gate folds 0/3
+QB1,F5__pi/3_N100,F5,pi/3,,100,8,0-2,g1e-2=7.16;offmean=0.389;calign=0.272;cvauc=0.901,no (gate at N=500),gate folds 0/3
+QB1,F5__pi/3_N500,F5,pi/3,,500,8,0-2,g1e-2=20.50;offmean=0.397;calign=0.268;cvauc=0.916,no,gate folds 0/3
+QB1,F5__pi/2_N100,F5,pi/2,,100,8,0-2,g1e-2=11.93;offmean=0.247;calign=0.187;cvauc=0.826,no (gate at N=500),gate folds 0/3
+QB1,F5__pi/2_N500,F5,pi/2,,500,8,0-2,g1e-2=33.53;offmean=0.252;calign=0.174;cvauc=0.886,no,gate folds 0/3
