@@ -29,7 +29,7 @@ Then: confirmation of the ≤ 3 candidates, headline (what was tried, what passe
 
 ## X2 results — kernel geometry (EXPLORATORY; discovery folds 0–2 only; run 2026-11-13; no other DX setting was run)
 
-`dx_x2_geometry.py` (tested end to end; 4 s), `results/dx_x2_geometry.json`, 24 rows in `results/dx_registry.csv`. Quantum kernel: the π/6 angle-encoding fidelity kernel used by Q3,
+`dx_x2_geometry.py` (tested end to end; 4 s), `results/dx_x2_geometry.json`, 48 rows (2 kernels × 4 λ × 2 N × 3 folds) in `results/dx_registry.csv`. Quantum kernel: the π/6 angle-encoding fidelity kernel used by Q3,
 K_Q(x,x') = Π_i cos²((a_i − a_i')/2), a = (π/6)·tanh(z), on the first 8 L1 features — **a classically computable product kernel** (O(k) per pair). Classical kernels: RBF with γ tuned by 5-fold CV on the sample, and the linear kernel rescaled to Tr K = N.
 g(K_C ‖ K_Q) = sqrt(‖√K_Q (K_C + λI)⁻¹ √K_Q‖_∞) (Huang et al. 2021); N ECGs sampled (class-stratified) from the outer-train part of each discovery fold.
 
