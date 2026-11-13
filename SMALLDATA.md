@@ -215,7 +215,7 @@ Q1 vs LR has small raw-p advantages at N = 50 and 200 (+0.004, +0.002) that do n
 **Cells meeting neither claim:** Q2 (trained scales) vs C3 GP at N = 25: d = −0.0183 [−0.0251, −0.0121] — **inconclusive** for non-inferiority (CI straddles −0.02); pre-registered wording: the classical model was better at that size.
 (Q4 at N = 100 vs LR, SVM-RBF, GP, RF and XGBoost also meets neither, as recorded in the primary section.)
 
-**Generalisation gap:** the angle-encoding models (Q1, Q3) have a significantly smaller train–test gap than kNN, random forest and XGBoost at every size, and than LR at N = 25; the gaps of Q1/Q3 and LR, SVM-RBF and GP converge from ~0.17 at N = 25 to ~0.02 at N = 500.
+**Generalisation gap:** Q1 and Q3 have a significantly smaller train–test gap than kNN and XGBoost at every size and than random forest at every size (Q3) or at N ≥ 50 (Q1); smaller than LR at N = 25 only; equal to SVM-RBF everywhere; Q1's gap is larger than GP's at N = 25 (equal elsewhere); the gaps of Q1/Q3 and LR, SVM-RBF and GP converge from ~0.17 at N = 25 to ~0.02 at N = 500.
 
 **Reading.** The learning curves of Q1, Q3, SVM-RBF, GP and random forest lie on top of each other at every size (within ~0.005 AUC); the quantum models' consistent wins are against the two weakest classical models (kNN, XGBoost) and, at the extremes N = 25 and N = 500, against plain LR.
 This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the Q1/Q3 feature map is a classically computable product kernel.
