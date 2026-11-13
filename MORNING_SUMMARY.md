@@ -1,10 +1,16 @@
-# MORNING SUMMARY (branch brickwall-overnight; details in BRICKWALL.md, log in OVERNIGHT_LOG.md)
+# MORNING SUMMARY (branch smalldata; details: SMALLDATA.md, DISTINGUISHER.md, BRICKWALL.md, PAPER_OUTLINE.md)
 
-**Finished:** P0 sanity (logged fold-0 AUC reproduced exactly) · P1 classical benchmarks (LR, LR2, RF, XGB, MLP; k = 8/12/16/32/249) · P2 brick-wall simulator rebuilt + verified (≤1.3e-15 vs dense sim and the notebook's PennyLane circuit) · P3 brick-wall n=8/12 (stages A/B/C, paper-phase rows) · P4 external PTB validation (445 records, 52 healthy patients) · P5 learning curves · P6 hardware prep (compile table, FakeFez noise, IBM script dry-run) · P7 report · EXTRA 1 (seeds), 2 (sample-level head), 3 (butterfly), 4 (16 qubits), 5 (external for improved EXTRA models).
-**Key numbers (5-fold test AUC):** XGBoost 0.937 (k=8) · 0.945 (k=12) · 0.965 (k=32) · 0.973 (all 249). Quantum: angle VQC π/6 0.928 (k=8), 0.951/0.955 (k=32, fixed/trained scales); brick-wall 0.920 (n=8), 0.934 (n=12); butterfly n=8 0.9225; 16 qubits ≈ 0.94 (see EXTRA). External PTB: all models 0.90–0.95 (CIs ±0.03).
-**Advantage verdict: NOT met anywhere** (CV at 8/12/32 features, external set, every learning-curve size). Best quantum ties or beats plain LR only (brick-wall n=12 beats LR by +0.005, CI excludes 0) and stays below LR2/MLP/RF/XGBoost. Paper Prop. 8 / Sec. VI.B–C: two-body readouts are classically tractable, so the statement is empirical on this task only.
-**Findings:** (1) the stored ST features were built with a 0.5–40 Hz filter, not the script's current 0.05 Hz — recovered, reproduces all 249 columns to 1e-13; (2) real V4–V6 shift between PTB-XL and PTB healthy controls; (3) π/6 lesson transfers (small scales win, π worst; optimum π/4); (4) n=12 brick-wall head weights ≈400 → needs ~10⁶ shots, n=8 needs ~300–1000 (robust to FakeFez noise: 0.915 → 0.911).
-**What failed / caveats:** `quantum_utils.py` missing (reconstructed, flagged); literal "Hadamard brick-wall" is not uniform (we use exact Walsh–Hadamard / Hadamard-12); columns=12 at n=12 skipped (too slow); n=12 noisy sim only 40 ECGs; torch is blocked by Application Control in the OneDrive venv (workaround in docs/REPRODUCE.md); no real-hardware run.
-**Your IBM test run (10 free minutes; only you run it)** — from `cloud_repo`, with `QISKIT_IBM_TOKEN` set in the environment:
-`C:\bwvenv\Scripts\python.exe -u hw_run_ibm_brickwall.py --submit --n 100 --shots 1000`  (models bw8 + angle-VQC k=32; prints the plan and estimated QPU time, asks to confirm, refuses > 8 min; est. ≈ 1.3 min for 2 models × 100 ECGs × 1000 shots)
-then `... --analyze` (or `--retrieve` if the session drops). Do **not** add `--models bw8,bw12,vqc32` unless you accept ~chance AUC for bw12 at 1000 shots. Dry run: `... --local --n 4 --shots 200`.
+1. Full-data benchmark: XGBoost best at every feature count (0.937 k=8 … 0.973 all 249); no quantum model meets the outperformance rule (BRICKWALL.md).
+2. Encoding rule: s = π/6 removes the angle-saturation collapse (k=32: 0.791 at π → 0.951); small scales also win in the brick-wall reimplementation (results/paper/table1_encoding.md).
+3. Pre-registered small-data study (k=8): quantum models non-inferior to the best classical model at N = 25, 50, 100, 200, 500 (500 = reduced sample), superior at none.
+4. Primary endpoint N=100: Q3 quantum-kernel SVM vs random forest d = −0.0028 [−0.0049, −0.0010]; by inner-CV choice, Q3 vs SVM-RBF is a tie (−0.0006 [−0.0024, +0.0013]).
+5. Wins (Holm) only vs kNN, XGBoost and plain LR (N=25, N=500); never vs SVM-RBF, GP, random forest. LR (9 params) matches the angle VQC (81) on AUC and gap.
+6. Kernel geometry (exploratory, folds 0–2): g(RBF‖π/6 kernel) = 1.7–11.5 ≪ √N → no room for advantage; distinguisher search stopped; folds 3–4 and PTB untouched.
+7. Paper outputs: results/paper/ (Tables 1–3, Figures 1–3, each stamped with its build commit); PAPER_OUTLINE.md final.
+8. INCOMPLETE: k=4 secondary endpoint (194 of 850 units; stalled — free RAM < 3 GB with Chrome/Claude/VS Code open).
+9. INCOMPLETE: 5 VQC seed runs (EXTRA 1) — waiting for RAM.
+10. INCOMPLETE: brick-wall at N≠100, EXTRA 6 (shot-robust heads), n=16 external run — torch blocked by Windows Application Control (no setting changed).
+11. INCOMPLETE: C7 TabPFN (licence login required); real IBM device run (yours; command in BRICKWALL.md §P6). Please delete C:\tvenv (test venv; removal was blocked).
+12. Resume (from cloud_repo, with ≥ 3.5 GB RAM free): `..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 4 100,50,200,25 8 --tag _k4 --reps 40`
+13. then `... sd_launch.py ..\.venv\Scripts\python.exe main 4 500 8 --tag _k4 --reps 10`, `C:\bwvenv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _main`, `C:\bwvenv\Scripts\python.exe make_paper.py`
+14. and the seeds: `..\.venv\Scripts\python.exe scale_cv.py --scales pi/6 --ks 8,32 --seeds 1,2 --steps 1000 --batch 1000 --lr 0.01 --jobs 2 --out results/bw/extra1_vqc.jsonl`

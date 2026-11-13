@@ -2,6 +2,25 @@
 
 Branch `smalldata` (from `brickwall-overnight`). Log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). Code: `sd_run.py`, `sd_analyze.py`. This report is updated after every sub-phase.
 
+## Headline (k = 8, final; k = 4 pending)
+
+**Claim level reached: non-inferiority at every training size, superiority at none.** In the pre-registered paired comparison of the best quantum model against the best classical model,
+the quantum models **matched classical performance within 0.02 AUC at N = 25, 50, 100, 200 and 500** (N = 500: reduced sample, 10 of 40 subsets) and **outperformed the best classical model at no size**:
+
+| N | best quantum vs best classical | mean d [95% CI] | claim |
+|---|---|---|---|
+| 25 | Q3 quantum-kernel SVM vs C3 GP | −0.0040 [−0.0099, +0.0012] | non-inferior |
+| 50 | Q3 vs C3 GP | −0.0033 [−0.0058, −0.0009] | non-inferior (GP slightly better) |
+| 100 (primary) | Q3 vs C5 random forest | −0.0028 [−0.0049, −0.0010] | non-inferior (RF slightly better) |
+| 200 | Q1 angle VQC vs C5 random forest | −0.0018 [−0.0036, −0.0002] | non-inferior (RF slightly better) |
+| 500 | Q1 vs C5 random forest | −0.0009 [−0.0020, +0.0002] | non-inferior; reduced sample |
+
+Choosing "best" by inner-CV AUC instead of test AUC makes the N = 100 comparison a tie with SVM-RBF (−0.0006 [−0.0024, +0.0013]). Holm-adjusted superiority (96 comparisons) holds only against weaker classical models:
+the quantum model outperformed **kNN** (all sizes), **XGBoost** (all sizes for Q1/Q3) and **plain LR** at N = 25 (Q3, +0.010) and N = 500 (Q1/Q3, +0.0045, reduced sample) — never SVM-RBF, the GP classifier or random forest.
+One cell is **inconclusive**: Q2 (trained scales) vs GP at N = 25 (d = −0.018, CI straddles −0.02). The brick-wall (Q4, N = 100 only) was worse than five of six classical models. LR (9 parameters) matches the angle VQC (81) on AUC and train–test gap.
+This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the best quantum models here use a classically computable product kernel (geometric difference to RBF ≪ √N, `DISTINGUISHER.md`).
+**Incomplete:** k = 4 (secondary endpoint; runs stalled by low free RAM), Q4 at N ≠ 100 (torch blocked by Windows Application Control), C7 TabPFN (licence login required).
+
 ## Pre-registered analysis plan
 
 (Written and committed BEFORE any SD experiment was run; not to be changed. Additions go under "Exploratory (not pre-registered)".)
