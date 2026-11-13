@@ -63,3 +63,6 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-13 11:39 A2 diagnosis: all k=4 worker exits with rc 1 were RAM-guard kills (21 logged in results/sd_ramguard.log; no errors/tracebacks in worker logs). RAM-gated launcher (needs >= 3.5 GB free) is alive and resumes k=4 automatically when memory frees; user is using Chrome/Claude, free RAM ~2.9 GB. Push to origin blocked by the permission check (needs the user's approval).
 - 2026-11-13 11:41 QB1 screen launched (3 processes, folds 0-2, BelowNormal).
 - 2026-11-13 12:16 QB1 done (no map passes gate), QB3 done (quadratic classical models match VQC at <= params), QB4 screen done, QB4 training launched (21 runs, 3 procs).
+- 2026-11-13 13:29 QB4 training stopped (6-hour rule; incomplete); QB5 now on 3 processes (folds 0,1,2).
+- 2026-11-13 13:39 Free RAM fell to 0.67 GB (user apps); stopped QB5 folds 1-2 (resumable), fold 0 continues alone.
+- 2026-11-13 14:30 free RAM 2.6 GB < 3: stopped QB5 fold 1 (resumable); fold 0 continues.
