@@ -40,6 +40,12 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 ## 7. Kernel geometry (exploratory)
 * Claim: for the π/6 angle kernel, the geometric difference to a tuned RBF kernel is 1.7–3.3 at N = 100 (√N = 10) and 2.6–11.5 at N = 500 (√N = 22.4), so there is no room for a quantum prediction advantage with this feature map; the kernel is a classically computable product kernel with an effective spectral dimension ≈ 1.8. Exploratory, discovery folds 0–2 only; the search was stopped after this diagnostic. — `DISTINGUISHER.md`, `results/dx_x2_geometry.json`, `results/paper/fig3_geometric_difference.png` (82c52b6, 1a60f8a, 75c799e).
 
+## 7b. Search for a quantum benefit (QB, pre-registered in `QB.md`)
+* Claim: a training-free screen of 1,200 feature-map settings (product, re-uploading, IQP/ZZ, clinically paired ZZ, Heisenberg evolution, brick-wall encoding; 5 scales) found no map with both expressivity beyond a tuned RBF kernel (g ≥ √N/2) and adequate label alignment; g crosses √N/2 only where alignment falls below 90 % of RBF (π/3–π/2). This extends the scale rule from "which scale" to "which feature map". — `QB.md` QB1, `results/qb1_screen.jsonl`, `results/paper/table4_feature_maps.md`, `results/paper/fig4_g_all_maps.png` (78984b0, 4073872, bedee3a).
+* Claim: the VQC's win over LR is explained by the encoding plus mild non-linearity: classical quadratic models with no more parameters on the same bounded inputs (rank-2 factorization machine 97 parameters, sparse degree-2 LR ≤ 71) match the trained-scale VQC (0.956) and exceed the π/6 VQC (0.952) on discovery folds; degree-2 surrogates explain 97–99 % of the VQC output. — `QB.md` QB3, `results/qb3.jsonl` (d76712b).
+* Claim: no robustness, shift, imbalance or subtype setting gave the quantum models a ≥ 0.005 AUC benefit over the best classical model at N = 100 (interim, 18 of 30 units). — `QB.md` QB5 (de0ffb4).
+* Claim level: **no benefit found**; confirmation was not run because no candidate qualified. — `QB.md` headline.
+
 ## 8. Hardware readiness (simulation only)
 * Claim: the angle VQC (π/6, k = 32) keeps its AUC under 1000 shots (≤ 0.002 loss) and the FakeFez noise model (0.961 → 0.960). — `HARDWARE.md` (c553b25, 3f9ec7f).
 * Claim: the n = 8 brick-wall is robust to shots and FakeFez noise (0.915 → 0.911), whereas the n = 12 model needs ~10⁶ shots because its head weights reach ~400. — `BRICKWALL.md` §P6, `results/bw/p6_noise_n8.json`, `results/bw/p6_shots.json` (8c10076).
@@ -73,6 +79,8 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 5. Shot/noise robustness — `results/figs/hw_shots.png`, `results/figs/hw_noisy.png`.
 
 ## Incomplete (as of this outline)
+* QB4 training (feature placement), QB5 folds 1–2 (12 of 30 units) and the QB5 full-data part.
+* k = 4 secondary endpoint of the small-data study (running when RAM allows).
 * Brick-wall (Q4) at N = 25, 50, 200, 500 — torch blocked by Windows Application Control.
 * EXTRA 6 (shot-robust n = 12 / n = 16 heads) and the n = 16 external run — same reason.
 * C7 TabPFN — licence login required.

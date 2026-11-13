@@ -3,6 +3,17 @@
 Branch `smalldata`. **This pre-registration was written and committed before any QB run.** Nothing below may be changed after a QB result has been seen; later additions go under "Exploratory (not pre-registered)".
 Every setting tried, including failures, is recorded in `results/qb_registry.csv`.
 
+## Headline (2026-11-13) — claim level: **no benefit found**
+
+* **Tried** (262 rows in `results/qb_registry.csv`): QB1 screened 1,200 feature-map settings (product, re-uploading, IQP/ZZ, clinically paired ZZ, Heisenberg evolution, brick-wall encoding; 5 scales; N = 100/500; k = 8/4; 3 discovery folds);
+  QB3 compared the trained VQCs with 6 parameter-matched classical models on raw and bounded inputs; QB4 screened 213 feature placements per fold; QB5 tested 13 perturbation/shift/imbalance/subtype settings.
+* **Passed the gate:** none of the feature maps (QB1). Expressivity beyond an RBF kernel (g ≥ √N/2) appears only at s = π/2, where label alignment collapses; QB2 was skipped as pre-registered.
+* **Non-linearity hypothesis (QB3): supported.** At equal or fewer parameters, classical quadratic models (rank-2 factorization machine, sparse degree-2 LR) on the same bounded inputs match the trained-scale VQC (0.9562 / 0.9561 vs 0.9561) and exceed the π/6 VQC; the win over LR is explained by the encoding plus mild non-linearity, not by the circuit.
+* **Other kinds of benefit (QB5, 18 of 30 units so far):** no setting with the quantum model ≥ +0.005 above the best classical model and CI > 0.
+* **Confirmation (QB6): not run — no candidate reached it.** Folds 3–4 and the external PTB set were not touched by QB.
+* **Incomplete:** QB4 training (stopped under the 6-hour rule); QB5 folds 1–2 (12 units, waiting for free RAM); QB5 full-data part (logged in advance as incomplete).
+* Wording: under the fixed claim rules this is **"no benefit found"**; the word "advantage" is not used.
+
 ## Working hypothesis being tested
 
 The quantum models beat plain logistic regression (full data k=32: VQC π/6 0.951 vs LR 0.945, 5/5 folds; brick-wall n=12 +0.005; small data Q3 vs LR +0.010 at N=25 and +0.0045 at N=500),
@@ -159,3 +170,7 @@ Best classical by inner CV (clean SD subsets, folds 0–2, r 0–9): **C2_svm_rb
 **Interim reading (18/30 units):** no setting yields a candidate. The quantum models are never ahead of the best classical model (SVM-RBF by inner CV) by ≥ 0.005 with a CI above 0; most differences are small and negative, and several CIs exclude 0 on the classical side (Q3 under test-time noise 0.5 SD; Q1 at 5 % MI prevalence).
 Against the dequantized twins the picture is mixed and small, except that both quantum models beat the bounded-input degree-2 LR twin under label noise and class imbalance (that twin overfits at N = 100), which is not a win over the best classical model.
 QB5 will be re-analysed when all 30 units are done; the candidate rule is applied only then.
+
+### QB6 — confirmation
+
+No candidate met the pre-registered criteria on discovery (QB1: none passed the gate; QB3: classical models matched the VQC; QB5 interim: none). **Confirmation was therefore not run**; folds 3–4 and the external PTB set remain unused by QB. Claim level: **no benefit found**.
