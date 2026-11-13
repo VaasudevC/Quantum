@@ -54,7 +54,7 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * No real-device run yet; all hardware statements are simulations (fake backends, noise models).
 * Single dataset and hand-crafted features; 5 outer folds carry the test-set variation; N = 500 is a reduced sample (10 of 40 subsets).
 * By construction the small-data study could not have shown an advantage: at k ≤ 8 the angle VQC (Q1) loads each feature once (no re-uploading), and the quantum-kernel SVM (Q3) uses a product kernel that a classical computer evaluates exactly. This motivates the QB study (`QB.md`), which screens entangling and re-uploading feature maps.
-* The 0.02 non-inferiority margin is wide compared with the spread of the good models: LR, SVM-RBF, GP, random forest, Q1 and Q3 all lie within about 0.005 AUC of each other at every N, so "non-inferior" is a weak statement; an exploratory ±0.005 equivalence check is reported in `SMALLDATA.md`.
+* The 0.02 non-inferiority margin is wide compared with the spread of the good models: LR, SVM-RBF, GP, random forest, Q1 and Q3 lie within about 0.005–0.006 AUC of each other at N = 100–500 (0.007 at N = 50; 0.014 at N = 25, where LR is lowest), so "non-inferior" is a weak statement; an exploratory ±0.005 equivalence check is reported in `SMALLDATA.md`.
 
 ## Tables
 1. Feature-selection comparison (L1 / cohen_dedup / random) — `RESULTS.md` Stage 3.
