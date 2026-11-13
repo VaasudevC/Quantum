@@ -1,5 +1,4 @@
 # MORNING SUMMARY (branch smalldata; details: SMALLDATA.md, DISTINGUISHER.md, BRICKWALL.md, PAPER_OUTLINE.md)
-
 1. Full-data benchmark: XGBoost best at every feature count (0.937 k=8 … 0.973 all 249); no quantum model meets the outperformance rule (BRICKWALL.md).
 2. Encoding rule: s = π/6 removes the angle-saturation collapse (k=32: 0.791 at π → 0.951); small scales also win in the brick-wall reimplementation (results/paper/table1_encoding.md).
 3. Pre-registered small-data study (k=8): quantum models non-inferior to the best classical model at N = 25, 50, 100, 200, 500 (500 = reduced sample), superior at none.
