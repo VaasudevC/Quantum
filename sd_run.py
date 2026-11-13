@@ -228,6 +228,11 @@ def main():
     only = set(filter(None, a.only.split(",")))
     if slow_process():
         print("slow process detected, exiting 99", flush=True); sys.exit(99)
+    if a.family == "torch":                     # torch DLL loads are intermittently blocked by Windows Application Control; torch cannot be re-imported
+        try:                                     # in a process after a failed import, so check at start and let the launcher restart the worker
+            import torch, bw_torch  # noqa
+        except Exception as e:
+            print("torch import failed, exiting 99:", e, flush=True); sys.exit(99)
     base = f"results/sd_runs_{a.family}{a.tag}"
     done = set()
     for p in Path("results").glob(Path(base).name + "*.jsonl"):

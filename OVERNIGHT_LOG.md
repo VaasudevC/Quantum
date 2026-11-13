@@ -57,3 +57,5 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-13 01:49 Phase 2 launched: main family k=8 N=50,200,25 (40 subsets) then N=500 (subsets 0-9), 8 workers, tag _s2 (16 earlier N=50 units resumed).
 - 2026-11-13 01:51 RAM guard started (stops one sd_run worker if free RAM < 3 GB; log results/sd_ramguard.log).
 - 2026-11-13 03:41 RAM guard stopped one worker at 03:35 (free 2.95 GB); its unfinished units get a relaunch after this pass.
+- 2026-11-13 08:42 Phase 2 analysed (a82370b,f521979); Phase 3 X2 done (82c52b6). Starting Phase 4: Q4 at N=50,200,25,500 on subsets 0-9 (original code), 8 workers.
+- 2026-11-13 09:00 torch blocked system-wide by Application Control (bwvenv and fresh C:\tvenv); Q4 secondary sizes, EXTRA 6 and n=16 external blocked. Logged in SMALLDATA.md. Launching main family k=4 (8 workers). C:\tvenv left for the user to delete (removal blocked by safety check).

@@ -219,3 +219,10 @@ Q1 vs LR has small raw-p advantages at N = 50 and 200 (+0.004, +0.002) that do n
 
 **Reading.** The learning curves of Q1, Q3, SVM-RBF, GP and random forest lie on top of each other at every size (within ~0.005 AUC); the quantum models' consistent wins are against the two weakest classical models (kNN, XGBoost) and, at the extremes N = 25 and N = 500, against plain LR.
 This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the Q1/Q3 feature map is a classically computable product kernel.
+
+## Deviation logged 2026-11-13 09:00 (before the affected runs): brick-wall (Q4) at secondary sizes blocked
+
+Starting at ~08:50 on 2026-11-13, Windows Application Control blocks torch's `_C` extension on every import ("DLL load failed while importing _C: An Application Control policy has blocked this file"), in `C:\bwvenv` and in a freshly created venv at another path (`C:\tvenv`).
+The same environment ran the Q4 throughput benchmark at ~01:50 the same day. Q4 at N = 25, 50, 200, 500 (planned: subsets 0–9) therefore **could not be run**; 0 of 200 units produced results (failed units were not written).
+No security setting was changed. Q4 remains available only at N = 100 (the primary endpoint, already recorded). The final Holm family is reported with this cell missing. If torch becomes loadable again, the Q4 runs are executed as a catch-up under the same plan and deviations.
+The main family at k = 4 does not need torch and proceeds now.
