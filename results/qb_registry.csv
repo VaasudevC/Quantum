@@ -199,3 +199,39 @@ QB1,F5__pi/3_N100,F5,pi/3,,100,8,0-2,g1e-2=7.16;offmean=0.389;calign=0.272;cvauc
 QB1,F5__pi/3_N500,F5,pi/3,,500,8,0-2,g1e-2=20.50;offmean=0.397;calign=0.268;cvauc=0.916,no,gate folds 0/3
 QB1,F5__pi/2_N100,F5,pi/2,,100,8,0-2,g1e-2=11.93;offmean=0.247;calign=0.187;cvauc=0.826,no (gate at N=500),gate folds 0/3
 QB1,F5__pi/2_N500,F5,pi/2,,500,8,0-2,g1e-2=33.53;offmean=0.252;calign=0.174;cvauc=0.886,no,gate folds 0/3
+QB3,LR_classical_z_f2,LR,pi/6 (twin) or z,params=33,full,32,2,test=0.9379;val=0.9473,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,FM_rank1_classical_z_f2,FM_rank1,pi/6 (twin) or z,params=65,full,32,2,test=0.9455;val=0.9562,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,FM_rank2_classical_z_f2,FM_rank2,pi/6 (twin) or z,params=97,full,32,2,test=0.9487;val=0.9583,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,MLP_32-2-1_classical_z_f2,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,2,test=0.9410;val=0.9489,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,MLP_32-3-1_classical_z_f2,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,2,test=0.9411;val=0.9499,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,L1_deg2_LR_le81_classical_z_f2,L1_deg2_LR_le81,pi/6 (twin) or z,params=67,full,32,2,test=0.9496;val=0.9594,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,LR_classical_bounded_twin_f2,LR,pi/6 (twin) or z,params=33,full,32,2,test=0.9430;val=0.9471,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,FM_rank1_classical_bounded_twin_f2,FM_rank1,pi/6 (twin) or z,params=65,full,32,2,test=0.9513;val=0.9562,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,FM_rank2_classical_bounded_twin_f2,FM_rank2,pi/6 (twin) or z,params=97,full,32,2,test=0.9527;val=0.9558,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,MLP_32-2-1_classical_bounded_twin_f2,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,2,test=0.9425;val=0.9468,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,MLP_32-3-1_classical_bounded_twin_f2,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,2,test=0.9519;val=0.9553,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,L1_deg2_LR_le81_classical_bounded_twin_f2,L1_deg2_LR_le81,pi/6 (twin) or z,params=63,full,32,2,test=0.9512;val=0.9569,n/a,vqc_pi6=0.9469;vqc_trained=0.9525
+QB3,LR_classical_z_f1,LR,pi/6 (twin) or z,params=33,full,32,1,test=0.9424;val=0.9440,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,FM_rank1_classical_z_f1,FM_rank1,pi/6 (twin) or z,params=65,full,32,1,test=0.9519;val=0.9480,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,FM_rank2_classical_z_f1,FM_rank2,pi/6 (twin) or z,params=97,full,32,1,test=0.9529;val=0.9511,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,MLP_32-2-1_classical_z_f1,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,1,test=0.9435;val=0.9421,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,MLP_32-3-1_classical_z_f1,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,1,test=0.9493;val=0.9485,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,L1_deg2_LR_le81_classical_z_f1,L1_deg2_LR_le81,pi/6 (twin) or z,params=70,full,32,1,test=0.9510;val=0.9499,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,LR_classical_bounded_twin_f1,LR,pi/6 (twin) or z,params=33,full,32,1,test=0.9458;val=0.9441,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,FM_rank1_classical_bounded_twin_f1,FM_rank1,pi/6 (twin) or z,params=65,full,32,1,test=0.9536;val=0.9497,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,FM_rank2_classical_bounded_twin_f1,FM_rank2,pi/6 (twin) or z,params=97,full,32,1,test=0.9546;val=0.9510,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,MLP_32-2-1_classical_bounded_twin_f1,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,1,test=0.9461;val=0.9438,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,MLP_32-3-1_classical_bounded_twin_f1,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,1,test=0.9496;val=0.9476,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,L1_deg2_LR_le81_classical_bounded_twin_f1,L1_deg2_LR_le81,pi/6 (twin) or z,params=70,full,32,1,test=0.9548;val=0.9480,n/a,vqc_pi6=0.9492;vqc_trained=0.9527
+QB3,LR_classical_z_f0,LR,pi/6 (twin) or z,params=33,full,32,0,test=0.9577;val=0.9517,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,FM_rank1_classical_z_f0,FM_rank1,pi/6 (twin) or z,params=65,full,32,0,test=0.9621;val=0.9574,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,FM_rank2_classical_z_f0,FM_rank2,pi/6 (twin) or z,params=97,full,32,0,test=0.9616;val=0.9593,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,MLP_32-2-1_classical_z_f0,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,0,test=0.9582;val=0.9543,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,MLP_32-3-1_classical_z_f0,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,0,test=0.9644;val=0.9608,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,L1_deg2_LR_le81_classical_z_f0,L1_deg2_LR_le81,pi/6 (twin) or z,params=66,full,32,0,test=0.9648;val=0.9560,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,LR_classical_bounded_twin_f0,LR,pi/6 (twin) or z,params=33,full,32,0,test=0.9568;val=0.9517,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,FM_rank1_classical_bounded_twin_f0,FM_rank1,pi/6 (twin) or z,params=65,full,32,0,test=0.9627;val=0.9591,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,FM_rank2_classical_bounded_twin_f0,FM_rank2,pi/6 (twin) or z,params=97,full,32,0,test=0.9614;val=0.9610,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,MLP_32-2-1_classical_bounded_twin_f0,MLP_32-2-1,pi/6 (twin) or z,params=69,full,32,0,test=0.9565;val=0.9510,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,MLP_32-3-1_classical_bounded_twin_f0,MLP_32-3-1,pi/6 (twin) or z,params=103,full,32,0,test=0.9581;val=0.9524,n/a,vqc_pi6=0.9598;vqc_trained=0.9631
+QB3,L1_deg2_LR_le81_classical_bounded_twin_f0,L1_deg2_LR_le81,pi/6 (twin) or z,params=70,full,32,0,test=0.9623;val=0.9582,n/a,vqc_pi6=0.9598;vqc_trained=0.9631

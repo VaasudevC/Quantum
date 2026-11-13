@@ -82,3 +82,21 @@ Any phase projected to exceed 6 hours on this machine is stopped, logged as inco
 * Near-misses, reported for completeness: 11 settings meet the three criteria in 1–2 folds **at λ = 1e-2 only**; at λ = 1e-1 their g is 4.9–7.0 (< 11.2), and their CV AUC is at most +0.004 above RBF (most are equal or below). Under the pre-registered rule they do not pass.
 * Projected (1-RDM) kernels: CV AUC within the same range as the fidelity kernels; F5's projected kernel is degenerate (particle-number sector), as stated in advance.
 * **QB2 is skipped** (no map passed the gate), as pre-registered.
+
+### QB3 — is the win over LR more than non-linearity? (run 2026-11-13; `qb3_nonlinearity.py`, `results/qb3.jsonl`; full data, k = 32, discovery folds 0–2, test AUC means over the 3 folds)
+
+| model | trainable parameters | on z-scored inputs | on bounded inputs a = (π/6)·tanh z (twin) |
+|---|---|---|---|
+| angle VQC, s = π/6 (logged runs) | 81 | **0.9519** | – |
+| angle VQC, trained scales (logged runs) | 113 | **0.9561** | – |
+| LR | 33 | 0.9460 | 0.9485 |
+| factorization machine, rank 1 | 65 | 0.9532 | 0.9558 |
+| factorization machine, rank 2 | 97 | 0.9544 | **0.9562** |
+| MLP 32-2-1 (tanh) | 69 | 0.9476 | 0.9484 |
+| MLP 32-3-1 (tanh) | 103 | 0.9516 | 0.9532 |
+| L1 degree-2 LR, ≤ 81 non-zero (66–70 used) | 67–71 | 0.9551 | **0.9561** |
+
+**Answer (one sentence): yes — at equal or fewer parameters, classical quadratic models match the VQC: a rank-2 factorization machine (97 parameters) and a sparse degree-2 LR (67–71 parameters) on the same bounded inputs reach 0.9562 / 0.9561, equal to the trained-scale VQC (0.9561, 113 parameters), and already exceed the π/6 VQC (0.952) on z-scored inputs.**
+The VQC therefore behaves like a quadratic classifier on its encoded inputs; its win over LR is explained by the encoding plus mild non-linearity, not by the circuit (wording fixed in the pre-registration). No QB3 setting is a confirmation candidate.
+Degree-2 surrogates: R² = 0.984–0.986 for the π/6 VQC (linear-only 0.91–0.93) and 0.971–0.975 for the trained-scale VQC (linear-only 0.87–0.88). The π/6 VQC's quadratic-coefficient matrix is spread (effective rank ≈ 21–22 of 32, top eigen-direction 14–17 % of the energy, half of it on the diagonal);
+the trained-scale VQC's is concentrated (effective rank 1.0–9.1; top direction 58–100 %), with very large weights on a few pairs (e.g. fold 1: aVF–III ST curvature) — the trained scales let the model emphasise a handful of feature products.
