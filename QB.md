@@ -107,3 +107,18 @@ the trained-scale VQC's is concentrated (effective rank 1.0–9.1; top direction
 2. **Subsets:** clean, label-noise, test-noise and lead-dropout settings use the cached SD subsets r = 0–9 of discovery folds 0–2 (30 units). Site shift, date shift, class imbalance and the inferior-MI subtype draw new N = 100 subsets (10 per fold, one ECG per patient, seed (fold, setting, r)) from the restricted pools, with median/z-score/L1 selection fitted on each new subset as in SD.
 3. **Definitions:** site shift = train on the largest recording site only, test on test-fold ECGs from all other sites; date shift = train on recordings before the median date of the fold's training part, test on test-fold recordings after it; the "clean" reference for both is the model trained on the ordinary subset r, tested on the same restricted test ECGs. Lead dropout = all selected features of one lead set to the subset median (0 in z-units after centring on the median) at test time, averaged over the leads present. Inferior MI = label_subclass "IMI" vs NORM. Twins use s = π/6.
 4. **Full data (QB5):** Q1 at full data needs ~27 training runs (≈ 9 CPU-h at the current contended speed) and Q3 at full data a ~11k × 11k Gram matrix (≈ 1 GB, not available next to the user's applications). **The full-data part of QB5 is marked incomplete** (estimate ≈ 9 CPU-h, i.e. ≈ 3–4 h with 3 free cores); QB5 reports N = 100 only.
+
+### QB4 — feature placement (k = 32, π/6, discovery folds 0–2; `qb4_placement.py`, `results/qb4_screen.jsonl`)
+
+**Training-free screen (complete):** centered alignment of the encoding-only re-uploading kernel (θ = 0) on 500 training ECGs per fold, for 213 placements per fold:
+
+| fold | L1 order | clinically paired | best of 200 random | 10 random: min – max | 200 random: min – max |
+|---|---|---|---|---|---|
+| 0 | 0.418 | 0.408 | 0.433 | 0.401 – 0.425 | 0.387 – 0.433 |
+| 1 | 0.385 | 0.396 | 0.396 | 0.371 – 0.386 | 0.360 – 0.396 |
+| 2 | 0.346 | 0.356 | 0.374 | 0.347 – 0.372 | 0.343 – 0.374 |
+
+The spread of the training-free score over placements is ±0.02–0.03 around the L1 order. The clinically paired placement is above the L1 order in folds 1–2 and below it in fold 0. The best of 200 random placements is above it in all folds (by 0.01–0.03).
+
+**Training part: INCOMPLETE (stopped 2026-11-13 13:29 under the 6-hour rule).** Each 1000-step k = 32 run took > 72 min wall at ~20–66 % of a core while the machine was in use (1.46 s/step at batch 1000 vs 0.38 s originally). None of the 21 planned runs finished. Projected total ≈ 21 runs × 40–60 CPU-min ≈ 14–21 CPU-h (≈ 5–7 h with 3 free cores on an idle machine).
+**Resume:** `sh qb4_run.sh 0`, `sh qb4_run.sh 1`, `sh qb4_run.sh 2` (resumable; the L1 order must reproduce `results/stage2_steps1000.jsonl`). Whether placement changes test AUC by more than 0.002 is therefore **not answered**.
