@@ -5,7 +5,7 @@
 5. Phase 4 bootstrap (exploratory, running): full-data per-ECG bootstrap CI for k=32 AUC diffs (VQC vs LR, LR2, XGB); results/p4_bootstrap.json when done.
 6. k=4 SD queue: 279/850 units (N=100 done 200/200; N=50 at 79/200; N=25/200/500 not started). Queue running with MAXP=8.
 7. Phase 2 done: README (no-advantage statement), docs/REPRODUCE.md, requirements-lock.txt, HARDWARE.md (IBM command). IBM dry run INCOMPLETE: Qiskit DLL blocked by WDAC.
-8. When Phase 4 done: check results/p4_bootstrap.json (VQC_pi6 mean ~0.9510, XGB ~0.9622 — XGB leads; CIs pending).
+8. Phase 4 DONE: VQC_pi6 vs LR=+0.0060[+0.0042,+0.0078]; vs LR2=-0.0022[-0.0046,+0.0002] (CI spans 0); vs XGB=-0.0112[-0.0130,-0.0095]. VQC≈LR2 (confirms QB3); XGB leads. Full table: results/p4_bootstrap_table.md.
 9. When k=4 queue done: `..\.venv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _main` then `make_paper.py` to update Table 3.
 10. Then `..\.venv\Scripts\python.exe qb5_analyze.py` (apply QB5 candidate rule; target 30/30 units).
 11. INCOMPLETE (blocked): brick-wall at N!=100; torch blocked by WDAC. C7 TabPFN: licence login. IBM run: yours (command in HARDWARE.md).
