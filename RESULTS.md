@@ -213,3 +213,12 @@ k=8 to k=32, and the ranking pi/6 > pi/2 > pi holds at k=32.
   order can differ. Each run's logged `features` list is the ground truth; `stage4b_poly.py` uses it. Fixed for all
   runs from 5 Nov (`random_state=0`, NEXT.md): folds 0–3 then give the identical ordered list and fold 4 the same set in a different order.
 - **Compute**: 4 CPUs; STEPS\* = 1000 was chosen partly so Stage 3 could keep all 5 folds.
+
+## Exploratory (added 2026-11-14)
+
+### Phase 4 — full-data paired bootstrap (not pre-registered; logged 2026-11-14 BEFORE running)
+
+Per the overnight prompt: get per-ECG out-of-fold test scores at k=32 for LR, degree-2 LR (L1 penalty, ≤81 params), π/6 VQC, trained-scale VQC, XGBoost; compute 95% bootstrap CIs on AUC differences (2000 resamples, fold-stratified) and DeLong's test per fold. VQC scores from `results/bw/vqc_scores.json`; classical scores recomputed by refitting on each fold's L1-selected k=32 features using the stored feature list. Script: `p4_full_bootstrap.py`. Output: `results/p4_bootstrap.json`, table appended to `results/paper/table1_encoding.md`.
+
+Motivation: the existing evidence is 5/5 folds with no p-value or CI; this gives calibrated uncertainty around the main claim.
+No claim wording is changed; CIs are added next to existing numbers.

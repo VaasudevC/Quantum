@@ -3,40 +3,52 @@
 An 8-qubit, 4-layer data-re-uploading variational quantum classifier (VQC) for myocardial infarction (MI) vs normal 12-lead ECGs, built on
 249 pre-extracted PTB-XL features. Each feature is encoded as the angle `s·tanh(z)`; the study is about the choice of the scale s.
 
-## Results at a glance (patient-grouped 5-fold CV, test AUC)
+## Status (2026-11-14) — current conclusions
 
-**The angle scale caused the re-uploading collapse.** With s = π about 10% of angles saturate near ±π, and AUC falls as more features are re-uploaded.
-With **s = π/6**, AUC *rises* with the number of features (0.928 → 0.939 → 0.951 for k = 8/16/32) and the VQC beats logistic regression on the
-same features at every k. A classical **degree-2 polynomial LR still beats every VQC** (0.958).
+No quantum-advantage claim and no parameter-efficiency claim. All models are classically simulable.
+
+**Encoding rule (full data, k = 32):** Angle saturation at s = π causes re-uploading collapse (AUC 0.791). s = π/6 fixes it (0.951). Replicated in the brick-wall (Qiskit, FakeFez).
 
 | model, k = 32 features | test AUC | source |
 |---|---|---|
-| VQC, s = π (original) | 0.791 | RESULTS Stage 2 |
-| VQC, s = π/2 | 0.910 | RESULTS Stage 2 |
-| logistic regression, same features | 0.945 | RESULTS |
-| **VQC, s = π/6** | **0.951** | RESULTS Stage 2 |
-| VQC, zz readout (π/6) | 0.953 | NEXT N1 |
-| **VQC, trained per-feature scales** (best VQC) | **0.955** | NEXT N2 |
-| degree-2 polynomial LR, same features | **0.958** | RESULTS 4b, NEXT |
+| VQC, s = π (original) | 0.791 | results/stage2_steps1000.jsonl |
+| VQC, s = π/2 | 0.910 | results/stage2_steps1000.jsonl |
+| logistic regression, same features | 0.945 | results/stage2_steps1000.jsonl |
+| **VQC, s = π/6** | **0.951** | results/stage2_steps1000.jsonl |
+| VQC, zz readout (π/6) | 0.953 | results/n1_zz.jsonl |
+| **VQC, trained per-feature scales** | **0.955** | results/n2_trainscale.jsonl |
+| degree-2 polynomial LR, same features | **0.958** | results/stage4b_poly.jsonl |
+| XGBoost (best classical at every k) | — | results/p1_classical.jsonl |
 
-**Towards hardware** (simulated; HARDWARE.md):
-- About 180 shots per ECG keeps π/6 within 0.01 AUC of noiseless.
-- On IBM's heavy-hex chip the CNOT ring needs 16 SWAPs (32 → 80 CZ).
-- Under the IBM Heron (FakeFez) noise model AUC is unchanged (0.961 → 0.960), but calibration needs a global rescale.
+**Feature-map screen (QB1):** 1,200 settings screened; none passes the expressivity gate (g ≥ √N/2 only at s = π/2 where label alignment collapses). See [`QB.md`](QB.md).
 
-**Not done yet:** the real-IBM run. The script `hw_run_ibm.py` is ready and dry-run tested; it needs an IBM token and network access to IBM.
+**Non-linearity (QB3):** rank-2 factorization machine and sparse degree-2 LR (≤ VQC parameters, same bounded inputs) match the trained-scale VQC. The win over LR = mild non-linearity, not quantum. See [`QB.md`](QB.md).
+
+**Small-data benchmark (k = 8, pre-registered):** VQC non-inferior to best classical at every N (25–500); superior at none. SVM-RBF within ±0.005 at every N (exploratory). **k = 4 secondary endpoint: in progress.** See [`SMALLDATA.md`](SMALLDATA.md).
+
+**Other benefit (QB5, 18/30 units):** no perturbation/shift/imbalance/subtype setting gives quantum ≥ +0.005 over best classical. See [`QB.md`](QB.md).
+
+**Hardware readiness (simulated):** ~180 shots/ECG keeps π/6 within 0.01 AUC of noiseless; under IBM Heron (FakeFez) noise AUC is unchanged (0.961 → 0.960). Real-device run not yet done; see `HARDWARE.md`.
+
+**Not claimed:** quantum advantage, parameter efficiency, real-device validation, TabPFN comparison.
+
+## Draft paper
+
+[`paper/PAPER_DRAFT.md`](paper/PAPER_DRAFT.md) — first draft (pending k = 4 results). Claims table: [`paper/CLAIMS_CHECK.md`](paper/CLAIMS_CHECK.md).
 
 ## Documentation
 
 | document | what is in it |
 |---|---|
-| [`RESULTS.md`](RESULTS.md) | Phase A, classical study: scale sweep, training length, selectors × seeds, shuffle control, official split, degree-2 comparison |
-| [`HARDWARE.md`](HARDWARE.md) | Phase B, hardware readiness: Qiskit vs PennyLane, circuit equivalence, shot noise, compilation, IBM noise model, encoding score, H4 status |
-| [`NEXT.md`](NEXT.md) | Phase C, improvements: zz readout, trained input scales, kernel-target alignment, clinical metrics |
-| [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md) | chronological log: every stage, decision, deviation from the runbooks, problem encountered, open items |
+| [`RESULTS.md`](RESULTS.md) | Phase A classical study: scale sweep, training length, selectors × seeds, shuffle control, official split, degree-2 comparison |
+| [`QB.md`](QB.md) | QB pre-registered benchmark: headline, feature-map screen, non-linearity, robustness/shift/imbalance |
+| [`SMALLDATA.md`](SMALLDATA.md) | small-data benchmark: pre-registered plan, deviations, results at k=8 (final) and k=4 (pending) |
+| [`HARDWARE.md`](HARDWARE.md) | Phase B hardware readiness: Qiskit vs PennyLane, circuit equivalence, shot noise, compilation, IBM noise model, encoding score |
+| [`NEXT.md`](NEXT.md) | Phase C improvements: zz readout, trained input scales, kernel-target alignment, clinical metrics |
+| [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md) | chronological log: every stage, decision, deviation, problem, open items |
 | [`docs/REPRODUCE.md`](docs/REPRODUCE.md) | every command in order, with run times and outputs |
 | [`docs/CODE_AND_DATA.md`](docs/CODE_AND_DATA.md) | file inventory, code changes and new interfaces, data, result-file formats |
-| [`CLOUD_RUNBOOK.md`](CLOUD_RUNBOOK.md), [`docs/runbooks/`](docs/runbooks/) | the runbooks the three phases followed |
+| [`CLOUD_RUNBOOK.md`](CLOUD_RUNBOOK.md), [`docs/runbooks/`](docs/runbooks/) | runbooks for all three phases |
 
 ## Layout
 ```

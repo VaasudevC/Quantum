@@ -105,6 +105,85 @@ for ro in ("z", "zz"):
 
 ---
 
+## Small-data benchmark (branch `smalldata`): SD, DX, QB commands (added 2026-11-14)
+
+Environment: `.venv` only (no torch required). Python 3.14.3; numpy 2.4.6; scikit-learn 1.9.0; xgboost 3.4.1.
+CPU: Intel Core i7-13xxx (GenuineIntel, Family 6 Model 186 Stepping 2). OS: Windows 11 10.0.26300.
+Lock file: `requirements-lock.txt` (generated `pip freeze` from `.venv`, 2026-11-14).
+
+**Important:** export `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1` in the calling shell before any `sd_run.py` or `sd_launch.py` call; setting them inside Python is insufficient (vcomp thread oversubscription, ~80× slowdown).
+
+### SD: prep and run order
+
+```bash
+# 0. Prepare per-subset cache (run once; writes C:/bwcache/sd/*.npz)
+..\.venv\Scripts\python.exe sd_prep.py
+
+# 1. Primary k=8 benchmark (all N, folds 0-4; use --tag to avoid overwriting)
+..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 8 100,50,200,25 8 --reps 40 --tag _main
+..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 8 500 2 --reps 10 --tag _main
+
+# 2. Secondary k=8 seed-offset runs (seedoff=1 for seed robustness)
+..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 8 50,200,25 8 --reps 40 --tag _s2 --seedoff 1
+..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 8 500 2 --reps 10 --tag _s2 --seedoff 1
+
+# 3. Secondary k=4 benchmark (tonight's target, 850 units)
+..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 4 100,50,200,25 6 --reps 40 --tag _k4
+..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 4 500 2 --reps 10 --tag _k4
+
+# 4. Analyse (run after each sub-phase)
+..\.venv\Scripts\python.exe sd_analyze.py 8 25,50,100,200,500 _main   # -> results/sd_analysis_k8_main.json
+..\.venv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _k4     # -> results/sd_analysis_k4_main.json  [PENDING]
+..\.venv\Scripts\python.exe sd_equivalence.py                          # -> results/sd_equivalence_k8.md
+```
+
+### DX: distinguisher
+
+```bash
+..\.venv\Scripts\python.exe dx_x2_geometry.py   # -> results/dx_x2_geometry.json (geometric diff VQC vs RBF)
+```
+
+### QB commands (in order; all from `cloud_repo`)
+
+```bash
+# QB1: feature-map screen
+..\.venv\Scripts\python.exe qb1_screen.py 0   # fold 0  -> results/qb1_screen.jsonl
+..\.venv\Scripts\python.exe qb1_screen.py 1   # fold 1
+..\.venv\Scripts\python.exe qb1_screen.py 2   # fold 2
+..\.venv\Scripts\python.exe qb1_gate.py       # gate + table -> results/qb1_gate.json, results/qb1_table.md
+
+# QB3: non-linearity (run on folds 0-2)
+..\.venv\Scripts\python.exe qb3_nonlinearity.py 0
+..\.venv\Scripts\python.exe qb3_nonlinearity.py 1
+..\.venv\Scripts\python.exe qb3_nonlinearity.py 2
+# (results/qb3.jsonl, results/qb3_f{0,1,2}.log)
+
+# QB4: placement screen then training (screen: folds 0-2; training: fold 0 only stopped under 6-h rule)
+..\.venv\Scripts\python.exe qb4_placement.py 0  # screen fold 0 -> results/qb4_screen.jsonl
+..\.venv\Scripts\python.exe qb4_placement.py 1
+..\.venv\Scripts\python.exe qb4_placement.py 2
+# training (optional, ~5-7 h idle): sh qb4_run.sh 0 | 1 | 2
+
+# QB5: robustness / shift / imbalance
+..\.venv\Scripts\python.exe qb5_robust.py 0   # fold 0 -> results/qb5.jsonl  [COMPLETE]
+..\.venv\Scripts\python.exe qb5_robust.py 1   # fold 1  [IN PROGRESS]
+..\.venv\Scripts\python.exe qb5_robust.py 2   # fold 2  [IN PROGRESS]
+..\.venv\Scripts\python.exe qb5_analyze.py    # final table, apply candidate rule -> results/qb5_analysis.json
+
+# VQC seed extension (k=32, seed=3, 5 more folds; appends to stage3_selectors.jsonl)
+..\.venv\Scripts\python.exe scale_cv.py --scales pi/6 --ks 32 --selectors l1 --seeds 3 --steps 1000 --jobs 2 --out results/stage3_selectors.jsonl
+```
+
+### Analysis after all runs complete (Phase 3 of overnight prompt)
+
+```bash
+..\.venv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _main
+..\.venv\Scripts\python.exe make_paper.py
+..\.venv\Scripts\python.exe qb5_analyze.py
+```
+
+---
+
 ## Brick-wall study (branch `brickwall-overnight`): environment and workarounds
 
 Two Python 3.14.3 environments are used (Windows 11, 16 logical / 10 physical cores). **Do not merge them**: Windows Application Control (WDAC / Smart App Control)

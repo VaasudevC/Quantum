@@ -174,3 +174,17 @@ QB5 will be re-analysed when all 30 units are done; the candidate rule is applie
 ### QB6 — confirmation
 
 No candidate met the pre-registered criteria on discovery (QB1: none passed the gate; QB3: classical models matched the VQC; QB5 interim: none). **Confirmation was therefore not run**; folds 3–4 and the external PTB set remain unused by QB. Claim level: **no benefit found**.
+
+---
+
+## Exploratory (not pre-registered) — added 2026-11-14
+
+### QB3 extended to folds 3 and 4 (descriptive only; logged BEFORE running)
+
+**Logged 2026-11-14 before any run on folds 3–4.**
+
+QB is closed with no candidate, so folds 3 and 4 are no longer needed for a QB confirmation run. This extension runs the existing QB3 script (`qb3_nonlinearity.py`) on folds 3 and 4 for a **descriptive 5-fold table only**. It supports no benefit claim — it is purely to characterise whether the non-linearity finding from folds 0–2 holds across all folds.
+
+Script: `..\.venv\Scripts\python.exe qb3_nonlinearity.py 3` and `... 4` (appends to `results/qb3.jsonl`). Analysis: `p5_qb3_extended.py` → `results/qb3_5fold_table.md`.
+
+Figure 5 (not pre-registered): heat map of the degree-2 surrogate coefficient matrix (VQC vs degree-2 LR, fold 0) with spectrum. Script: `p5_fig5.py` → `results/figs/fig5_qb3_coef_heatmap.png`.

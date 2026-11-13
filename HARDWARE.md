@@ -257,3 +257,38 @@ python -u hw_run_ibm.py --submit     # shows the plan, asks y/N, submits, saves,
 The Aer comparison step simulates the 12-qubit compile as a density matrix, so expect about 10–25 min of CPU after the jobs return. Results land in
 `results/hw/ibm_hw/analysis.json`. The H3 best-compile numbers on the same 100 ECGs (noiseless 0.983 / FakeFez-noisy 0.984 for pi/6;
 0.856 / 0.866 for pi) are the simulation baseline to compare against.
+
+---
+
+## Real-device command for the paper run (added 2026-11-14)
+
+**Target:** k = 32, s = π/6 angle VQC on 300 stratified fold-0 test ECGs at 1,024 shots/PUB, plus 2 readout-calibration PUBs on the same qubits.
+Reports: noiseless AUC, FakeFez-noise AUC, hardware AUC (once returned), per-ECG score correlation, circuit layout (physical qubits, depth, 2-qubit gate count).
+
+**Prerequisite:** in `hw_run_ibm.py` change line `N_ECG, SHOTS, CAL_SHOTS = 100, 1000, 1000` to `N_ECG, SHOTS, CAL_SHOTS = 300, 1024, 1024`.
+
+**Dry run (FakeFez, no account needed):**
+```bash
+# Requires C:\bwvenv with Qiskit/Aer; use from an environment not blocked by Application Control.
+# Blocked on this machine (Qiskit _accelerate DLL blocked by WDAC as of 2026-11-14; dry run incomplete).
+C:\bwvenv\Scripts\python.exe hw_run_ibm.py --local --n 300
+# Output: results/hw/ibm_local/analysis.json
+```
+
+**Real-device command (run this yourself from a machine with network access to IBM):**
+```bash
+pip install -r requirements-hw.txt
+export QISKIT_IBM_TOKEN=<your_token>           # from quantum.cloud.ibm.com; never commit
+export QISKIT_IBM_INSTANCE=<crn_if_needed>     # IBM Cloud accounts only
+C:\bwvenv\Scripts\python.exe hw_run_ibm.py --submit --n 300 --yes
+# Submits 2 models × (300 ECG PUBs + 2 calibration PUBs) × 1024 shots ≈ 616k shots
+# Expected QPU time: ~3–6 of the 10 free minutes/month (at 1024 shots/PUB for n=12 circuits).
+# Results: results/hw/ibm_hw/analysis.json (AUC table + per-ECG correlations)
+# To re-fetch after a session drop: C:\bwvenv\Scripts\python.exe hw_run_ibm.py --retrieve
+```
+
+**What the analysis reports** (from `results/hw/ibm_hw/analysis.json`):
+- AUC columns: `noiseless`, `aer_noisy_raw`, `aer_noisy_mitigated`, `hw_raw`, `hw_mitigated`
+- `corr_P_vs_noiseless`: Pearson r of hardware P(MI) vs noiseless P(MI) per ECG
+- Circuit stats in `meta.json`: backend name, calibration timestamp, `n2q` (2-qubit gate count), `depth`, physical qubit layout
+- Note: bootstrap CIs for AUC are not yet implemented in `analyze()`; compute offline with `sklearn.utils.resample` on the per-ECG scores saved in `ecgs_*.npz` + `counts_*.json`.
