@@ -1,8 +1,8 @@
 # PAPER OUTLINE — Quantum feature maps for MI detection from compact ECG features: an encoding design rule and a pre-registered small-data benchmark
 
-Status: draft outline (branch `smalldata`). Every claim below names the file(s) and the commit that support it. Claims marked *(pending)* depend on runs that are not finished; they must not be written up until the cited result exists.
+Status: final outline (branch `smalldata`). Every claim below names the file(s) and the commit that support it. Claims marked *(pending)* are not finished and must not be written up until the cited result exists; see the incomplete list at the end.
 
-Framing: (1) compact, interpretable feature selection (extends the poster); (2) an encoding design rule — angle saturation at large scales, fixed by s = π/6, and replicated in a different architecture (the brick-wall); (3) a pre-registered small-data benchmark — quantum models are non-inferior at N = 100 but not superior; (4) hardware readiness, in simulation only.
+Framing: (1) compact, interpretable feature selection (extends the poster); (2) an encoding design rule — angle saturation at large scales, fixed by s = π/6, and replicated in a different architecture (the brick-wall); (3) a pre-registered small-data benchmark — quantum models are non-inferior to the best classical model at every size and superior at none; (4) hardware readiness, in simulation only.
 
 ## 1. Introduction
 * Claim: Myocardial infarction (MI) vs normal ECG classification on PTB-XL with 8–32 hand-crafted ST/T/QRS features is a realistic, small-input testbed for near-term quantum classifiers. — `README.md`, `data/st_features_plus_TR.csv.gz` (commit 86f8984).
@@ -28,15 +28,17 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * Claim: tuned XGBoost is best at every feature count (0.937 k=8, 0.945 k=12, 0.965 k=32, 0.973 all 249); no quantum model meets the outperformance rule at 8, 12 or 32 features or on the external PTB set. — `BRICKWALL.md` headline + P1/P3/P4, `results/p1_classical.jsonl`, `results/bw/p3_analysis.md`, `results/ext/p4_report.md` (0db679d, 97e25f9, 727750c, e4f7ed6).
 
 ## 6. Pre-registered small-data benchmark (main result)
-* Claim: the analysis plan was committed before any SD run; compute deviations were logged before any analysis. — `SMALLDATA.md` (f7ba45e plan, 66b5b5f deviations).
-* Claim (primary endpoint, N = 100, k = 8): the best quantum model (quantum-kernel SVM) vs the best classical model (random forest): d = −0.0028 [−0.0049, −0.0010]; superiority not met; non-inferiority (margin 0.02) met — "matched classical performance within 0.02 AUC". — `SMALLDATA.md` primary section, `results/sd_analysis_k8_N100.json`, `results/sd_tables_k8_N100.md` (6eef855).
-* Claim: Q1–Q3 outperformed kNN and XGBoost at N = 100 (Holm-adjusted), not the best classical models. — same (6eef855).
-* Claim: the brick-wall was significantly worse than LR, SVM-RBF, GP, RF and XGBoost at N = 100. — same (6eef855).
-* Claim (sensitivity, added after the primary result): per-fold differences are all negative; with "best" chosen by inner-CV AUC the comparison is a tie (Q3 vs SVM-RBF, −0.0006 [−0.0024, +0.0013]); the angle VQC has the same train–test gap as LR with 81 vs 9 parameters. — `SMALLDATA.md` sensitivity section, `results/sd_sensitivity_N100.json` (2af3bff).
-* Claim *(pending, Phase 2/4)*: behaviour at N = 25, 50, 200, 500 and at k = 4. — `results/sd_tables_k8.md`, `results/figs/sd_auc_vs_N.png` (to be committed).
+* Claim: the analysis plan was committed before any SD run; compute deviations (N = 500 and Q4 secondary sizes on 10 of 40 subsets; Q4 at k = 4 dropped) were logged before any analysis. — `SMALLDATA.md` (f7ba45e plan, 66b5b5f deviations).
+* Claim (headline): **the quantum models were non-inferior to the best classical model at every training size (N = 25–500, margin 0.02 AUC) and superior at none**; when "best" is chosen by inner-CV AUC instead of test AUC, the best quantum model (Q3 quantum-kernel SVM) is level with SVM-RBF at N = 100 (−0.0006 [−0.0024, +0.0013]). — `SMALLDATA.md` primary, sensitivity and Phase 2 sections; `results/sd_analysis_k8_N100.json`, `results/sd_sensitivity_N100.json`, `results/sd_analysis_k8_main.json`; `results/paper/table3_smalldata.md` (6eef855, 2af3bff, a82370b, 75c799e).
+* Claim (primary endpoint, N = 100, k = 8, as recorded): best quantum (Q3) vs best classical (random forest) d = −0.0028 [−0.0049, −0.0010]; non-inferiority met, superiority not. — `SMALLDATA.md` primary section (6eef855).
+* Claim: Holm-adjusted wins exist only against weaker classical models — kNN and XGBoost at most sizes, plain LR at N = 25 and N = 500 (reduced sample); never against SVM-RBF, GP or random forest. — `SMALLDATA.md` Phase 2 section, `results/sd_tables_k8_main.md` (a82370b).
+* Claim: logistic regression (9 parameters) matches the angle VQC (81 parameters) on test AUC and on the train–test gap at N = 100. — `SMALLDATA.md` sensitivity section (2af3bff).
+* Claim: the brick-wall QNN was significantly worse than LR, SVM-RBF, GP, RF and XGBoost at N = 100; it could not be run at other sizes (torch blocked by Windows Application Control). — `SMALLDATA.md` (6eef855, 56ea635, 4c4445c).
+* Claim *(pending; incomplete if not finished)*: k = 4 results. — `results/sd_analysis_k4_main.json`.
+* Figures 2 and Table 3: `results/paper/fig2_learning_curves.png`, `results/paper/table3_smalldata.md` (75c799e).
 
 ## 7. Kernel geometry (exploratory)
-* Claim *(pending, Phase 3)*: geometric difference g(K_C ‖ K_Q) of the π/6 angle feature map vs RBF and linear kernels on discovery folds, compared with √N. — `dx_x2_geometry.py`, `results/dx_x2_geometry.json`, `results/dx_registry.csv` (to be committed).
+* Claim: for the π/6 angle kernel, the geometric difference to a tuned RBF kernel is 1.7–3.3 at N = 100 (√N = 10) and 2.6–11.5 at N = 500 (√N = 22.4), so there is no room for a quantum prediction advantage with this feature map; the kernel is a classically computable product kernel with an effective spectral dimension ≈ 1.8. Exploratory, discovery folds 0–2 only; the search was stopped after this diagnostic. — `DISTINGUISHER.md`, `results/dx_x2_geometry.json`, `results/paper/fig3_geometric_difference.png` (82c52b6, 1a60f8a, 75c799e).
 
 ## 8. Hardware readiness (simulation only)
 * Claim: the angle VQC (π/6, k = 32) keeps its AUC under 1000 shots (≤ 0.002 loss) and the FakeFez noise model (0.961 → 0.960). — `HARDWARE.md` (c553b25, 3f9ec7f).
@@ -44,25 +46,32 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * Claim: a test-only IBM script is ready and dry-run on FakeFez; no real-device run has been made. — `hw_run_ibm_brickwall.py`, `MORNING_SUMMARY.md` (8c10076, 1ac69dd).
 
 ## 9. Discussion and limitations
-* No quantum-advantage claim: at full data XGBoost leads; at N = 100 quantum models are non-inferior but not superior to the best classical model.
-* All models are classically simulable: the angle kernel is a product of cos² terms, and the brick-wall two-body readout is classically tractable (paper Prop. 8, Sec. VI.B–C).
-* The brick-wall is our reimplementation; Antonio's `quantum_utils.py` conventions are unknown (questions listed in `BRICKWALL.md` §P7).
+* No quantum-advantage claim: at full data XGBoost leads; in the small-data benchmark the quantum models are non-inferior to the best classical model at every size and superior at none.
+* No parameter-efficiency claim: LR with 9 parameters matches the 81-parameter angle VQC on AUC and on the train–test gap.
+* All models are classically simulable: the angle kernel is a product of cos² terms, and the brick-wall two-body readout is classically tractable (paper Prop. 8, Sec. VI.B–C); the kernel-geometry diagnostic leaves no room for a prediction advantage with the π/6 feature map.
+* The brick-wall is our reimplementation; `quantum_utils.py` conventions are unknown (questions in `BRICKWALL.md` §P7), and it was run in the small-data benchmark only at N = 100.
 * TabPFN, a strong small-data baseline in the pre-registration, was not run (licence login required).
 * No real-device run yet; all hardware statements are simulations (fake backends, noise models).
-* Single dataset and hand-crafted features; 5 outer folds carry the test-set variation.
+* Single dataset and hand-crafted features; 5 outer folds carry the test-set variation; N = 500 is a reduced sample (10 of 40 subsets).
 
 ## Tables
 1. Feature-selection comparison (L1 / cohen_dedup / random) — `RESULTS.md` Stage 3.
-2. Angle scale × k (test AUC) — `RESULTS.md` Stage 1–2.
+2. Encoding study (angle scale; brick-wall replication) — `results/paper/table1_encoding.md`.
 3. Brick-wall stage A grid (scale × k × columns) — `BRICKWALL.md` §P3.
-4. Full-data model × feature count — `BRICKWALL.md` §P1.
+4. Full-data model × feature count — `results/paper/table2_benchmark.md`.
 5. SD primary endpoint (N = 100) — `SMALLDATA.md`.
-6. SD all sizes *(pending)*.
+6. Small-data differences with CIs by N — `results/paper/table3_smalldata.md`.
 7. Hardware: compile / noise / shots — `HARDWARE.md`, `BRICKWALL.md` §P6.
 
 ## Figures
-1. AUC vs k for s = π, π/2, π/6 — `results/figs/b_auc_vs_k.png`.
+1. Scale sweep and AUC vs k — `results/paper/fig1_scale_sweep.png`.
 2. Shuffle control — `results/figs/c_shuffle_control.png`.
-3. SD mean test AUC vs N with CIs *(pending)* — `results/figs/sd_auc_vs_N.png`.
-4. SD best quantum − best classical vs N *(pending)* — `results/figs/sd_diff_vs_N.png`.
+3. Learning curves and best-vs-best difference — `results/paper/fig2_learning_curves.png`.
+4. Geometric difference vs √N — `results/paper/fig3_geometric_difference.png`.
 5. Shot/noise robustness — `results/figs/hw_shots.png`, `results/figs/hw_noisy.png`.
+
+## Incomplete (as of this outline)
+* Brick-wall (Q4) at N = 25, 50, 200, 500 — torch blocked by Windows Application Control.
+* EXTRA 6 (shot-robust n = 12 / n = 16 heads) and the n = 16 external run — same reason.
+* C7 TabPFN — licence login required.
+* Real-device (IBM) test run — not done (user's run).
