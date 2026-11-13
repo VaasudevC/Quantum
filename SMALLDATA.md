@@ -226,3 +226,9 @@ Starting at ~08:50 on 2026-11-13, Windows Application Control blocks torch's `_C
 The same environment ran the Q4 throughput benchmark at ~01:50 the same day. Q4 at N = 25, 50, 200, 500 (planned: subsets 0–9) therefore **could not be run**; 0 of 200 units produced results (failed units were not written).
 No security setting was changed. Q4 remains available only at N = 100 (the primary endpoint, already recorded). The final Holm family is reported with this cell missing. If torch becomes loadable again, the Q4 runs are executed as a catch-up under the same plan and deviations.
 The main family at k = 4 does not need torch and proceeds now.
+
+## Status 2026-11-13 10:38: brick-wall (Q4) secondary sizes — incomplete (torch blocked by Windows Application Control)
+
+Checked whether the exact faster brick-wall variant (`bw_torch.psi_fast`: column unitary = matrix_exp of commuting generators) can run without torch: **it cannot** — it uses `torch.linalg.matrix_exp` and torch autograd for the gradients.
+A numpy port would also not meet the required verification (test AUC of existing N = 100 Q4 units reproduced to 1e-10): those units were trained with complex64 torch arithmetic, and even the exact torch fast variant already differed by 0.0007 AUC on one subset.
+Therefore, with no security setting changed and torch not retried: **Q4 at N = 25, 50, 200, 500: incomplete (torch blocked by Windows Application Control)**. Q4 exists only at N = 100.

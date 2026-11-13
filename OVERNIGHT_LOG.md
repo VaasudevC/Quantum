@@ -59,3 +59,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-13 03:41 RAM guard stopped one worker at 03:35 (free 2.95 GB); its unfinished units get a relaunch after this pass.
 - 2026-11-13 08:42 Phase 2 analysed (a82370b,f521979); Phase 3 X2 done (82c52b6). Starting Phase 4: Q4 at N=50,200,25,500 on subsets 0-9 (original code), 8 workers.
 - 2026-11-13 09:00 torch blocked system-wide by Application Control (bwvenv and fresh C:\tvenv); Q4 secondary sizes, EXTRA 6 and n=16 external blocked. Logged in SMALLDATA.md. Launching main family k=4 (8 workers). C:\tvenv left for the user to delete (removal blocked by safety check).
+- 2026-11-13 10:38 k=4 workers were all stopped by the RAM guard (Chrome/Claude/VS Code hold ~7 GB; free RAM 2.8 GB with no SD worker). Runner changed to dynamic unit claiming + launcher that starts/restarts workers only while free RAM >= 3.5 GB (guard rule unchanged). Relaunched k=4.

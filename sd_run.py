@@ -241,16 +241,47 @@ def main():
     names = [M.name for M in models_for(a.family, a.k) if not only or M.name in only]
     units = [(a.family, a.k, f, N, r, only, a.seedoff) for N in map(int, a.sizes.split(",")) for r in range(a.reps) for f in map(int, a.folds.split(","))
              if any((n, f, N, r, a.k, a.seedoff) not in done for n in names)]
-    mine = units[a.worker_id::a.workers]
     out = Path(f"{base}.w{a.worker_id}.jsonl")
-    print(f"worker {a.worker_id}/{a.workers}: {len(mine)} of {len(units)} units", flush=True)
-    for u in mine:
-        for rec in unit(u):
-            if rec.get("error"):
-                print("ERROR", rec, flush=True); continue
+    claims = CACHE / "claims"; claims.mkdir(exist_ok=True)
+    print(f"worker {a.worker_id}: {len(units)} units not done at start (dynamic claiming)", flush=True)
+    for u in units:
+        cf = claims / (f"{base.split('/')[-1]}_k{u[1]}_f{u[2]}_N{u[3]}_r{u[4]}_s{u[6]}.lock")
+        if not claim(cf):
+            continue
+        recs = unit(u)
+        if all(not r.get("error") for r in recs):
             with open(out, "a") as fo:
-                fo.write(json.dumps(rec) + chr(10))
+                for rec in recs:
+                    fo.write(json.dumps(rec) + chr(10))
+            cf.write_text("done")
+        else:
+            for rec in recs:
+                if rec.get("error"): print("ERROR", rec, flush=True)
+            cf.unlink(missing_ok=True)
         print("done unit", u[2:5], flush=True)
+
+
+def _alive(pid):
+    import ctypes
+    h = ctypes.windll.kernel32.OpenProcess(0x1000, False, int(pid))     # PROCESS_QUERY_LIMITED_INFORMATION
+    if not h:
+        return False
+    code = ctypes.c_ulong(); ctypes.windll.kernel32.GetExitCodeProcess(h, ctypes.byref(code)); ctypes.windll.kernel32.CloseHandle(h)
+    return code.value == 259                                                # STILL_ACTIVE
+
+
+def claim(cf):
+    """atomically claim a unit; a claim held by a dead process (e.g. stopped by the RAM guard) is taken over."""
+    try:
+        fd = os.open(cf, os.O_CREAT | os.O_EXCL | os.O_WRONLY); os.write(fd, str(os.getpid()).encode()); os.close(fd); return True
+    except FileExistsError:
+        try:
+            txt = cf.read_text().strip()
+        except Exception:
+            return False
+        if txt == "done" or (txt.isdigit() and _alive(txt)):
+            return False
+        cf.write_text(str(os.getpid())); return True
 
 
 if __name__ == "__main__":
