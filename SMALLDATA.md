@@ -251,3 +251,17 @@ The main family at k = 4 does not need torch and proceeds now.
 Checked whether the exact faster brick-wall variant (`bw_torch.psi_fast`: column unitary = matrix_exp of commuting generators) can run without torch: **it cannot** — it uses `torch.linalg.matrix_exp` and torch autograd for the gradients.
 A numpy port would also not meet the required verification (test AUC of existing N = 100 Q4 units reproduced to 1e-10): those units were trained with complex64 torch arithmetic, and even the exact torch fast variant already differed by 0.0007 AUC on one subset.
 Therefore, with no security setting changed and torch not retried: **Q4 at N = 25, 50, 200, 500: incomplete (torch blocked by Windows Application Control)**. Q4 exists only at N = 100.
+
+## Exploratory equivalence check (exploratory, added after the results; not pre-registered; no pre-registered claim changes)
+
+Best quantum vs best classical, both chosen by **inner-CV AUC** at each N (k = 8); "equivalent" if the 95% hierarchical-bootstrap CI of the paired difference lies inside ±0.005 AUC. Code `sd_equivalence.py`.
+
+| N | best quantum (inner CV) | best classical (inner CV) | mean d [95% CI] | CI inside ±0.005 | note |
+|---|---|---|---|---|---|
+| 25 | Q3 quantum-kernel SVM | C2 SVM-RBF | +0.0025 [-0.0032, +0.0080] | no |  |
+| 50 | Q3 quantum-kernel SVM | C2 SVM-RBF | +0.0008 [-0.0019, +0.0035] | yes |  |
+| 100 | Q3 quantum-kernel SVM | C2 SVM-RBF | -0.0006 [-0.0024, +0.0013] | yes |  |
+| 200 | Q3 quantum-kernel SVM | C2 SVM-RBF | +0.0003 [-0.0010, +0.0016] | yes |  |
+| 500 | Q3 quantum-kernel SVM | C2 SVM-RBF | +0.0003 [-0.0009, +0.0015] | yes | reduced sample |
+
+Reading: inner-CV picks the quantum-kernel SVM (Q3) and SVM-RBF at every size; they are **equivalent within ±0.005 AUC at N = 50, 100, 200 and 500** (N = 500 reduced sample) and the check is not met at N = 25 only because the CI is wider (+0.0025 [−0.0032, +0.0080]).
