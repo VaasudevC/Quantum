@@ -167,3 +167,55 @@ Reading: (1) every fold shows the best classical model (random forest) slightly 
 * C7 TabPFN, the strongest pre-registered small-data tabular baseline, was **not run** (licence login required).
 * Subset variance is large at small N (CIs per model ±0.006 at N=100), and only 5 outer folds carry test-set variation.
 * Compute deviations (logged before analysis): Q4 at secondary sizes and all models at N=500 on 10 of the 40 subsets; Q4 at k=4 dropped.
+
+## Secondary sizes, main family (Phase 2: N = 25, 50, 200, 500; Q1–Q3 and C1–C6; analysed 2026-11-13)
+
+All cells complete under the logged deviations: 200 paired subsets at N = 25, 50, 100, 200; **N = 500: reduced sample (10 of 40 subsets, 50 pairs)**. Q4 is shown only at N = 100 (Phase 4 adds it at the other sizes).
+The Holm family used here has **96 comparisons** (Q1–Q3 × C1–C6 × 5 sizes + Q4 × C1–C6 at N = 100); the final family after Phase 4 is larger and is reported there. Files: `results/sd_tables_k8_main.md`, `results/sd_analysis_k8_main.json`;
+figures `results/figs/sd_auc_vs_N_main.png` (mean test AUC vs N, 95% CI bands), `results/figs/sd_diff_vs_N_main.png` (best quantum − best classical), `results/figs/sd_gap_vs_N_main.png`.
+
+### k = 8: mean test AUC [95% hierarchical-bootstrap CI] (5 folds x up to 40 subsets), generalisation gap in parentheses
+
+| model | N=25 | N=50 | N=100 | N=200 | N=500 |
+|---|---|---|---|---|---|
+| Q1 angle VQC | 0.825 [0.815, 0.833] (+0.17) | 0.866 [0.860, 0.872] (+0.12) | 0.889 [0.882, 0.894] (+0.07) | 0.905 [0.900, 0.911] (+0.04) | 0.919 [0.913, 0.925] (+0.02) |
+| Q2 VQC trained scales | 0.814 [0.803, 0.823] (+0.19) | 0.854 [0.846, 0.862] (+0.13) | 0.883 [0.876, 0.889] (+0.08) | 0.901 [0.895, 0.906] (+0.04) | 0.916 [0.910, 0.922] (+0.02) |
+| Q3 quantum-kernel SVM | 0.828 [0.818, 0.837] (+0.17) | 0.866 [0.860, 0.872] (+0.11) | 0.889 [0.882, 0.895] (+0.07) | 0.905 [0.899, 0.910] (+0.04) | 0.919 [0.912, 0.925] (+0.02) |
+| Q4 brick-wall n=8 | – | – | 0.857 [0.846, 0.866] (+0.07) | – | – |
+| C1 LR | 0.818 [0.808, 0.828] (+0.18) | 0.862 [0.855, 0.869] (+0.12) | 0.887 [0.881, 0.893] (+0.07) | 0.902 [0.896, 0.909] (+0.04) | 0.914 [0.907, 0.922] (+0.01) |
+| C2 SVM-RBF | 0.826 [0.818, 0.834] (+0.17) | 0.865 [0.860, 0.871] (+0.12) | 0.889 [0.884, 0.895] (+0.07) | 0.904 [0.898, 0.911] (+0.04) | 0.919 [0.912, 0.925] (+0.02) |
+| C3 GP classifier | 0.832 [0.825, 0.840] (+0.16) | 0.869 [0.864, 0.875] (+0.11) | 0.891 [0.886, 0.897] (+0.07) | 0.906 [0.900, 0.912] (+0.04) | 0.918 [0.912, 0.925] (+0.02) |
+| C4 kNN | 0.786 [0.776, 0.795] (+0.21) | 0.833 [0.825, 0.839] (+0.17) | 0.863 [0.859, 0.868] (+0.14) | 0.884 [0.878, 0.890] (+0.12) | 0.903 [0.897, 0.908] (+0.10) |
+| C5 random forest | 0.828 [0.818, 0.837] (+0.17) | 0.868 [0.863, 0.874] (+0.13) | 0.891 [0.885, 0.898] (+0.10) | 0.907 [0.901, 0.912] (+0.08) | 0.920 [0.913, 0.926] (+0.06) |
+| C6 XGBoost | 0.785 [0.772, 0.797] (+0.21) | 0.846 [0.839, 0.851] (+0.15) | 0.875 [0.868, 0.881] (+0.12) | 0.898 [0.893, 0.904] (+0.09) | 0.916 [0.910, 0.922] (+0.06) |
+
+### Best quantum vs best classical per size (best = highest mean AUC at that size)
+
+| N | best quantum | best classical | mean d [95% CI] | wins | Holm p (superiority) | superiority | non-inferior (CI lower > −0.02) |
+|---|---|---|---|---|---|---|---|
+| 25 | Q3 quantum-kernel SVM | C3 GP classifier | -0.0040 [-0.0099, +0.0012] | 0.45 | 1.000 | False | True |
+| 50 | Q3 quantum-kernel SVM | C3 GP classifier | -0.0033 [-0.0058, -0.0009] | 0.41 | 1.000 | False | True |
+| 100 | Q3 quantum-kernel SVM | C5 random forest | -0.0028 [-0.0049, -0.0010] | 0.42 | 1.000 | False | True |
+| 200 | Q1 angle VQC | C5 random forest | -0.0018 [-0.0036, -0.0002] | 0.46 | 1.000 | False | True |
+| 500 | Q1 angle VQC | C5 random forest | -0.0009 [-0.0020, +0.0002] | 0.40 | 1.000 | False | True |
+
+**Claim level per size (best quantum vs best classical; pre-registered language):**
+| N | claim level | label |
+|---|---|---|
+| 25 | matched classical performance within 0.02 AUC (non-inferior; d = −0.0040, CI includes 0) | – |
+| 50 | matched classical performance within 0.02 AUC (d = −0.0033, CI below 0: GP slightly better) | – |
+| 100 | matched classical performance within 0.02 AUC (primary endpoint, recorded above) | – |
+| 200 | matched classical performance within 0.02 AUC (d = −0.0018, CI below 0: RF slightly better) | – |
+| 500 | matched classical performance within 0.02 AUC (d = −0.0009, CI includes 0) | **reduced sample** (10 of 40 subsets) |
+
+**Superiority (Holm over 96):** the quantum model outperformed **C1 LR** at N = 25 (Q3 quantum-kernel SVM, +0.010 [+0.005, +0.015], adjusted p = 0.019) and at N = 500 (Q1 +0.0046 [+0.0023, +0.0068] and Q3 +0.0045 [+0.0023, +0.0069], adjusted p = 0.019; **reduced sample**);
+it outperformed **C4 kNN** at every size (Q1, Q2, Q3; +0.013 to +0.042) and **C6 XGBoost** at every size for Q1 and Q3 and at N = 25, 100, 200 for Q2 (+0.002 to +0.043). There is **no superiority over C2 SVM-RBF, C3 GP or C5 random forest at any size**, and none over the best classical model at any size.
+Q1 vs LR has small raw-p advantages at N = 50 and 200 (+0.004, +0.002) that do not survive Holm.
+
+**Cells meeting neither claim:** Q2 (trained scales) vs C3 GP at N = 25: d = −0.0183 [−0.0251, −0.0121] — **inconclusive** for non-inferiority (CI straddles −0.02); pre-registered wording: the classical model was better at that size.
+(Q4 at N = 100 vs LR, SVM-RBF, GP, RF and XGBoost also meets neither, as recorded in the primary section.)
+
+**Generalisation gap:** the angle-encoding models (Q1, Q3) have a significantly smaller train–test gap than kNN, random forest and XGBoost at every size, and than LR at N = 25; the gaps of Q1/Q3 and LR, SVM-RBF and GP converge from ~0.17 at N = 25 to ~0.02 at N = 500.
+
+**Reading.** The learning curves of Q1, Q3, SVM-RBF, GP and random forest lie on top of each other at every size (within ~0.005 AUC); the quantum models' consistent wins are against the two weakest classical models (kNN, XGBoost) and, at the extremes N = 25 and N = 500, against plain LR.
+This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the Q1/Q3 feature map is a classically computable product kernel.

@@ -56,3 +56,4 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
   sd_bench_workers.py written to time 1/2/4 workers after the machine clean-up (reboot, close Chrome/VS Code, wsl --shutdown — user actions).
 - 2026-11-13 01:49 Phase 2 launched: main family k=8 N=50,200,25 (40 subsets) then N=500 (subsets 0-9), 8 workers, tag _s2 (16 earlier N=50 units resumed).
 - 2026-11-13 01:51 RAM guard started (stops one sd_run worker if free RAM < 3 GB; log results/sd_ramguard.log).
+- 2026-11-13 03:41 RAM guard stopped one worker at 03:35 (free 2.95 GB); its unfinished units get a relaunch after this pass.
