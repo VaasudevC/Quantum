@@ -129,9 +129,7 @@ def table4():
          "F0 product map, F1 re-uploading (L loads, CNOT ring), F2 IQP/ZZ (ring), F3 IQP with clinically paired RZZ, F4 Heisenberg-ring evolution (T Trotter steps), F5 brick-wall encoding state. "
          "g = geometric difference to a CV-tuned RBF kernel (Huang et al. 2021). Gate (N = 500, k = 8, ≥ 2 of 3 folds): g ≥ √N/2 at λ ∈ {1e-3, 1e-2, 1e-1}, mean off-diagonal > 0.05, centered alignment ≥ 90 % of RBF.",
          f"**Maps passing the gate: {len(gate['passed'])}.** Source `results/qb1_screen.jsonl`.", "", t]
-    (OUT / "table4_feature_maps.md").write_text("
-".join(L) + "
-", encoding="utf-8")
+    (OUT / "table4_feature_maps.md").write_text(chr(10).join(L) + chr(10), encoding="utf-8")
 
 
 def fig4():

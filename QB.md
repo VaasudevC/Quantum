@@ -68,3 +68,17 @@ At most 4 (map, scale) settings pass, ranked by mean centered alignment. If none
 
 numpy / scipy / scikit-learn / xgboost only (no torch); ≤ 4 workers, 1 BLAS thread each, RAM guard on; every script resumable. Order: QB1 → QB3 → QB4 → QB2 → QB5 → QB6.
 Any phase projected to exceed 6 hours on this machine is stopped, logged as incomplete with a time estimate, and the next phase starts.
+
+---
+
+## Results (added after the runs; the pre-registration above is unchanged)
+
+### QB1 — training-free screen (run 2026-11-13; `qb1_screen.py`, `qb1_gate.py`, `results/qb1_screen.jsonl`, `results/qb1_table.md`, `results/paper/table4_feature_maps.md`, `results/paper/fig4_g_all_maps.png`)
+
+* 1200 settings screened (6 maps / 20 parameterisations × 5 scales × N ∈ {100, 500} × k ∈ {8, 4} × 3 discovery folds; F5 = the brick-wall encoding state, numpy). All states verified (unit norm 1e-15; F0 = product formula 1e-15; F4 = dense matrix exponential 2e-16). **F0 at π/6 reproduces the X2 numbers exactly** (g and CV AUC in all 6 fold × N cells).
+* **Gate result: no (map, scale) setting passes** (0 of 100 at N = 500, k = 8). Over the 300 fold-settings: g ≥ √N/2 at all three λ fails in 286, the alignment criterion fails in 160, the concentration criterion in 15.
+* **Trade-off (the paper result):** g ≥ √N/2 at all λ is reached only at the largest scale **s = π/2** (F1, F2, F3, F4, F5), where the kernel's centered alignment with the labels falls to 30–60 % of the RBF kernel's and CV AUC drops to 0.85–0.92 (RBF 0.92–0.94). At the scales where alignment matches RBF (π/8–π/4) every map has g ≈ 4–7 at λ = 1e-2, below √N/2 = 11.2.
+  Entangling (IQP/ZZ, clinically paired ZZ, Heisenberg evolution), re-uploading and the brick-wall encoding all behave like the product map: **expressivity beyond an RBF kernel appears only together with a loss of label alignment.** This extends the scale rule from "which scale" to "which feature map".
+* Near-misses, reported for completeness: 11 settings meet the three criteria in 1–2 folds **at λ = 1e-2 only**; at λ = 1e-1 their g is 4.9–7.0 (< 11.2), and their CV AUC is at most +0.004 above RBF (most are equal or below). Under the pre-registered rule they do not pass.
+* Projected (1-RDM) kernels: CV AUC within the same range as the fidelity kernels; F5's projected kernel is degenerate (particle-number sector), as stated in advance.
+* **QB2 is skipped** (no map passed the gate), as pre-registered.
