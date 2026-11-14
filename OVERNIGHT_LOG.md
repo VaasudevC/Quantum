@@ -72,3 +72,19 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-14 02:42 EXECUTION NOTE (not an analysis change): overnight cap raised to 8 processes total (was 4 for a busy machine; Chrome/VS Code/Claude closed tonight so RAM is free). Orphan Python processes (PIDs 35580, 23736) from dead qb_sched killed. Stale claim files in C:/bwcache/sd/claims removed. Fresh queue launched: qb_sched.py MAXP=8, jobs = sd_run workers 0-5 (k=4, N=100/50/200/25, reps=40), sd_run workers 6-7 (k=4, N=500, reps=10), scale_cv seed=3 (5 VQC seed runs), qb5_robust.py folds 1 and 2. Workers use 1 BLAS thread; RAM guard unchanged (stop at <3 GB, start at >=3.5 GB).
 - 2026-11-14 03:25 Phase 4+5 progress: QB3 exploratory folds 3-4 done (consistent with 0-2: deg-2 LR ≥ VQC in all 5 folds; surrogate R²=0.9865); Fig5 generated; p4_full_bootstrap.py running (roc_auc bug fixed: tie detection == → !=; fold 0 LR=0.9577 now correct vs 0.5000 before). k=4: 310/850 (N=100 done, N=50 at 110/200). QB5 at 18/30. Bootstrap pair 1: VQC_pi6 vs LR = +0.0060 [+0.0042, +0.0078].
 - 2026-11-14 03:24 progress: k4 units 329/850, QB5 18/30, seed3 runs 0/5, free RAM 3.18 GB, elapsed 0.5h
+- 2026-11-14 03:54 progress: k4 units 419/850, QB5 18/30, seed3 runs 0/5, free RAM 3.48 GB, elapsed 1.0h
+- 2026-11-14 04:24 progress: k4 units 457/850, QB5 18/30, seed3 runs 0/5, free RAM 3.39 GB, elapsed 1.5h
+- 2026-11-14 04:54 progress: k4 units 499/850, QB5 18/30, seed3 runs 0/5, free RAM 3.40 GB, elapsed 2.0h
+- 2026-11-14 05:24 progress: k4 units 540/850, QB5 18/30, seed3 runs 0/5, free RAM 3.77 GB, elapsed 2.5h
+- 2026-11-14 05:54 progress: k4 units 580/850, QB5 18/30, seed3 runs 0/5, free RAM 3.67 GB, elapsed 3.0h
+- 2026-11-14 06:24 progress: k4 units 667/850, QB5 18/30, seed3 runs 0/5, free RAM 3.70 GB, elapsed 3.5h
+- 2026-11-14 06:54 progress: k4 units 817/850, QB5 28/30, seed3 runs 0/5, free RAM 4.51 GB, elapsed 4.0h
+- 2026-11-14 07:24 progress: k4 units 821/850, QB5 30/30, seed3 runs 3/5, free RAM 4.74 GB, elapsed 4.5h
+- 2026-11-14 07:54 progress: k4 units 825/850, QB5 30/30, seed3 runs 5/5, free RAM 4.87 GB, elapsed 5.0h
+- 2026-11-14 08:24 progress: k4 units 831/850, QB5 30/30, seed3 runs 5/5, free RAM 4.93 GB, elapsed 5.5h
+- 2026-11-14 08:54 progress: k4 units 836/850, QB5 30/30, seed3 runs 5/5, free RAM 4.94 GB, elapsed 6.0h
+- 2026-11-14 09:24 progress: k4 units 840/850, QB5 30/30, seed3 runs 5/5, free RAM 4.83 GB, elapsed 6.5h
+- 2026-11-14 09:54 progress: k4 units 845/850, QB5 30/30, seed3 runs 5/5, free RAM 4.92 GB, elapsed 7.0h
+- 2026-11-14 10:24 progress: k4 units 850/850, QB5 30/30, seed3 runs 5/5, free RAM 5.34 GB, elapsed 7.5h
+- 2026-11-14 10:54 progress: k4 units 850/850, QB5 30/30, seed3 runs 5/5, free RAM 3.42 GB, elapsed 8.0h
+- 2026-11-14 11:24 progress: k4 units 850/850, QB5 30/30, seed3 runs 5/5, free RAM 4.44 GB, elapsed 8.5h
