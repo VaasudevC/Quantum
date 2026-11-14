@@ -154,9 +154,55 @@ def fig4():
     fig.text(0.01, 0.005, STAMP + " Pre-registered QB1 screen; no map passed the gate.", fontsize=6, color="#666666"); plt.tight_layout(rect=(0, 0.03, 1, 1)); plt.savefig(OUT / "fig4_g_all_maps.png", dpi=200); plt.close()
 
 
+def table5():
+    p = Path("results/hw/ibm_bw_hw/extended_analysis.json")
+    if not p.exists():
+        return
+    r = json.load(open(p))
+    def fmt(key, mr):
+        v = mr.get(key)
+        ci = mr.get(key + "_ci")
+        if v is None: return "–"
+        if ci: return f"{v:.4f} [{ci[0]:.4f}, {ci[1]:.4f}]"
+        return f"{v:.4f}"
+    L = ["# Table 5 — Real hardware results: ibm_marrakesh (Heron r2), 200 ECGs, 1000 shots, 2026-11-14", "", STAMP, "",
+         "Source: `results/hw/ibm_bw_hw/extended_analysis.json`.",
+         "Bootstrap CIs: B=2000, seed=0, percentile method. Noiseless AUC from exact simulation.", "",
+         "## AUC with 95% bootstrap CIs", "",
+         "| model | circuit (CZ, depth) | AUC noiseless [95% CI] | AUC raw [95% CI] | AUC postselected [95% CI] | kept fraction |",
+         "|---|---|---|---|---|---|"]
+    circuits = {"bw8": "136 CZ, depth 254", "vqc32": "80 CZ, depth 208"}
+    for mname in ("bw8", "vqc32"):
+        if mname not in r: continue
+        mr = r[mname]
+        kf = f"{mr['kept_fraction_mean']:.3f} ± {mr['kept_fraction_std']:.3f}" if "kept_fraction_mean" in mr else "–"
+        L.append(f"| {mname} | {circuits[mname]} | {fmt('auc_noiseless', mr)} | {fmt('auc_raw', mr)} | {fmt('auc_postselected', mr)} | {kf} |")
+    L += ["", "## Per-ECG agreement (hardware vs noiseless logit)", "",
+          "| model | Pearson r | Spearman ρ | MAE logit | contraction factor |",
+          "|---|---|---|---|---|"]
+    for mname in ("bw8", "vqc32"):
+        if mname not in r: continue
+        mr = r[mname]
+        L.append(f"| {mname} | {mr.get('pearson_r_raw', float('nan')):.3f} | {mr.get('spearman_rho_raw', float('nan')):.3f} | {mr.get('mae_logit_raw', float('nan')):.3f} | {mr.get('contraction_factor_raw', float('nan')):.3f} |")
+    L += ["", "## Calibration (at hardware-optimal balanced-accuracy threshold)", "",
+          "| model | bal. acc | sens | spec | acc |",
+          "|---|---|---|---|---|"]
+    for mname in ("bw8", "vqc32"):
+        if mname not in r: continue
+        cal = r[mname].get("calibration", {}).get("hw_raw_at_hw_thr", {})
+        if cal:
+            L.append(f"| {mname} hw raw | {cal.get('bal_acc', float('nan')):.3f} | {cal.get('sens', float('nan')):.3f} | {cal.get('spec', float('nan')):.3f} | {cal.get('acc', float('nan')):.3f} |")
+        cal_nl = r[mname].get("calibration", {}).get("noiseless", {})
+        if cal_nl:
+            L.append(f"| {mname} noiseless | {cal_nl.get('bal_acc', float('nan')):.3f} | {cal_nl.get('sens', float('nan')):.3f} | {cal_nl.get('spec', float('nan')):.3f} | {cal_nl.get('acc', float('nan')):.3f} |")
+    L += ["", "Note: threshold is hardware-optimal on this same test set (not held-out validation). The 200-ECG test set has ~±0.01 AUC sampling error."]
+    (OUT / "table5_hardware.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
-    table1(); table2(); table3(); figures(); table4(); fig4()
+    table1(); table2(); table3(); figures(); table4(); fig4(); table5()
     (OUT / "README.md").write_text(f"# results/paper\n\n{STAMP}\n\n* `table1_encoding.md` — encoding study (angle scale; brick-wall replication)\n* `table2_benchmark.md` — full-data benchmark by feature count\n"
                                    f"* `table3_smalldata.md` — pre-registered small-data differences with CIs by N\n* `fig1_scale_sweep.png` — scale sweep and AUC vs k\n* `fig2_learning_curves.png` — SD learning curves and best-vs-best difference\n"
-                                   f"* `fig3_geometric_difference.png` — g(K_RBF‖K_Q) vs √N (exploratory)\n\nRebuild: `C:/bwvenv/Scripts/python.exe make_paper.py`\n", encoding="utf-8")
+                                   f"* `fig3_geometric_difference.png` — g(K_RBF‖K_Q) vs √N (exploratory)\n* `table5_hardware.md` — real hardware results (ibm_marrakesh, 2026-11-14)\n"
+                                   f"\nRebuild: `../.venv/Scripts/python.exe make_paper.py`\n", encoding="utf-8")
     print("ok", HEAD)

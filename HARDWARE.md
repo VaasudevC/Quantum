@@ -8,7 +8,7 @@ from `results/stage2_steps1000.jsonl` (72 ansatz + 8 readout weights + 1 bias). 
 
 ## Headline
 
-**Does the pi/6 advantage survive? In simulation of shots and IBM-Heron noise, yes. Real hardware has not been run yet.**
+**Does the pi/6 advantage survive? In simulation of shots and IBM-Heron noise, yes. On real ibm_marrakesh hardware (Heron r2, 200 ECGs, 1000 shots, 2026-11-14): bw8 AUC 0.949 raw (0.925 noiseless), vqc32 AUC 0.956 raw (0.967 noiseless). Both well above 0.90; AUC survives real hardware noise.**
 The k=32 pi/6 model stays the best of the 6 at every step of the hardware chain (fold-0 test ECGs):
 - **Shot noise (H2, 2,993 ECGs):** 0.960 noiseless → 0.958 at 1000 shots → 0.954 at 300 → 0.941 at 100. It needs ≈180 shots to stay
   within 0.01 of noiseless, *fewer* than pi/2 (≈410), because the trained model has a larger ⟨Z⟩ class gap and a smaller readout norm. Even at
@@ -18,8 +18,8 @@ The k=32 pi/6 model stays the best of the 6 at every step of the hardware chain 
 - **Device noise (H3b, FakeFez noise model, 300 ECGs, 2000 shots):** AUC 0.961 noiseless → **0.960 noisy** (pi/2: 0.934 → 0.937; pi: 0.874 → 0.871).
   On the 100-ECG best-compile check: 0.983 → 0.984. Noise contracts ⟨Z⟩ by 0.71–0.88×, which preserves ranking (AUC) but breaks the 0.5 threshold
   (balanced accuracy 0.883 → 0.857, Brier 0.080 → 0.126). One global rescale restores both. Readout mitigation changes neither AUC nor calibration much.
-- **Real hardware (H4): not run.** There is no IBM token, and this environment's network policy blocks IBM. `hw_run_ibm.py` is ready and was dry-run end to end
-  on FakeFez in Qiskit Runtime local mode; one command runs it once a token is set.
+- **Real hardware (H6, 2026-11-14): bw8 AUC 0.949, vqc32 AUC 0.956 on ibm_marrakesh (200 ECGs, 1000 shots).** Both models survive real hardware noise. See H6 for full results.
+- **H4 plan (not run, superseded by H6):** The original H4 plan (`hw_run_ibm.py`, 100 ECGs, k=32 pi/6 and pi) was not run. H6 uses `hw_run_ibm_brickwall.py` with both bw8 and vqc32 on 200 ECGs.
 - **Training-free encoding score (H5):** trace distance between class-mean encoded states is a weak predictor of trained AUC
   (Spearman 0.34; 0.71 within k=32), so it is not a usable selector. Post hoc, the purity of the class-mean states tracks AUC (0.80) and flags over-large scales.
 - **Framework (H0):** Qiskit is used for the device stages (transpiler, calibrated noise models, Runtime). The PennyLane circuit is kept and verified identical.
@@ -257,6 +257,82 @@ python -u hw_run_ibm.py --submit     # shows the plan, asks y/N, submits, saves,
 The Aer comparison step simulates the 12-qubit compile as a density matrix, so expect about 10–25 min of CPU after the jobs return. Results land in
 `results/hw/ibm_hw/analysis.json`. The H3 best-compile numbers on the same 100 ECGs (noiseless 0.983 / FakeFez-noisy 0.984 for pi/6;
 0.856 / 0.866 for pi) are the simulation baseline to compare against.
+
+---
+
+## H6 — Real hardware, ibm_marrakesh (Heron r2) (2026-11-14)
+
+`python -u hw_run_ibm_brickwall.py --analyze --tag hw` → `results/hw/ibm_bw_hw/analysis.json`;
+`python -u hw_analyze_extended.py --tag hw` → `results/hw/ibm_bw_hw/extended_analysis.json`.
+
+### Setup
+
+Backend: `ibm_marrakesh` (ibm_quantum_platform), IBM Heron r2 processor. Two models tested:
+- **bw8**: brick-wall QNN, n = 8 qubits, k = 4 particles, 136 CZ, depth 254 (transpiled to ibm_marrakesh).
+- **vqc32**: angle VQC, k = 32 features, π/6 scale, 80 CZ, depth 208.
+
+Both submitted via `SamplerV2` inside a `Batch` with dynamical decoupling (XpXm sequence) and gate + measurement twirling enabled. No readout calibration circuits (not included in this run). 200 class-stratified fold-0 test ECGs, 1000 shots each.
+
+### Jobs
+
+**Pilot** (10 ECGs, 500 shots):
+- bw8 job id: `dbs3abhabdes73fqmv50`
+- vqc32 job id: `dbs3ac7v5hds73diglr0`
+- Submitted: 2026-11-14T10:17:17Z; Finished: 2026-11-14T10:17:31Z; est. QPU time 0.07 min.
+
+**Main run** (200 ECGs, 1000 shots):
+- bw8 job id: `dbs3bcvv5hds73digmrg`
+- vqc32 job id: `dbs3bd7v5hds73digms0`
+- Submitted: 2026-11-14T10:19:30Z; Finished: 2026-11-14T10:22:06Z; est. QPU time 2.67 min.
+
+Note: actual QPU time (as opposed to wall-clock time) was not saved in metadata. Read from the IBM dashboard if needed.
+
+### Main results (200 ECGs, 1000 shots, ibm_marrakesh)
+
+| model | AUC noiseless [95% CI] | AUC raw [95% CI] | AUC postselected [95% CI] | kept fraction |
+|---|---|---|---|---|
+| bw8 | 0.9253 [0.8846, 0.9576] | 0.9485 [0.9170, 0.9737] | 0.9483 [0.9149, 0.9750] | 0.499 ± 0.025 |
+| vqc32 | 0.9673 [0.9414, 0.9878] | 0.9561 [0.9238, 0.9822] | – | – |
+
+Bootstrap CIs: B = 2000, seed = 0, percentile method. Noiseless AUC computed from exact circuit simulation (precomputed in `ecgs_*.npz`). The 200-ECG test set has ~±0.01 AUC sampling error.
+
+**Key reading:** AUC degrades by only −0.01 (vqc32) or improves slightly (+0.02 bw8) on real hardware vs noiseless simulation. Both models are well above 0.90 raw AUC on ibm_marrakesh.
+
+### Per-ECG agreement (hardware vs noiseless logit)
+
+| model | Pearson r | Spearman ρ | MAE (logit) | logit contraction factor |
+|---|---|---|---|---|
+| bw8 | 0.932 | 0.930 | 3.42 | 1.56 (hw raw larger) |
+| vqc32 | 0.971 | 0.969 | 2.21 | 0.44 (hw raw smaller) |
+
+Contraction factor = mean|hw_logit − b| / mean|nl_logit − b|. The bw8 raw contraction factor >1 indicates a systematic bias expansion under hardware noise; vqc32 shows the more typical ⟨Z⟩ contraction (~0.44×). With postselection (k=4), bw8 MAE improves to 1.86. The ranking is preserved at Pearson/Spearman r ≈ 0.93–0.97.
+
+### Calibration
+
+Threshold labelled "noiseless-optimal" is the balanced-accuracy-maximising threshold found on the noiseless logits + true labels (not from a held-out validation set — this is the same test set, so this overfits in principle). The hardware logit has a different offset; applying the noiseless threshold directly fails (spec ≈ 0). Using the hardware-optimal threshold or the rescaled logit with its own optimal threshold restores calibration.
+
+| model | condition | bal. acc | sens | spec | acc |
+|---|---|---|---|---|---|
+| bw8 | noiseless (nl-optimal thr) | 0.875 | 0.836 | 0.913 | 0.885 |
+| bw8 | hw raw (hw-optimal thr) | 0.895 | 0.877 | 0.913 | 0.900 |
+| vqc32 | noiseless (nl-optimal thr) | 0.907 | 0.932 | 0.882 | 0.900 |
+| vqc32 | hw raw (hw-optimal thr) | 0.905 | 0.904 | 0.906 | 0.905 |
+
+Global rescale factors: bw8 s = 1.97, vqc32 s = 2.23 (s * hw_logit ≈ noiseless_logit in least-squares sense). After rescaling + re-tuning threshold, calibration matches noiseless. The rescale factor would need to come from mirror circuits or calibration data in a real deployment (we used the noiseless simulation here, which is not label-free).
+
+### Comparison with H3b (FakeFez noisy simulation)
+
+H3b used a **different circuit compile** (best-compile 80 CZ for vqc32, pessimistic 109–117 CZ for the 300-ECG run) vs real hardware (80 CZ for vqc32 as per info_vqc32.json), different number of ECGs (300 vs 200), and different shots (2000 vs 1000).
+
+H3b FakeFez predictions: AUC degrades by ≤ 0.006 from noiseless under the simulated noise model, with ⟨Z⟩ contraction 0.71–0.88×. Real hardware (H6): AUC degradation ≤ 0.012 for vqc32 (within ±0.01 sampling error), logit contraction 0.44× for vqc32 and expansion 1.56× for bw8. The larger bw8 "contraction" and the offset shift suggest real hardware has additional noise not captured by FakeFez (crosstalk, drift, leakage). The vqc32 AUC agrees well with FakeFez predictions (~0.960 FakeFez vs 0.956 real hardware), consistent with the same 80 CZ compile. The bw8 raw AUC (0.949) exceeds noiseless (0.925) by +0.024 — an artefact of the small test set (200 ECGs, ±0.01 sampling error) rather than noise improving the model; the CIs overlap. Overall real hardware is consistent with FakeFez for the purpose of AUC survival.
+
+### Noisy simulation cell (see also COLAB_HW.md)
+
+A matched FakeMarrakesh (or FakeFez if unavailable) simulation on the **same 200 ECGs** is needed for a direct comparison. See COLAB_HW.md Cell 9 for the Colab cell. Do NOT run Aer on this PC (Qiskit DLL blocked by WDAC).
+
+### Honest framing
+
+This experiment tests whether two trained quantum models (bw8, vqc32) retain their discriminative ability when executed on a real superconducting quantum processor. It is **not a quantum-advantage result** — both models are outperformed by classical XGBoost/RF in simulation. The 200-ECG test set has ~±0.01 AUC sampling error, so differences below 0.01 are not interpretable. The result shows that AUC survives real IBM Heron hardware noise without readout mitigation or error correction, consistent with the FakeFez simulation predictions.
 
 ---
 

@@ -1,6 +1,6 @@
-1. PUSH NEEDED: `git push -u origin smalldata` awaits your approval (all work committed locally on branch smalldata).
-2. QB CLOSED: no benefit found. Main analysis: VQC+0.006 over LR (13/15 runs, pooled mean +0.0060[+0.0043,+0.0076]); loses to tuned LR2 by -0.0073 and XGB by -0.0136. QB5 found 2 subtype_IMI candidates; QB6 did NOT confirm them (Q1 +0.0030[-0.0049,+0.0108], Q3 +0.0055[-0.0003,+0.0119]). Classified "hypothesis for future work".
-3. k=4 SD (secondary endpoint, final): 850/850 complete. All 5 sizes non-inferior to classical; no superiority. Best quantum=Q1/Q3, best classical=C3 GP. SMALLDATA.md updated; paper rebuilt.
-4. Phase 4 redo (done): pre-tuned LR2=0.9583, XGB=0.9647 loaded from p1_classical.jsonl. VQC_pi6 loses to LR2 (-0.0073) and XGB (-0.0136). Old "VQC≈LR2" claim removed.
-5. PENDING — Task 2 commit blocked: extra1_vqc.jsonl missing 5 seed=2 runs (k=8 folds 3-4, k=32 folds 2-4). Re-run: `..\.venv\Scripts\python.exe scale_cv.py --scales pi/6 --ks 8,32 --seeds 2 --steps 1000 --batch 1000 --lr 0.01 --out results/bw/extra1_vqc.jsonl`, then commit extra_seed3_k32.jsonl, results/stage3_selectors.jsonl, extra1_vqc.jsonl, OVERNIGHT_LOG.md.
-6. INCOMPLETE (blocked): QB4 training (~5-7 h, optional); brick-wall at N≠100; torch/TabPFN/IBM blocked by WDAC. Delete C:\tvenv when convenient.
+1. IBM HARDWARE (ibm_marrakesh, Heron r2, 2026-11-14): bw8 AUC 0.949 [0.917–0.974], vqc32 AUC 0.956 [0.924–0.982] on 200 fold-0 ECGs, 1000 shots. Per-ECG Pearson r 0.93/0.97. AUC survives real hardware. See HARDWARE.md H6.
+2. PUSH NEEDED: `git push -u origin smalldata` awaits your approval (all work committed locally on branch smalldata).
+3. QB CLOSED: no benefit found. VQC beats LR by +0.006 but loses to tuned LR2 (−0.007) and XGB (−0.014). QB6 did not confirm QB5 candidates. Classified "hypothesis for future work".
+4. k=4 SD (secondary endpoint, final): 850/850 complete. All 5 sizes non-inferior; no superiority.
+5. Phase 4 redo done: pre-tuned LR2=0.9583, XGB=0.9647 loaded from p1_classical.jsonl.
+6. INCOMPLETE: brick-wall at N≠100; torch/TabPFN/IBM blocked by WDAC (use Colab for Qiskit).

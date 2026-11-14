@@ -6,6 +6,8 @@ Branch `smalldata` (from `brickwall-overnight`). Log: [`OVERNIGHT_LOG.md`](OVERN
 
 **Claim level reached: non-inferiority at every training size, superiority at none — for both k = 8 and k = 4.**
 
+**Real hardware result (2026-11-14, ibm_marrakesh, Heron r2):** The two best-performing quantum models from this study — bw8 (brick-wall n=8, k=4) and vqc32 (angle VQC, k=32, π/6) — were tested on 200 fold-0 test ECGs at 1000 shots each on a real IBM superconducting device. bw8 achieved AUC 0.949 [95% CI 0.917–0.974] and vqc32 AUC 0.956 [0.924–0.982] on ibm_marrakesh. Per-ECG Pearson r between hardware and noiseless logit was 0.93 (bw8) and 0.97 (vqc32). AUC survives real hardware noise without mitigation, consistent with FakeFez simulation predictions from HARDWARE.md H3b. This is a hardware validation result, not a quantum-advantage claim; classical XGBoost (AUC 0.965 on 32 features, full training set) still leads. See [`HARDWARE.md`](HARDWARE.md) H6 for full details.
+
 ### k = 8 (primary)
 
 In the pre-registered paired comparison of the best quantum model against the best classical model,

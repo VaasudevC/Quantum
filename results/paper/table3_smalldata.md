@@ -1,6 +1,6 @@
 # Table 3 — Pre-registered small-data benchmark: best quantum − best classical by training size N
 
-Built from commit 5ff9dda by make_paper.py.
+Built from commit 8a5214d by make_paper.py.
 
 Paired over 5 folds × 40 subsets (N = 500: **reduced sample**, 10 subsets); 95% hierarchical-bootstrap CIs (folds, then subsets); one-sided superiority with Holm; non-inferiority margin −0.02. Source: `results/sd_analysis_k8_main.json` (and `_k4_main.json`). C7 TabPFN not run (licence login required); Q4 brick-wall only at N = 100 (torch blocked at other sizes).
 

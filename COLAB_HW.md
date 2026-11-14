@@ -127,6 +127,127 @@ Unzip into `cloud_repo/results/hw/` on the lab PC and commit.
 
 ---
 
+## Cell 9 — FakeMarrakesh noisy simulation (matched comparison with H6)
+
+Run this cell to simulate the **same 200 ECGs** (from the real hardware run) using `FakeMarrakesh`
+(or `FakeFez` if `FakeMarrakesh` is not available), enabling a direct comparison between real
+device and simulation for the same circuit and inputs.
+
+**Purpose:** generate `results/hw/ibm_bw_fakehw/` with the same format as `ibm_bw_hw/`, so that
+`hw_analyze_extended.py --tag fakehw` can be run on it. This isolates whether the real-hardware
+AUC degradation is explained by the IBM noise model, or whether real-device noise (crosstalk,
+drift, leakage) adds more.
+
+**Do NOT run Aer on the lab PC (Qiskit DLL blocked by WDAC).**
+
+```python
+# Cell 9 — FakeMarrakesh noisy simulation (matched to H6 real hardware run)
+import json, os
+import numpy as np
+from pathlib import Path
+
+# -- Load existing H6 real hardware ECG inputs and circuit info --
+hw_dir = Path("results/hw/ibm_bw_hw")
+os.makedirs("results/hw/ibm_bw_fakehw", exist_ok=True)
+out_dir = Path("results/hw/ibm_bw_fakehw")
+
+import shutil
+# Copy ECG inputs (labels, noiseless scores) from the real hardware run
+for model_name in ("bw8", "vqc32"):
+    shutil.copy(hw_dir / f"ecgs_{model_name}.npz", out_dir / f"ecgs_{model_name}.npz")
+    shutil.copy(hw_dir / f"info_{model_name}.json", out_dir / f"info_{model_name}.json")
+
+# -- Try FakeMarrakesh; fall back to FakeFez --
+try:
+    from qiskit_ibm_runtime.fake_provider import FakeMarrakesh
+    fake_be = FakeMarrakesh()
+    backend_name = "fake_marrakesh"
+    print("Using FakeMarrakesh")
+except ImportError:
+    from qiskit_ibm_runtime.fake_provider import FakeFez
+    fake_be = FakeFez()
+    backend_name = "fake_fez_fallback"
+    print("FakeMarrakesh not found; using FakeFez as fallback")
+
+from qiskit_aer import AerSimulator
+sim = AerSimulator.from_backend(fake_be)
+
+from qiskit.transpiler import generate_preset_pass_manager
+from qiskit_ibm_runtime import SamplerV2
+pm = generate_preset_pass_manager(optimization_level=3, backend=fake_be, seed_transpiler=0)
+
+SHOTS = 1000  # match the real hardware run
+
+import hw_bw as H, qiskit_vqc as Q
+cache = Path(os.environ.get("BW_CACHE", "cache"))
+
+for model_name in ("bw8", "vqc32"):
+    info = json.load(open(out_dir / f"info_{model_name}.json"))
+    e = np.load(out_dir / f"ecgs_{model_name}.npz")
+    # Reconstruct parameter bindings from the saved info and ECG positions
+    if model_name == "bw8":
+        n, k = info["n"], info["k"]
+        qc, th, wv = H.build(n, 4, k)  # columns=4 from the trained model (see info)
+        # Load the actual trained params from cache (same as the real run)
+        import sys; sys.path.insert(0, ".")
+        import bw_torch as T
+        rows = [json.loads(l) for l in open("results/bw/p3_stageC.jsonl")]
+        r = [r for r in rows if r["n"] == n and r["fold"] == 0 and r.get("rank") == 0][0]
+        d = np.load(cache / "l1_f0.npz"); Z = d["Z"].astype(np.float64)[:, :n]
+        pos = e["pos"]
+        theta = -r["scale"] * np.tanh(Z[d["te"]][pos])
+        w_flat = np.asarray(r["params"]["w"]).ravel()
+        tc = pm.run(qc)
+        vals = {p: np.asarray(theta[:, int(p.name[2:])] if p.name.startswith("x[") else
+                              np.full(len(pos), w_flat[int(p.name[2:-1])]), dtype=float)
+                for p in tc.parameters}
+        # Simpler: rebuild vals dict
+        vals = {}
+        for p in tc.parameters:
+            if p.name.startswith("x["):
+                j = int(p.name[2:-1])
+                vals[p] = theta[:, j].astype(float)
+            elif p.name.startswith("w["):
+                i = int(p.name[2:-1])
+                vals[p] = np.full(len(pos), float(w_flat[i]))
+        pub = (tc, vals)
+    else:  # vqc32
+        row = Q.load_models()[(32, "pi/6")]; th_, w_, b_ = Q.split_params(row)
+        qc, x = Q.build_template(th_, 32)
+        hw_data = np.load(cache / "hw_inputs.npz")
+        pos = e["pos"]
+        A = hw_data["A_vqc_te"][pos]
+        tc = pm.run(qc)
+        vals = {p: A[:, int(p.name[2:-1])].astype(float) for p in tc.parameters}
+        pub = (tc, vals)
+
+    # Run SamplerV2 on the Aer simulator
+    sampler = SamplerV2(mode=sim)
+    job = sampler.run([pub], shots=SHOTS)
+    result = job.result()
+    data = result[0].data
+    ba = getattr(data, list(data.keys())[0])
+    counts = [ba[i].get_counts() for i in range(ba.shape[0])] if ba.shape else [ba.get_counts()]
+    json.dump(counts, open(out_dir / f"counts_{model_name}.json", "w"))
+    print(f"Saved {model_name} counts ({len(counts)} ECGs)")
+
+# Save meta
+import datetime
+meta_hw = json.load(open(hw_dir / "meta.json"))
+meta = dict(backend=backend_name, local=True,
+            submitted_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            shots=SHOTS, n_ecg=len(np.load(out_dir / "ecgs_bw8.npz")["y"]),
+            info=meta_hw["info"])
+json.dump(meta, open(out_dir / "meta.json", "w"), indent=1)
+print("Done. Run hw_analyze_extended.py --tag fakehw to get extended_analysis.json.")
+```
+
+After running: `python hw_run_ibm_brickwall.py --analyze --tag fakehw` and
+`python hw_analyze_extended.py --tag fakehw`, then download and copy to
+`cloud_repo/results/hw/ibm_bw_fakehw/` on the lab PC for comparison with H6.
+
+---
+
 ## Notes
 
 - **BW_CACHE**: defaults to `cache/` (inside the bundle). To use the lab PC cache directly
