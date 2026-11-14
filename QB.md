@@ -3,16 +3,16 @@
 Branch `smalldata`. **This pre-registration was written and committed before any QB run.** Nothing below may be changed after a QB result has been seen; later additions go under "Exploratory (not pre-registered)".
 Every setting tried, including failures, is recorded in `results/qb_registry.csv`.
 
-## Headline (2026-11-13) — claim level: **no benefit found**
+## Headline (updated 2026-11-14) — claim level: **no benefit found on the main analysis; 2 discovery candidates for QB6 confirmation**
 
 * **Tried** (262 rows in `results/qb_registry.csv`): QB1 screened 1,200 feature-map settings (product, re-uploading, IQP/ZZ, clinically paired ZZ, Heisenberg evolution, brick-wall encoding; 5 scales; N = 100/500; k = 8/4; 3 discovery folds);
-  QB3 compared the trained VQCs with 6 parameter-matched classical models on raw and bounded inputs; QB4 screened 213 feature placements per fold; QB5 tested 13 perturbation/shift/imbalance/subtype settings.
+  QB3 compared the trained VQCs with 6 parameter-matched classical models on raw and bounded inputs; QB4 screened 213 feature placements per fold; QB5 tested 13 perturbation/shift/imbalance/subtype settings (30/30 units complete).
 * **Passed the gate:** none of the feature maps (QB1). Expressivity beyond an RBF kernel (g ≥ √N/2) appears only at s = π/2, where label alignment collapses; QB2 was skipped as pre-registered.
 * **Non-linearity hypothesis (QB3): supported.** At equal or fewer parameters, classical quadratic models (rank-2 factorization machine, sparse degree-2 LR) on the same bounded inputs match the trained-scale VQC (0.9562 / 0.9561 vs 0.9561) and exceed the π/6 VQC; the win over LR is explained by the encoding plus mild non-linearity, not by the circuit.
-* **Other kinds of benefit (QB5, 18 of 30 units so far):** no setting with the quantum model ≥ +0.005 above the best classical model and CI > 0.
-* **Confirmation (QB6): not run — no candidate reached it.** Folds 3–4 and the external PTB set were not touched by QB.
-* **Incomplete:** QB4 training (stopped under the 6-hour rule); QB5 folds 1–2 (12 units, waiting for free RAM); QB5 full-data part (logged in advance as incomplete).
-* Wording: under the fixed claim rules this is **"no benefit found"**; the word "advantage" is not used.
+* **Other kinds of benefit (QB5, 30/30 units complete):** 2 candidates found — both in the inferior-MI subtype (subtype_IMI) setting: Q1 angle VQC +0.0103 [+0.0008, +0.0236] and Q3 quantum-kernel SVM +0.0091 [+0.0016, +0.0193] vs SVM-RBF. All other 28 settings: no quantum model ≥ +0.005 above the best classical model with CI > 0.
+* **Confirmation (QB6): protocol written (see below); NOT YET RUN.** Two candidates are sent to QB6; folds 3–4 were not used in discovery.
+* **Incomplete:** QB4 training (stopped under the 6-hour rule); QB5 full-data part (logged in advance as incomplete).
+* Wording: the main result (no benefit on the standard analysis) is **"no benefit found"**; the two subtype_IMI candidates are **"hypothesis for future work"** unless QB6 confirms. The word "advantage" is not used.
 
 ## Working hypothesis being tested
 
@@ -134,46 +134,60 @@ The spread of the training-free score over placements is ±0.02–0.03 around th
 **Training part: INCOMPLETE (stopped 2026-11-13 13:29 under the 6-hour rule).** Each 1000-step k = 32 run took > 72 min wall at ~20–66 % of a core while the machine was in use (1.46 s/step at batch 1000 vs 0.38 s originally). None of the 21 planned runs finished. Projected total ≈ 21 runs × 40–60 CPU-min ≈ 14–21 CPU-h (≈ 5–7 h with 3 free cores on an idle machine).
 **Resume:** `sh qb4_run.sh 0`, `sh qb4_run.sh 1`, `sh qb4_run.sh 2` (resumable; the L1 order must reproduce `results/stage2_steps1000.jsonl`). Whether placement changes test AUC by more than 0.002 is therefore **not answered**.
 
-### QB5 — other kinds of benefit (N = 100, discovery folds 0–2; `qb5_robust.py`, `qb5_analyze.py`, `results/qb5.jsonl`) — **PARTIAL: 18 of 30 units** (fold 0 complete, folds 1–2 partial; remaining units wait for free RAM)
+### QB5 — other kinds of benefit (N = 100, discovery folds 0–2; `qb5_robust.py`, `qb5_analyze.py`, `results/qb5.jsonl`) — **COMPLETE: 30/30 units** (updated 2026-11-14)
 
-Best classical by inner CV (clean SD subsets, folds 0–2, r 0–9): **C2_svm_rbf**. 18 units (fold × subset). d = quantum − comparator on the perturbed AUC; Δdrop = comparator drop − quantum drop (> 0: quantum loses less).
+Best classical by inner CV (clean SD subsets, folds 0–2, r 0–9): **C2_svm_rbf**. 30 units (fold × subset). d = quantum − comparator on the perturbed AUC; Δdrop = comparator drop − quantum drop (> 0: quantum loses less).
 
 | setting | quantum | mean AUC quantum / best classical | d vs best classical [95% CI] | Δdrop vs best classical [95% CI] | d vs TW_LR / TW_LR2 / TW_SVM | candidate |
 |---|---|---|---|---|---|---|
-| testnoise_0.1 | Q1 | 0.894 / 0.897 | -0.0021 [-0.0058, +0.0030] | +0.0001 [-0.0005, +0.0023] | +0.0019 / +0.0002 / +0.0000 | no |
-| testnoise_0.1 | Q3 | 0.895 / 0.897 | -0.0015 [-0.0080, +0.0038] | -0.0008 [-0.0040, -0.0001] | +0.0024 / +0.0008 / +0.0006 | no |
-| testnoise_0.3 | Q1 | 0.884 / 0.887 | -0.0030 [-0.0071, +0.0066] | -0.0009 [-0.0036, +0.0081] | +0.0016 / +0.0007 / -0.0004 | no |
-| testnoise_0.3 | Q3 | 0.882 / 0.887 | -0.0047 [-0.0155, +0.0023] | -0.0041 [-0.0116, -0.0015] | -0.0001 / -0.0010 / -0.0021 | no |
-| testnoise_0.5 | Q1 | 0.868 / 0.873 | -0.0056 [-0.0102, +0.0104] | -0.0035 [-0.0082, +0.0124] | +0.0012 / +0.0037 / +0.0004 | no |
-| testnoise_0.5 | Q3 | 0.865 / 0.873 | -0.0085 [-0.0195, -0.0007] | -0.0078 [-0.0155, -0.0037] | -0.0017 / +0.0008 / -0.0025 | no |
-| leaddrop_mean | Q1 | 0.886 / 0.888 | -0.0024 [-0.0069, +0.0028] | -0.0003 [-0.0010, +0.0006] | +0.0017 / -0.0010 / -0.0002 | no |
-| leaddrop_mean | Q3 | 0.887 / 0.888 | -0.0009 [-0.0056, +0.0054] | -0.0002 [-0.0017, +0.0014] | +0.0032 / +0.0006 / +0.0014 | no |
-| leaddrop_worst | Q1 | 0.865 / 0.872 | -0.0067 [-0.0134, +0.0000] | -0.0046 [-0.0084, -0.0014] | -0.0012 / -0.0064 / -0.0042 | no |
-| leaddrop_worst | Q3 | 0.868 / 0.872 | -0.0036 [-0.0109, +0.0057] | -0.0029 [-0.0082, +0.0030] | +0.0020 / -0.0033 / -0.0011 | no |
-| labelnoise_0.1 | Q1 | 0.889 / 0.897 | -0.0077 [-0.0141, +0.0007] | -0.0056 [-0.0108, +0.0020] | -0.0026 / +0.0083 / -0.0054 | no |
-| labelnoise_0.1 | Q3 | 0.893 / 0.897 | -0.0046 [-0.0106, +0.0019] | -0.0039 [-0.0086, +0.0016] | +0.0005 / +0.0115 / -0.0022 | no |
-| labelnoise_0.2 | Q1 | 0.877 / 0.885 | -0.0080 [-0.0180, +0.0062] | -0.0059 [-0.0154, +0.0092] | -0.0087 / +0.0201 / -0.0119 | no |
-| labelnoise_0.2 | Q3 | 0.882 / 0.885 | -0.0026 [-0.0165, +0.0102] | -0.0020 [-0.0136, +0.0091] | -0.0033 / +0.0255 / -0.0065 | no |
-| labelnoise_0.3 | Q1 | 0.832 / 0.857 | -0.0254 [-0.0519, +0.0158] | -0.0233 [-0.0485, +0.0171] | -0.0300 / +0.0501 / -0.0325 | no |
-| labelnoise_0.3 | Q3 | 0.859 / 0.857 | +0.0013 [-0.0217, +0.0339] | +0.0020 [-0.0190, +0.0340] | -0.0032 / +0.0769 / -0.0057 | no |
-| imbalance_0.05 | Q1 | 0.800 / 0.834 | -0.0335 [-0.0755, -0.0025] | -0.0314 [-0.0742, -0.0003] | +0.0019 / +0.0446 / -0.0126 | no |
-| imbalance_0.05 | Q3 | 0.826 / 0.834 | -0.0077 [-0.0248, +0.0067] | -0.0070 [-0.0267, +0.0086] | +0.0277 / +0.0705 / +0.0133 | no |
-| imbalance_0.1 | Q1 | 0.852 / 0.853 | -0.0017 [-0.0238, +0.0231] | +0.0005 [-0.0227, +0.0247] | +0.0102 / +0.0317 / +0.0019 | no |
-| imbalance_0.1 | Q3 | 0.848 / 0.853 | -0.0057 [-0.0172, +0.0107] | -0.0050 [-0.0152, +0.0101] | +0.0062 / +0.0277 / -0.0021 | no |
-| site | Q1 | 0.886 / 0.890 | -0.0046 [-0.0148, +0.0010] | +0.0000 [-0.0093, +0.0065] | +0.0032 / -0.0013 / +0.0011 | no |
-| site | Q3 | 0.889 / 0.890 | -0.0014 [-0.0085, +0.0025] | +0.0000 [-0.0072, +0.0053] | +0.0064 / +0.0019 / +0.0043 | no |
-| date | Q1 | 0.891 / 0.891 | +0.0002 [-0.0078, +0.0042] | +0.0020 [-0.0093, +0.0072] | +0.0040 / +0.0049 / +0.0006 | no |
-| date | Q3 | 0.890 / 0.891 | -0.0005 [-0.0087, +0.0065] | -0.0011 [-0.0066, +0.0036] | +0.0033 / +0.0043 / -0.0001 | no |
-| subtype_IMI | Q1 | 0.908 / 0.906 | +0.0025 [-0.0075, +0.0101] | – | +0.0028 / +0.0237 / +0.0009 | no |
-| subtype_IMI | Q3 | 0.910 / 0.906 | +0.0037 [-0.0065, +0.0108] | – | +0.0040 / +0.0248 / +0.0021 | no |
+| testnoise_0.1 | Q1 | 0.893 / 0.895 | -0.0020 [-0.0050, +0.0008] | -0.0001 [-0.0005, +0.0005] | +0.0035 / +0.0018 / +0.0008 | no |
+| testnoise_0.1 | Q3 | 0.893 / 0.895 | -0.0014 [-0.0040, +0.0015] | -0.0005 [-0.0015, -0.0001] | +0.0041 / +0.0024 / +0.0014 | no |
+| testnoise_0.3 | Q1 | 0.883 / 0.886 | -0.0032 [-0.0067, +0.0006] | -0.0013 [-0.0030, +0.0018] | +0.0031 / +0.0029 / +0.0007 | no |
+| testnoise_0.3 | Q3 | 0.882 / 0.886 | -0.0039 [-0.0075, -0.0004] | -0.0031 [-0.0052, -0.0015] | +0.0024 / +0.0022 / -0.0000 | no |
+| testnoise_0.5 | Q1 | 0.865 / 0.872 | -0.0069 [-0.0100, -0.0023] | -0.0049 [-0.0080, -0.0003] | +0.0025 / +0.0042 / +0.0007 | no |
+| testnoise_0.5 | Q3 | 0.864 / 0.872 | -0.0079 [-0.0120, -0.0042] | -0.0070 [-0.0097, -0.0047] | +0.0014 / +0.0031 / -0.0004 | no |
+| leaddrop_mean | Q1 | 0.884 / 0.886 | -0.0026 [-0.0057, +0.0002] | -0.0006 [-0.0015, +0.0002] | +0.0033 / +0.0010 / +0.0005 | no |
+| leaddrop_mean | Q3 | 0.885 / 0.886 | -0.0012 [-0.0042, +0.0022] | -0.0003 [-0.0014, +0.0006] | +0.0047 / +0.0023 / +0.0019 | no |
+| leaddrop_worst | Q1 | 0.862 / 0.868 | -0.0064 [-0.0114, -0.0027] | -0.0045 [-0.0075, -0.0023] | +0.0019 / -0.0034 / -0.0024 | no |
+| leaddrop_worst | Q3 | 0.865 / 0.868 | -0.0036 [-0.0094, +0.0009] | -0.0027 [-0.0071, +0.0003] | +0.0047 / -0.0006 / +0.0004 | no |
+| labelnoise_0.1 | Q1 | 0.886 / 0.893 | -0.0075 [-0.0126, -0.0034] | -0.0056 [-0.0096, -0.0021] | +0.0003 / +0.0105 / -0.0041 | no |
+| labelnoise_0.1 | Q3 | 0.890 / 0.893 | -0.0031 [-0.0090, +0.0021] | -0.0022 [-0.0071, +0.0027] | +0.0046 / +0.0148 / +0.0002 | no |
+| labelnoise_0.2 | Q1 | 0.869 / 0.884 | -0.0141 [-0.0227, -0.0062] | -0.0122 [-0.0213, -0.0040] | -0.0090 / +0.0251 / -0.0132 | no |
+| labelnoise_0.2 | Q3 | 0.881 / 0.884 | -0.0026 [-0.0121, +0.0054] | -0.0017 [-0.0100, +0.0056] | +0.0026 / +0.0366 / -0.0016 | no |
+| labelnoise_0.3 | Q1 | 0.834 / 0.862 | -0.0282 [-0.0475, -0.0099] | -0.0263 [-0.0448, -0.0084] | -0.0242 / +0.0487 / -0.0203 | no |
+| labelnoise_0.3 | Q3 | 0.853 / 0.862 | -0.0094 [-0.0253, +0.0050] | -0.0085 [-0.0233, +0.0052] | -0.0053 / +0.0676 / -0.0015 | no |
+| imbalance_0.05 | Q1 | 0.798 / 0.823 | -0.0249 [-0.0536, -0.0014] | -0.0230 [-0.0515, +0.0005] | +0.0020 / +0.0502 / -0.0072 | no |
+| imbalance_0.05 | Q3 | 0.816 / 0.823 | -0.0074 [-0.0196, +0.0041] | -0.0065 [-0.0198, +0.0057] | +0.0194 / +0.0677 / +0.0102 | no |
+| imbalance_0.1 | Q1 | 0.837 / 0.847 | -0.0100 [-0.0251, +0.0033] | -0.0081 [-0.0241, +0.0054] | +0.0060 / +0.0272 / -0.0002 | no |
+| imbalance_0.1 | Q3 | 0.840 / 0.847 | -0.0073 [-0.0162, +0.0016] | -0.0065 [-0.0150, +0.0024] | +0.0086 / +0.0298 / +0.0024 | no |
+| site | Q1 | 0.882 / 0.886 | -0.0040 [-0.0120, +0.0022] | +0.0001 [-0.0063, +0.0055] | +0.0035 / -0.0010 / +0.0019 | no |
+| site | Q3 | 0.885 / 0.886 | -0.0016 [-0.0053, +0.0020] | -0.0001 [-0.0045, +0.0046] | +0.0060 / +0.0015 / +0.0043 | no |
+| date | Q1 | 0.890 / 0.891 | -0.0006 [-0.0041, +0.0032] | +0.0010 [-0.0040, +0.0059] | +0.0048 / +0.0076 / +0.0029 | no |
+| date | Q3 | 0.889 / 0.891 | -0.0019 [-0.0062, +0.0029] | -0.0019 [-0.0053, +0.0018] | +0.0035 / +0.0063 / +0.0016 | no |
+| subtype_IMI | Q1 | 0.903 / 0.893 | **+0.0103 [+0.0008, +0.0236]** | – | +0.0021 / +0.0245 / +0.0080 | **yes** |
+| subtype_IMI | Q3 | 0.902 / 0.893 | **+0.0091 [+0.0016, +0.0193]** | – | +0.0008 / +0.0233 / +0.0068 | **yes** |
 
-**Interim reading (18/30 units):** no setting yields a candidate. The quantum models are never ahead of the best classical model (SVM-RBF by inner CV) by ≥ 0.005 with a CI above 0; most differences are small and negative, and several CIs exclude 0 on the classical side (Q3 under test-time noise 0.5 SD; Q1 at 5 % MI prevalence).
-Against the dequantized twins the picture is mixed and small, except that both quantum models beat the bounded-input degree-2 LR twin under label noise and class imbalance (that twin overfits at N = 100), which is not a win over the best classical model.
-QB5 will be re-analysed when all 30 units are done; the candidate rule is applied only then.
+**Final reading (30/30 units, 2026-11-14):** 2 candidates — both in the **subtype_IMI** setting (inferior MI vs NORM, N = 100 subsets drawn from the inferior-MI pool). Q1 angle VQC: +0.0103 [+0.0008, +0.0236]; Q3 quantum-kernel SVM: +0.0091 [+0.0016, +0.0193] vs SVM-RBF (best classical by inner CV). Both pass the ≥ +0.005 and CI > 0 candidate criteria. All other 28 settings: no quantum model is a candidate.
+Against the dequantized twins: both candidates beat the bounded-input deg-2 LR twin (+0.0245 / +0.0233) and the bounded SVM twin (+0.0080 / +0.0068), but only by small margins vs the bounded LR twin (+0.0021 / +0.0008). The twin comparison is part of the QB6 confirmation protocol.
+Note: the interim table (18/30 units, fold 0 only) showed subtype_IMI at +0.0025/+0.0037 — both below the +0.005 candidate threshold and with CIs spanning 0. Folds 1 and 2 added the remaining 20 units and shifted the estimate to the final values above. The candidate status was applied only after all 30 units completed, as pre-registered.
 
-### QB6 — confirmation
+### QB6 — confirmation (protocol written 2026-11-14; NOT YET RUN)
 
-No candidate met the pre-registered criteria on discovery (QB1: none passed the gate; QB3: classical models matched the VQC; QB5 interim: none). **Confirmation was therefore not run**; folds 3–4 and the external PTB set remain unused by QB. Claim level: **no benefit found**.
+**Protocol (written and committed BEFORE any QB6 run).**
+
+Two candidates from QB5 are sent to confirmation: **(1) subtype_IMI Q1 angle VQC** (+0.0103 [+0.0008, +0.0236] vs SVM-RBF, discovery) and **(2) subtype_IMI Q3 quantum-kernel SVM** (+0.0091 [+0.0016, +0.0193] vs SVM-RBF, discovery).
+
+**QB6 confirmation protocol (fixed before running):**
+* **Data:** outer folds 3 and 4 (not used in any QB discovery step). External PTB set if inferior-MI labels are present and identifiable from the available metadata.
+* **Subsets:** N = 100 subsets from the inferior-MI pool (inferior MI vs NORM), 10 subsets per fold (r = 0–9), seed (fold, "subtype_IMI", r) — identical construction to QB5 subtype_IMI.
+* **Hyper-parameters:** reuse the configuration chosen by inner CV on the clean (non-perturbed) SD subset of the same fold and r, exactly as QB5. No re-tuning on folds 3–4.
+* **Comparators:** SVM-RBF (best classical by inner CV, same as QB5) **and** the three dequantized twins: bounded-input LR, bounded-input deg-2 LR, bounded-input SVM-RBF.
+* **Bootstrap:** paired hierarchical bootstrap exactly as sd_analyze.py (B = 5000, resample folds then subsets, percentile 95% CI). One run only; no re-runs.
+* **Holm correction:** over the 2 candidates (not over models or twins; twins are reported separately). A candidate passes only if the Holm-adjusted CI lower bound vs SVM-RBF > 0 AND point estimate ≥ +0.005 AND it beats its twin (bounded-input SVM-RBF).
+* **Wording if confirmed:** "benefit confirmed (subtype_IMI)". If not confirmed: "hypothesis for future work (subtype_IMI)". Either way, the main-analysis claim remains "no benefit found".
+* **Script to write:** `qb6_confirm.py` (not yet written). Output: `results/qb6.jsonl`, `results/qb6_table.md`.
+
+**Status: NOT RUN.** Protocol is committed; folds 3–4 have not been touched.
 
 ---
 
