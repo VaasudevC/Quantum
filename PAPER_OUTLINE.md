@@ -1,8 +1,8 @@
 # PAPER OUTLINE — Quantum feature maps for MI detection from compact ECG features: an encoding design rule and a pre-registered small-data benchmark
 
-Status: final outline (branch `smalldata`). Every claim below names the file(s) and the commit that support it. Claims marked *(pending)* are not finished and must not be written up until the cited result exists; see the incomplete list at the end.
+Status: final outline (updated 2026-11-14, branch `main`). Every claim below names the file(s) and the commit that support it. Claims marked *(pending)* are not finished and must not be written up until the cited result exists; see the incomplete list at the end.
 
-Framing: (1) compact, interpretable feature selection (extends the poster); (2) an encoding design rule — angle saturation at large scales, fixed by s = π/6, and replicated in a different architecture (the brick-wall); (3) a pre-registered small-data benchmark — quantum models are non-inferior to the best classical model at every size and superior at none; (4) hardware readiness, in simulation only.
+Framing: (1) compact, interpretable feature selection (extends the poster); (2) an encoding design rule — angle saturation at large scales, fixed by s = π/6, and replicated in a different architecture (the brick-wall); (3) a pre-registered small-data benchmark — quantum models are non-inferior to the best classical model at every size and superior at none; (4) hardware readiness in simulation, plus one real-device run on ibm_marrakesh (200 ECGs, 1000 shots).
 
 ## 1. Introduction
 * Claim: Myocardial infarction (MI) vs normal ECG classification on PTB-XL with 8–32 hand-crafted ST/T/QRS features is a realistic, small-input testbed for near-term quantum classifiers. — `README.md`, `data/st_features_plus_TR.csv.gz` (commit 86f8984).
@@ -34,7 +34,7 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * Claim: Holm-adjusted wins exist only against weaker classical models — kNN and XGBoost at most sizes, plain LR at N = 25 and N = 500 (reduced sample); never against SVM-RBF, GP or random forest. — `SMALLDATA.md` Phase 2 section, `results/sd_tables_k8_main.md` (a82370b).
 * Claim: logistic regression (9 parameters) matches the angle VQC (81 parameters) on test AUC and on the train–test gap at N = 100. — `SMALLDATA.md` sensitivity section (2af3bff).
 * Claim: the brick-wall QNN was significantly worse than LR, SVM-RBF, GP, RF and XGBoost at N = 100; it could not be run at other sizes (torch blocked by Windows Application Control). — `SMALLDATA.md` (6eef855, 56ea635, 4c4445c).
-* Claim *(pending; incomplete if not finished)*: k = 4 results. — `results/sd_analysis_k4_main.json`.
+* Claim (secondary endpoint, complete 2026-11-14): k = 4 gives the same result: non-inferior at every N, superior at none; best classical is the GP classifier throughout. — `SMALLDATA.md` k = 4 section, `results/sd_analysis_k4_main.json`.
 * Figures 2 and Table 3: `results/paper/fig2_learning_curves.png`, `results/paper/table3_smalldata.md` (75c799e).
 
 ## 7. Kernel geometry (exploratory)
@@ -44,13 +44,13 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * Claim: a training-free screen of 1,200 feature-map settings (product, re-uploading, IQP/ZZ, clinically paired ZZ, Heisenberg evolution, brick-wall encoding; 5 scales) found no map with both expressivity beyond a tuned RBF kernel (g ≥ √N/2) and adequate label alignment; g crosses √N/2 only where alignment falls below 90 % of RBF (π/3–π/2). This extends the scale rule from "which scale" to "which feature map". — `QB.md` QB1, `results/qb1_screen.jsonl`, `results/paper/table4_feature_maps.md`, `results/paper/fig4_g_all_maps.png` (78984b0, 4073872, bedee3a).
 * Claim: the VQC's win over LR is explained by the encoding plus mild non-linearity: classical quadratic models with no more parameters on the same bounded inputs (rank-2 factorization machine 97 parameters, sparse degree-2 LR ≤ 71) match the trained-scale VQC (0.956) and exceed the π/6 VQC (0.952) on discovery folds; degree-2 surrogates explain 97–99 % of the VQC output. — `QB.md` QB3, `results/qb3.jsonl` (d76712b).
 * Exploratory (not pre-registered): QB3 extended to folds 3–4 (descriptive only, logged 2026-11-14 before running); finding is consistent across all 5 folds — sparse deg-2 LR (≤65 non-zero params) matches or exceeds the VQC in every fold; degree-2 surrogate R² ≥ 0.985 on fold 0. See `results/qb3_5fold_table.md`, `results/figs/fig5_qb3_coef_heatmap.png` (8c3e6d2+).
-* Claim: no robustness, shift, imbalance or subtype setting gave the quantum models a ≥ 0.005 AUC benefit over the best classical model at N = 100 (interim, 18 of 30 units). — `QB.md` QB5 (de0ffb4).
-* Claim level: **no benefit found**; confirmation was not run because no candidate qualified. — `QB.md` headline.
+* Claim: no robustness, shift, imbalance or subtype setting gave the quantum models a ≥ 0.005 AUC benefit over the best classical model at N = 100 (interim, 18 of 30 units). — `QB.md` QB5 (de0ffb4). Update: QB5 finished (30 of 30 units) and produced two inferior-MI candidates (Q1 +0.0103, Q3 +0.0091 vs SVM-RBF); the QB6 confirmation run did not confirm either (Q1 CI spans 0; Q3 lower bound −0.0003), so both stay "hypothesis for future work".
+* Claim level: **no benefit found**. — `QB.md` headline.
 
-## 8. Hardware readiness (simulation only)
+## 8. Hardware readiness (simulation) and real-device run
 * Claim: the angle VQC (π/6, k = 32) keeps its AUC under 1000 shots (≤ 0.002 loss) and the FakeFez noise model (0.961 → 0.960). — `HARDWARE.md` (c553b25, 3f9ec7f).
 * Claim: the n = 8 brick-wall is robust to shots and FakeFez noise (0.915 → 0.911), whereas the n = 12 model needs ~10⁶ shots because its head weights reach ~400. — `BRICKWALL.md` §P6, `results/bw/p6_noise_n8.json`, `results/bw/p6_shots.json` (8c10076).
-* Claim: a test-only IBM script is ready and dry-run on FakeFez; no real-device run has been made. — `hw_run_ibm_brickwall.py`, `MORNING_SUMMARY.md` (8c10076, 1ac69dd).
+* Claim: on a real IBM Heron r2 device (`ibm_marrakesh`, 2026-11-14, 200 fold-0 test ECGs, 1000 shots, no readout mitigation) the angle VQC (k = 32, π/6) scored AUC 0.956 [0.924, 0.982] (noiseless 0.967; paired Δ −0.011 [−0.024, −0.001]) and the n = 8 brick-wall scored 0.949 [0.917, 0.974] (noiseless 0.925; paired Δ +0.023 [+0.003, +0.046], most likely a noise-induced shift in the decision function, not an improvement). One run, one fold, ±0.01 sampling error; thresholds in the calibration table were tuned on the test ECGs. — `HARDWARE.md` H6, `results/hw/ibm_bw_hw/` (e88ff0f, e12d996, 75e01d3).
 
 ## 9. Discussion and limitations
 * No quantum-advantage claim: at full data XGBoost leads; in the small-data benchmark the quantum models are non-inferior to the best classical model at every size and superior at none.
@@ -58,7 +58,7 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * All models are classically simulable: the angle kernel is a product of cos² terms, and the brick-wall two-body readout is classically tractable (paper Prop. 8, Sec. VI.B–C); the kernel-geometry diagnostic leaves no room for a prediction advantage with the π/6 feature map.
 * The brick-wall is our reimplementation; `quantum_utils.py` conventions are unknown (questions in `BRICKWALL.md` §P7), and it was run in the small-data benchmark only at N = 100.
 * TabPFN, a strong small-data baseline in the pre-registration, was not run (licence login required).
-* No real-device run yet; all hardware statements are simulations (fake backends, noise models).
+* The real-device evidence is a single run on one fold (200 ECGs) without error mitigation; other statements about hardware are simulations (fake backends, noise models). Real hardware showed about 2× more logit contraction than the FakeFez model predicted.
 * Single dataset and hand-crafted features; 5 outer folds carry the test-set variation; N = 500 is a reduced sample (10 of 40 subsets).
 * By construction the small-data study could not have shown an advantage: at k ≤ 8 the angle VQC (Q1) loads each feature once (no re-uploading), and the quantum-kernel SVM (Q3) uses a product kernel that a classical computer evaluates exactly. This motivates the QB study (`QB.md`), which screens entangling and re-uploading feature maps.
 * The 0.02 non-inferiority margin is wide compared with the spread of the good models: LR, SVM-RBF, GP, random forest, Q1 and Q3 lie within about 0.005–0.006 AUC of each other at N = 100–500 (0.007 at N = 50; 0.014 at N = 25, where LR is lowest), so "non-inferior" is a weak statement; an exploratory ±0.005 equivalence check is reported in `SMALLDATA.md`.
@@ -79,10 +79,9 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 4. Geometric difference vs √N — `results/paper/fig3_geometric_difference.png`.
 5. Shot/noise robustness — `results/figs/hw_shots.png`, `results/figs/hw_noisy.png`.
 
-## Incomplete (as of this outline)
-* QB4 training (feature placement), QB5 folds 1–2 (12 of 30 units) and the QB5 full-data part.
-* k = 4 secondary endpoint of the small-data study (running when RAM allows).
+## Incomplete (updated 2026-11-14)
+* QB4 training (feature placement) and the QB5 full-data part (both stopped on purpose; QB5 units are 30 of 30 complete).
 * Brick-wall (Q4) at N = 25, 50, 200, 500 — torch blocked by Windows Application Control.
 * EXTRA 6 (shot-robust n = 12 / n = 16 heads) and the n = 16 external run — same reason.
 * C7 TabPFN — licence login required.
-* Real-device (IBM) test run — not done (user's run).
+* Real-device (IBM): done once (H6). Open: repeat on other folds, with readout-error mitigation and held-out thresholds; matched FakeMarrakesh simulation on the same 200 ECGs.

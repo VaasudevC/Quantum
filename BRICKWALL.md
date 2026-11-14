@@ -377,7 +377,7 @@ Statement for the record: this is an **empirical** statement on this task and th
 Classical simulability (paper Prop. 8, Sec. VI.B–C): the paper states that few-body (here two-body, nearest-neighbour) expectation values of this encoding are additively tractable classically at every particle number — our own simulator exploits exactly this (sector dimension ≤ 924) — so a performance
 difference on this readout could not be attributed to quantum hardness; the hardness claims in the paper concern *sampling* (the sample-level head, EXTRA 2).
 
-## P6 — hardware preparation (test only; nothing was trained on hardware, and no real-device run was made)
+## P6 — hardware preparation (test only; nothing was trained on hardware. At the time of writing no real-device run had been made; the run was done on 2026-11-14, see the UPDATE at the end of this file and HARDWARE.md H6)
 
 **Circuits** (`hw_bw.py`): X/H/CX magic preparation → ±1 sign layer + n(n−1)/2 nearest-neighbour RBS gates that compile the spreading matrix exactly (QR/Givens decomposition) → data RZ(−φ_j) → trainable columns
 (RZ(−w), RBS = `XXPlusYYGate(φ, π/2)` = SingleExcitation) → measurement of all qubits. Statevector features of the Qiskit circuit equal the simulator's to ≤ 4.4e-15 at n=8 (k = 2, 4) and n=12 (k = 2, 4, 6).
@@ -481,7 +481,7 @@ Shot sweep from the Aer statevector simulation on the same 300 (n=8) ECGs: 100 s
 (ii) **n=12 is not hardware-usable as trained:** its head weights reach ±414 because the output features vary by only ~0.009 across ECGs, so shot noise is amplified ~400× — AUC is 0.53 at 1000 shots, 0.72 at 64k, 0.94 at 10⁶ shots. The same pathology (one fold with |h| = 14 339, AUC 0.49 at 1000 shots, exact 0.919) appeared in one of the five n=8 CV models, so it is a property of unregularised heads on low-contrast quantum features rather than of n=12 itself.
 A regularised / shot-aware head (L2 on the head, noise injection) would be the natural fix and was not tried in the main phases. (iii) Success-probability estimates (0.45–0.59 on Heron r2 for the final circuits) are lower than for the angle VQC (0.705, `HARDWARE.md`) because of the spreading network.
 
-**IBM test run** (`hw_run_ibm_brickwall.py`, yours to run; see `MORNING_SUMMARY.md`): loads the stored trained parameters (fold-0 stage-C models, angle VQC k=32 π/6), same stratified 100–200 fold-0 test ECGs for all models, one `SamplerV2` job per model inside one `Batch`,
+**IBM test run** (`hw_run_ibm_brickwall.py`, run on ibm_marrakesh on 2026-11-14, results in HARDWARE.md H6): loads the stored trained parameters (fold-0 stage-C models, angle VQC k=32 π/6), same stratified 100–200 fold-0 test ECGs for all models, one `SamplerV2` job per model inside one `Batch`,
 job ids + raw counts saved *before* analysis, particle-number post-selection and AUC in `--analyze`, estimated QPU time printed and the script **refuses above 8 minutes**. Dry-run end to end in local mode on FakeFez (bw8: 136 CZ, depth 256; angle VQC: 80 CZ). Token only from `QISKIT_IBM_TOKEN`.
 Default models are `bw8,vqc32`; `bw12` is available but the script warns that it needs ~10⁶ shots.
 
