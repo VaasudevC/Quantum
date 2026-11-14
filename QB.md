@@ -10,13 +10,13 @@ Every setting tried, including failures, is recorded in `results/qb_registry.csv
 * **Passed the gate:** none of the feature maps (QB1). Expressivity beyond an RBF kernel (g ≥ √N/2) appears only at s = π/2, where label alignment collapses; QB2 was skipped as pre-registered.
 * **Non-linearity hypothesis (QB3): supported.** At equal or fewer parameters, classical quadratic models (rank-2 factorization machine, sparse degree-2 LR) on the same bounded inputs match the trained-scale VQC (0.9562 / 0.9561 vs 0.9561) and exceed the π/6 VQC; the win over LR is explained by the encoding plus mild non-linearity, not by the circuit.
 * **Other kinds of benefit (QB5, 30/30 units complete):** 2 candidates found — both in the inferior-MI subtype (subtype_IMI) setting: Q1 angle VQC +0.0103 [+0.0008, +0.0236] and Q3 quantum-kernel SVM +0.0091 [+0.0016, +0.0193] vs SVM-RBF. All other 28 settings: no quantum model ≥ +0.005 above the best classical model with CI > 0.
-* **Confirmation (QB6): protocol written (see below); NOT YET RUN.** Two candidates are sent to QB6; folds 3–4 were not used in discovery.
+* **Confirmation (QB6): RUN (2026-11-14). NO BENEFIT CONFIRMED.** Two candidates sent; neither met the full Holm-adjusted criterion (Q1: CI spans 0 and point < +0.005; Q3: CI barely spans 0, lo = −0.0003). Both classified as "hypothesis for future work".
 * **Incomplete:** QB4 training (stopped under the 6-hour rule); QB5 full-data part (logged in advance as incomplete).
 * Wording: the main result (no benefit on the standard analysis) is **"no benefit found"**; the two subtype_IMI candidates are **"hypothesis for future work"** unless QB6 confirms. The word "advantage" is not used.
 
 ## Working hypothesis being tested
 
-The quantum models beat plain logistic regression (full data k=32: VQC π/6 0.951 vs LR 0.945, 5/5 folds; brick-wall n=12 +0.005; small data Q3 vs LR +0.010 at N=25 and +0.0045 at N=500),
+The quantum models beat plain logistic regression (full data k=32: VQC π/6 0.951 vs LR 0.945, mean +0.0060 [+0.0043, +0.0076] pooled over 3 seeds, 13/15 runs positive; brick-wall n=12 +0.005; small data Q3 vs LR +0.010 at N=25 and +0.0045 at N=500),
 but degree-2 LR (0.958) beats every VQC and a degree-2 function of the angles explains 98.6% of the VQC output. **Hypothesis: the win over LR is "the model is mildly non-linear", not "the model is quantum".**
 QB tests this and looks for a setting that breaks it. The π/6 product kernel (effective dimension ≈ 1.8, g(RBF‖Q) ≪ √N) closes the search for that map only; entangling and re-uploading maps have not been screened.
 
@@ -171,7 +171,7 @@ Best classical by inner CV (clean SD subsets, folds 0–2, r 0–9): **C2_svm_rb
 Against the dequantized twins: both candidates beat the bounded-input deg-2 LR twin (+0.0245 / +0.0233) and the bounded SVM twin (+0.0080 / +0.0068), but only by small margins vs the bounded LR twin (+0.0021 / +0.0008). The twin comparison is part of the QB6 confirmation protocol.
 Note: the interim table (18/30 units, fold 0 only) showed subtype_IMI at +0.0025/+0.0037 — both below the +0.005 candidate threshold and with CIs spanning 0. Folds 1 and 2 added the remaining 20 units and shifted the estimate to the final values above. The candidate status was applied only after all 30 units completed, as pre-registered.
 
-### QB6 — confirmation (protocol written 2026-11-14; NOT YET RUN)
+### QB6 — confirmation (protocol written 2026-11-14; RUN 2026-11-14)
 
 **Protocol (written and committed BEFORE any QB6 run).**
 
@@ -188,7 +188,20 @@ Two candidates from QB5 are sent to confirmation: **(1) subtype_IMI Q1 angle VQC
 * **Script:** `qb6_confirm.py`. Output: `results/qb6.jsonl`, `results/qb6_table.md`, `results/qb6_analysis.json`.
   Run: `..\.venv\Scripts\python.exe qb6_confirm.py 3 4`
 
-**Status: NOT RUN.** Protocol is committed; folds 3–4 have not been touched.
+**Status: RUN (2026-11-14). Results: NO BENEFIT CONFIRMED.**
+
+#### QB6 Results (20 units, folds 3–4, r = 0–9)
+
+| candidate | mean d [95% CI] | CI lo > 0 | point >= +0.005 | Holm pass | claim |
+|---|---|---|---|---|---|
+| subtype_IMI Q1 angle VQC | +0.0030 [−0.0049, +0.0108] | No | No | No | hypothesis for future work |
+| subtype_IMI Q3 quantum-kernel SVM | +0.0055 [−0.0003, +0.0119] | No | Yes | No | hypothesis for future work |
+
+vs dequantized twins (Q3): vs twin LR +0.0023 [−0.0007, +0.0053]; vs twin deg-2 LR +0.0318 [+0.0196, +0.0478]; vs twin SVM +0.0087 [+0.0033, +0.0145].
+
+Both Q1 and Q3 point estimates are positive but neither meets the full claim (CI lower bound > 0 AND point ≥ +0.005 after Holm adjustment). Q3 barely misses: CI lower bound = −0.0003 (needs > 0); Q1 point estimate = +0.0030 (below +0.005 threshold). The discovery finding (QB5, folds 0–2) did not replicate on confirmation folds 3–4.
+
+**Overall claim (final):** the subtype_IMI finding is classified as **"hypothesis for future work"**. The main-analysis claim (**no benefit found on the standard analysis**) is unchanged. Files: `results/qb6.jsonl`, `results/qb6_table.md`, `results/qb6_analysis.json`.
 
 ---
 
