@@ -1,12 +1,6 @@
-1. PUSH NOT DONE: `git push -u origin smalldata` needs your approval; all work is committed locally (branch smalldata).
-2. QB: NO BENEFIT FOUND on the main analysis; QB5 final (30/30 units) found 2 discovery candidates: subtype_IMI Q1 +0.0103[+0.0008,+0.0236] and Q3 +0.0091[+0.0016,+0.0193] vs SVM-RBF. QB6 confirmation protocol written; NOT YET RUN (see QB.md).
-3. QB3 exploratory: degree-2 surrogate R²=0.9865 (fold 0 VQC); sparse L1 deg-2 LR (65 nonzero) ≥ VQC_pi6 in all 5 folds (folds 3-4 exploratory, logged before running); Fig5 → results/figs/fig5_qb3_coef_heatmap.png.
-4. QB5: COMPLETE (30/30 units). All settings except subtype_IMI: no quantum model ≥ +0.005 over best classical. See QB.md for full final table.
-5. Phase 4 bootstrap (exploratory, DONE): VQC_pi6 vs LR=+0.0060[+0.0042,+0.0078]; vs LR2=-0.0022[-0.0046,+0.0002] (CI spans 0); vs XGB=-0.0112[-0.0130,-0.0095]. Note: uses refitted (not tuned) LR2/XGB — Task 5 redo pending. Full table: results/p4_bootstrap_table.md.
-6. k=4 SD queue: COMPLETE (850/850). sd_analyze.py done: all 5 sizes non-inferior, no superiority; best quantum=Q1/Q3, best classical=GP. Windows re-run verified identical.
-7. Phase 2 done: README, docs/REPRODUCE.md, requirements-lock.txt, HARDWARE.md (IBM command). IBM dry run INCOMPLETE: Qiskit DLL blocked by WDAC.
-8. PENDING tasks (see ordered list): (a) Task 2: stage3_selectors.jsonl fix + extra1_vqc seed=2 runs; (b) Task 4: run QB6; (c) Task 5: redo Phase 4 with tuned models; (d) Task 6: pooled CI for 5/5-fold claim; (e) Task 7: update SMALLDATA.md k=4 headline, make_paper.py, rewrite this file.
-9. QB4 training resume (optional, ~5-7 h idle): `sh qb4_run.sh 0`, `sh qb4_run.sh 1`, `sh qb4_run.sh 2`.
-10. INCOMPLETE (blocked): brick-wall at N!=100; torch blocked by WDAC. C7 TabPFN: licence login. IBM run: yours (command in HARDWARE.md).
-11. stage3_selectors.jsonl: MISTAKE — 5 seed=3 rows added overnight; extracted to results/extra_seed3_k32.jsonl and original restored.
-12. Please delete C:\tvenv (test venv; removal blocked by safety check).
+1. PUSH NEEDED: `git push -u origin smalldata` awaits your approval (all work committed locally on branch smalldata).
+2. QB CLOSED: no benefit found. Main analysis: VQC+0.006 over LR (13/15 runs, pooled mean +0.0060[+0.0043,+0.0076]); loses to tuned LR2 by -0.0073 and XGB by -0.0136. QB5 found 2 subtype_IMI candidates; QB6 did NOT confirm them (Q1 +0.0030[-0.0049,+0.0108], Q3 +0.0055[-0.0003,+0.0119]). Classified "hypothesis for future work".
+3. k=4 SD (secondary endpoint, final): 850/850 complete. All 5 sizes non-inferior to classical; no superiority. Best quantum=Q1/Q3, best classical=C3 GP. SMALLDATA.md updated; paper rebuilt.
+4. Phase 4 redo (done): pre-tuned LR2=0.9583, XGB=0.9647 loaded from p1_classical.jsonl. VQC_pi6 loses to LR2 (-0.0073) and XGB (-0.0136). Old "VQC≈LR2" claim removed.
+5. PENDING — Task 2 commit blocked: extra1_vqc.jsonl missing 5 seed=2 runs (k=8 folds 3-4, k=32 folds 2-4). Re-run: `..\.venv\Scripts\python.exe scale_cv.py --scales pi/6 --ks 8,32 --seeds 2 --steps 1000 --batch 1000 --lr 0.01 --out results/bw/extra1_vqc.jsonl`, then commit extra_seed3_k32.jsonl, results/stage3_selectors.jsonl, extra1_vqc.jsonl, OVERNIGHT_LOG.md.
+6. INCOMPLETE (blocked): QB4 training (~5-7 h, optional); brick-wall at N≠100; torch/TabPFN/IBM blocked by WDAC. Delete C:\tvenv when convenient.

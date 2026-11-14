@@ -1,6 +1,6 @@
 # Table 1 — Encoding study: angle scale s in angle = s·tanh(z)
 
-Built from commit 78984b0 by make_paper.py.
+Built from commit 5ff9dda by make_paper.py.
 
 **(a) Angle VQC (8 qubits × 4 layers, re-uploading), 5-fold test AUC (mean ± SD), 1000 steps** — `results/stage2_steps1000.jsonl`
 

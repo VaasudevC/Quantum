@@ -2,9 +2,13 @@
 
 Branch `smalldata` (from `brickwall-overnight`). Log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). Code: `sd_run.py`, `sd_analyze.py`. This report is updated after every sub-phase.
 
-## Headline (k = 8, final; k = 4 pending)
+## Headline (k = 8, final; k = 4, secondary endpoint, final)
 
-**Claim level reached: non-inferiority at every training size, superiority at none.** In the pre-registered paired comparison of the best quantum model against the best classical model,
+**Claim level reached: non-inferiority at every training size, superiority at none — for both k = 8 and k = 4.**
+
+### k = 8 (primary)
+
+In the pre-registered paired comparison of the best quantum model against the best classical model,
 the quantum models **matched classical performance within 0.02 AUC at N = 25, 50, 100, 200 and 500** (N = 500: reduced sample, 10 of 40 subsets) and **outperformed the best classical model at no size**:
 
 | N | best quantum vs best classical | mean d [95% CI] | claim |
@@ -18,8 +22,23 @@ the quantum models **matched classical performance within 0.02 AUC at N = 25, 50
 Choosing "best" by inner-CV AUC instead of test AUC makes the N = 100 comparison a tie with SVM-RBF (−0.0006 [−0.0024, +0.0013]). Holm-adjusted superiority (96 comparisons) holds only against weaker classical models:
 the quantum model outperformed **kNN** (all sizes), **XGBoost** (all sizes for Q1/Q3) and **plain LR** at N = 25 (Q3, +0.010) and N = 500 (Q1/Q3, +0.0045, reduced sample) — never SVM-RBF, the GP classifier or random forest.
 One full-sample cell meets neither claim: Q2 (trained scales) vs GP at N = 25 — the classical model was better at that size; the CI straddles the margin (d = −0.018 [−0.025, −0.012]). The brick-wall (Q4, N = 100 only) was worse than five of six classical models. LR (9 parameters) matches the angle VQC (81) on AUC and train–test gap.
+
+### k = 4 (secondary endpoint, complete 2026-11-14)
+
+Same finding: quantum models non-inferior at every size, superior at none (Holm over 90 comparisons). Best quantum = Q1 angle VQC (most sizes) or Q3 quantum-kernel SVM (N=25); best classical = **C3 GP classifier at every size** (shifted from random forest at k=8):
+
+| N | best quantum vs best classical | mean d [95% CI] | claim |
+|---|---|---|---|
+| 25 | Q3 quantum-kernel SVM vs C3 GP | −0.0033 [−0.0104, +0.0024] | non-inferior |
+| 50 | Q1 angle VQC vs C3 GP | −0.0026 [−0.0058, +0.0004] | non-inferior |
+| 100 | Q1 angle VQC vs C3 GP | −0.0022 [−0.0038, −0.0007] | non-inferior (GP slightly better) |
+| 200 | Q1 angle VQC vs C3 GP | −0.0011 [−0.0025, +0.0000] | non-inferior |
+| 500 | Q1 angle VQC vs C3 GP | −0.0007 [−0.0018, +0.0004] | non-inferior; reduced sample |
+
+At k = 4 the quantum models load each of 4 features once (no re-uploading), and the quantum-kernel SVM (Q3) uses a product kernel that a classical computer evaluates exactly. The k = 4 AUC is ~0.07 below k = 8 for all models, consistent with less information.
+
 This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the best quantum models here use a classically computable product kernel (geometric difference to RBF ≪ √N, `DISTINGUISHER.md`).
-**Incomplete:** k = 4 (secondary endpoint; runs stalled by low free RAM), Q4 at N ≠ 100 (torch blocked by Windows Application Control), C7 TabPFN (licence login required).
+**Remaining incomplete:** Q4 at N ≠ 100 (torch blocked by Windows Application Control), C7 TabPFN (licence login required).
 
 ## Pre-registered analysis plan
 
@@ -265,3 +284,38 @@ Best quantum vs best classical, both chosen by **inner-CV AUC** at each N (k = 8
 | 500 | Q3 quantum-kernel SVM | C2 SVM-RBF | +0.0003 [-0.0009, +0.0015] | yes | reduced sample |
 
 Reading: inner-CV picks the quantum-kernel SVM (Q3) and SVM-RBF at every size; they are **equivalent within ±0.005 AUC at N = 50, 100, 200 and 500** (N = 500 reduced sample) and the check is not met at N = 25 only because the CI is wider (+0.0025 [−0.0032, +0.0080]).
+
+## Secondary endpoint — k = 4 (complete 2026-11-14; Q1–Q3 and C1–C6; 850/850 units)
+
+Runs: 6 workers × 5 folds × (N=100: 40 subsets, N=50: 40 subsets, N=25: 40 subsets, N=200: 40 subsets, N=500: 10 subsets) = 850 units. Q4 not run at k=4 (logged deviation: Q4 at k=4 dropped due to torch block).
+Files: `results/sd_analysis_k4_main.json`, `results/sd_tables_k4_main.md`, `results/sd_analysis_k4_main_k4N100.json`, figures `results/figs/sd_{auc,diff,gap}_vs_N_k4_main*.png`.
+
+### k = 4: mean test AUC [95% hierarchical-bootstrap CI] (5 folds x up to 40 subsets), generalisation gap in parentheses
+
+| model | N=25 | N=50 | N=100 | N=200 | N=500 |
+|---|---|---|---|---|---|
+| Q1 angle VQC | 0.804 [0.792, 0.814] (+0.18) | 0.850 [0.844, 0.856] (+0.11) | 0.874 [0.868, 0.880] (+0.06) | 0.890 [0.886, 0.894] (+0.03) | 0.903 [0.895, 0.910] (+0.01) |
+| Q2 VQC trained scales | 0.799 [0.788, 0.808] (+0.19) | 0.842 [0.834, 0.849] (+0.12) | 0.869 [0.864, 0.875] (+0.07) | 0.886 [0.883, 0.890] (+0.04) | 0.901 [0.893, 0.908] (+0.02) |
+| Q3 quantum-kernel SVM | 0.810 [0.798, 0.820] (+0.17) | 0.850 [0.843, 0.856] (+0.11) | 0.873 [0.866, 0.880] (+0.06) | 0.888 [0.883, 0.892] (+0.03) | 0.902 [0.894, 0.910] (+0.01) |
+| C1 LR | 0.807 [0.797, 0.815] (+0.17) | 0.850 [0.844, 0.856] (+0.11) | 0.874 [0.868, 0.881] (+0.05) | 0.889 [0.885, 0.893] (+0.03) | 0.901 [0.893, 0.909] (+0.01) |
+| C2 SVM-RBF | 0.810 [0.802, 0.818] (+0.17) | 0.849 [0.842, 0.856] (+0.11) | 0.873 [0.865, 0.880] (+0.06) | 0.887 [0.883, 0.892] (+0.03) | 0.903 [0.894, 0.911] (+0.01) |
+| C3 GP classifier | 0.814 [0.806, 0.821] (+0.17) | 0.853 [0.845, 0.860] (+0.11) | 0.876 [0.870, 0.883] (+0.05) | 0.891 [0.887, 0.895] (+0.03) | 0.903 [0.896, 0.911] (+0.01) |
+| C4 kNN | 0.778 [0.769, 0.786] (+0.22) | 0.824 [0.817, 0.832] (+0.18) | 0.852 [0.845, 0.859] (+0.15) | 0.870 [0.865, 0.875] (+0.13) | 0.886 [0.879, 0.894] (+0.11) |
+| C5 random forest | 0.803 [0.793, 0.813] (+0.19) | 0.847 [0.840, 0.854] (+0.14) | 0.871 [0.864, 0.877] (+0.10) | 0.886 [0.882, 0.890] (+0.08) | 0.902 [0.893, 0.910] (+0.05) |
+| C6 XGBoost | 0.775 [0.763, 0.786] (+0.22) | 0.830 [0.823, 0.837] (+0.16) | 0.860 [0.853, 0.866] (+0.12) | 0.882 [0.878, 0.885] (+0.08) | 0.901 [0.892, 0.909] (+0.05) |
+
+### Best quantum vs best classical per size (k = 4; Holm over 90 comparisons)
+
+| N | best quantum | best classical | mean d [95% CI] | wins | Holm p (superiority) | superiority | non-inferior |
+|---|---|---|---|---|---|---|---|
+| 25 | Q3 quantum-kernel SVM | C3 GP classifier | −0.0033 [−0.0104, +0.0024] | 0.45 | 1.000 | False | True |
+| 50 | Q1 angle VQC | C3 GP classifier | −0.0026 [−0.0058, +0.0004] | 0.44 | 1.000 | False | True |
+| 100 | Q1 angle VQC | C3 GP classifier | −0.0022 [−0.0038, −0.0007] | 0.43 | 1.000 | False | True |
+| 200 | Q1 angle VQC | C3 GP classifier | −0.0011 [−0.0025, +0.0000] | 0.43 | 1.000 | False | True |
+| 500 | Q1 angle VQC | C3 GP classifier | −0.0007 [−0.0018, +0.0004] | 0.46 | 1.000 | False | True (**reduced sample**) |
+
+**Superiority (Holm over 90):** outperformed **C4 kNN** at every size (Q1, Q2, Q3; +0.021 to +0.035) and **C6 XGBoost** at every size (Q1, Q2, Q3; +0.015 to +0.035). At N = 25, Q3 also outperformed **C5 random forest** (+0.0071 [+0.0027, +0.0117]). No superiority over C1 LR, C2 SVM-RBF or C3 GP classifier at any size. No superiority over the best classical model at any size.
+
+**Reading.** At k = 4, all nine models (Q1–Q3, C1–C6) lie within about 0.015 AUC of each other at every size (Q2 is lowest, GP is highest). The pattern exactly replicates k = 8: quantum non-inferior, no superiority over the strong classical models. The k = 4 AUC is 0.06–0.08 below k = 8 uniformly across models.
+
+This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size.

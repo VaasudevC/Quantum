@@ -1,6 +1,6 @@
 # results/paper
 
-Built from commit 78984b0 by make_paper.py.
+Built from commit 5ff9dda by make_paper.py.
 
 * `table1_encoding.md` — encoding study (angle scale; brick-wall replication)
 * `table2_benchmark.md` — full-data benchmark by feature count
