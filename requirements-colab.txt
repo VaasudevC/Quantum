@@ -1,0 +1,7 @@
+# Qiskit stack — versions from C:/bwvenv (tested on Windows; functionally identical on Colab Linux)
+qiskit==2.6.2
+qiskit-aer==0.18.2          # needed for --local FakeFez dry run
+qiskit-ibm-runtime==0.52.0
+# Qiskit pulls rustworkx, sympy, stevedore, dill automatically; no need to pin them here.
+# torch (>=2.0) and numpy are already pre-installed on Colab; do NOT reinstall torch here
+# (the Colab GPU build conflicts with any separately installed torch wheel).

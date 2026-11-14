@@ -18,6 +18,9 @@ from pathlib import Path
 import numpy as np, torch
 import bw_torch as T, hw_bw as H, qiskit_vqc as Q, Vqc_fast8 as V
 torch.set_num_threads(1)
+# Cache directory: set BW_CACHE env var to override (e.g. "C:/bwcache" on the lab PC).
+# Default "cache" matches the layout of hw_bundle.zip.
+_CACHE = Path(os.environ.get("BW_CACHE", "cache"))
 PER_SHOT_S = 0.4e-3            # conservative QPU seconds per shot (rep delay ~250 us + circuit + readout, with margin)
 ALL = ["bw8", "bw12", "vqc32"]
 
@@ -34,12 +37,12 @@ def stratified(y, n, seed=0):
 
 def model_inputs(name, n_ecg):
     """returns (template circuit, {param name: values array (n_ecg,)}, info dict, labels, positions in the fold-0 test set)"""
-    hw = np.load("C:/bwcache/hw_inputs.npz"); y_te = hw["y_te"]; pos = stratified(y_te, n_ecg)
+    hw = np.load(_CACHE / "hw_inputs.npz"); y_te = hw["y_te"]; pos = stratified(y_te, n_ecg)
     if name.startswith("bw"):
         n = int(name[2:])
         rows = [json.loads(l) for l in open("results/bw/p3_stageC.jsonl")]
         r = [r for r in rows if r["n"] == n and r["fold"] == 0 and r.get("rank") == 0][0]
-        d = np.load("C:/bwcache/l1_f0.npz"); Z = d["Z"].astype(np.float64)[:, :n]; te = d["te"]
+        d = np.load(_CACHE / "l1_f0.npz"); Z = d["Z"].astype(np.float64)[:, :n]; te = d["te"]
         assert (te == hw["te"]).all()
         qc, th, wv = H.build(n, r["columns"], r["k"]); w = np.asarray(r["params"]["w"]).ravel()
         theta = -r["scale"] * np.tanh(Z[te][pos])
@@ -169,7 +172,9 @@ if __name__ == "__main__":
     for f in ("--local", "--submit", "--retrieve", "--analyze"):
         g.add_argument(f, action="store_true")
     ap.add_argument("--yes", action="store_true"); ap.add_argument("--n", type=int, default=100); ap.add_argument("--shots", type=int, default=1000)
-    ap.add_argument("--models", default="bw8,vqc32")   # bw12 needs ~1e6 shots (p6_shots.json): not sensible on the free 10 QPU minutes; ap.add_argument("--max-minutes", type=float, default=8.0); ap.add_argument("--tag", default=None)
+    ap.add_argument("--models", default="bw8,vqc32")  # bw12 needs ~1e6 shots (p6_shots.json): not sensible on the free 10 QPU minutes
+    ap.add_argument("--max-minutes", type=float, default=8.0)
+    ap.add_argument("--tag", default=None)
     a = ap.parse_args(); models = a.models.split(",")
     if a.local:
         run(True, True, a.n, a.shots, models, a.max_minutes, a.tag or "local"); analyze(a.tag or "local")
