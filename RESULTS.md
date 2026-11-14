@@ -10,7 +10,7 @@ The 8-qubit re-uploading VQC encodes each feature as an angle `s·tanh(z)`. At t
 are pushed to ±pi, and the classifier collapses as more features are re-uploaded (k=32: test AUC 0.79). **Shrinking the scale to
 s = pi/6 removes the collapse.** AUC now **rises** with the number of re-uploaded features: **0.928 (k=8) → 0.939 (k=16) → 0.951 (k=32)**.
 k=32 beats k=8 in 5/5 folds, and pi/6 beats pi in 5/5 folds at every k (+0.16 at k=32). At pi/6 the VQC is **ahead of logistic regression on the same
-features by +0.006–0.007 at every k** (k=32: 0.951 vs 0.945, 5/5 folds), and 2000 steps give 0.953. A shuffle control shows the
+features by +0.006–0.007 at every k** (k=32: 0.951 vs 0.945; pooled over 3 seeds: mean +0.0060 [+0.0043, +0.0076], 13/15 runs positive: seed=0 5/5, seed=1 4/5, seed=2 4/5), and 2000 steps give 0.953. A shuffle control shows the
 later re-uploading rounds carry information (+0.023 over k=8, while shuffled later features cost only −0.006). A degree-2 polynomial LR
 on the same 32 features scores 0.958–0.960 and beats the VQC in 5/5 folds. A quadratic function of the input angles explains 98.6% of the
 VQC's learned logit, so the VQC learns within the degree-2 class but does not reach its optimum.
@@ -55,7 +55,7 @@ Command: `scale_cv.py --scales "pi/8,pi/6,pi/4,pi/3,pi/2,2*pi/3,pi" --ks 32 --st
 | pi     | 5 | 0.7960 | 0.794 ± 0.072 | 0.945 | −0.151 | 0.4 |
 
 Fold-level sign tests on test AUC: pi/6 beats pi/2 on 5/5 folds (mean +0.041, p=0.062);
-pi/6 beats pi on 5/5 folds (mean +0.156, p=0.062). At pi/6 the VQC matches or beats LR on the same 32 features in 5/5 folds.
+pi/6 beats pi on 5/5 folds (mean +0.156, p=0.062). At pi/6 the VQC beats LR on the same 32 features in 13/15 runs (5 folds × 3 seeds; seed=0: 5/5, seed=1: 4/5, seed=2: 4/5); pooled mean +0.0060 [+0.0043, +0.0076] (5000-resample bootstrap over 15 observations).
 
 **Interpretation.** AUC falls monotonically as the scale grows past pi/6, so the k=32 collapse is an angle-scale effect.
 Compressing angles to |θ| < pi/6 recovers about 0.16 AUC compared with pi, and the VQC ends up level with logistic regression
@@ -218,22 +218,24 @@ k=8 to k=32, and the ranking pi/6 > pi/2 > pi holds at k=32.
 
 ### Phase 4 — full-data paired bootstrap (not pre-registered; logged 2026-11-14 BEFORE running)
 
-Per the overnight prompt: get per-ECG out-of-fold test scores at k=32 for LR, degree-2 LR (L1 penalty, ≤81 params), π/6 VQC, trained-scale VQC, XGBoost; compute 95% bootstrap CIs on AUC differences (2000 resamples, fold-stratified) and DeLong's test per fold. VQC scores from `results/bw/vqc_scores.json`; classical scores recomputed by refitting on each fold's L1-selected k=32 features using the stored feature list. Script: `p4_full_bootstrap.py`. Output: `results/p4_bootstrap.json`, `results/p4_bootstrap_table.md`.
+Per the overnight prompt: get per-ECG out-of-fold test scores at k=32 for LR, degree-2 LR (L1 penalty, ≤81 params), π/6 VQC, trained-scale VQC, XGBoost; compute 95% bootstrap CIs on AUC differences (2000 resamples, fold-stratified). VQC scores from `results/bw/vqc_scores.json`; classical scores loaded from `results/p1_classical.jsonl` test_scores (pre-tuned; k=32 LR2 mean 0.9583, XGB mean 0.9647). Script: `p4_full_bootstrap.py`. Output: `results/p4_bootstrap.json`, `results/p4_bootstrap_table.md`.
 
-**Results (mean AUC across 5 folds, d = A − B, 95% bootstrap CI):**
+**Redo (2026-11-14):** original version refitted LR2/XGB from scratch → LR2 mean 0.9532 (wrong); rewritten to load pre-tuned test_scores from p1_classical.jsonl.
+
+**Results (mean AUC across 5 folds, d = A − B, 95% bootstrap CI, seed=0):**
 
 | comparison | A | B | mean d [95% CI] |
 |---|---|---|---|
-| VQC_pi6 vs LR | 0.9510 | 0.9451 | +0.0060 [+0.0042, +0.0078] |
-| VQC_pi6 vs LR2 | 0.9510 | 0.9532 | −0.0022 [−0.0046, +0.0002] |
-| VQC_pi6 vs XGB | 0.9510 | 0.9622 | −0.0112 [−0.0130, −0.0095] |
-| VQC_trained vs LR | 0.9547 | 0.9451 | +0.0096 [+0.0076, +0.0116] |
-| VQC_trained vs LR2 | 0.9547 | 0.9532 | +0.0015 [−0.0007, +0.0036] |
-| VQC_trained vs XGB | 0.9547 | 0.9622 | −0.0075 [−0.0091, −0.0059] |
-| LR2 vs LR | 0.9532 | 0.9451 | +0.0081 [+0.0052, +0.0109] |
-| LR2 vs VQC_pi6 | 0.9532 | 0.9510 | +0.0022 [−0.0002, +0.0045] |
+| VQC_pi6 vs LR | 0.9510 | 0.9451 | +0.0059 [+0.0042, +0.0077] |
+| VQC_pi6 vs LR2 | 0.9510 | 0.9583 | −0.0073 [−0.0089, −0.0056] |
+| VQC_pi6 vs XGB | 0.9510 | 0.9647 | −0.0136 [−0.0155, −0.0118] |
+| VQC_trained vs LR | 0.9547 | 0.9451 | +0.0096 [+0.0074, +0.0116] |
+| VQC_trained vs LR2 | 0.9547 | 0.9583 | −0.0036 [−0.0052, −0.0021] |
+| VQC_trained vs XGB | 0.9547 | 0.9647 | −0.0100 [−0.0116, −0.0084] |
+| LR2 vs LR | 0.9583 | 0.9451 | +0.0132 [+0.0113, +0.0152] |
+| LR2 vs VQC_pi6 | 0.9583 | 0.9510 | +0.0073 [+0.0056, +0.0089] |
 
-**Interpretation**: VQC ≈ degree-2 LR (CI spans zero in both directions); XGBoost significantly outperforms both VQC variants. Confirms QB3 nonlinearity finding with calibrated CIs. Note: roc_auc bug (== vs != in tie detection) found and fixed; corrected values above.
+**Interpretation**: VQC loses to tuned degree-2 LR by −0.0073 and to XGBoost by −0.0136; both CIs exclude zero. LR2 clearly outperforms plain LR (+0.0132). XGBoost is the best classical model. No claim wording is changed by this exploratory analysis.
 
 Motivation: the existing evidence is 5/5 folds with no p-value or CI; this gives calibrated uncertainty around the main claim.
 No claim wording is changed; CIs are added next to existing numbers.
