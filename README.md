@@ -10,7 +10,7 @@ Variational quantum classifiers (VQCs) for **MI vs normal** 12-lead ECGs on [PTB
 |---|---|
 | **Encoding rule** | Angle `s·tanh(z)` with s = π collapses as features are re-uploaded (k = 32: AUC 0.791). **s = π/6 fixes it: AUC rises 0.928 → 0.939 → 0.951 for k = 8, 16, 32.** |
 | **Best VQC** | Trained per-feature scales, k = 32: **AUC 0.955** (5-fold patient-grouped CV) |
-| **Classical comparison** | Logistic regression 0.945, degree-2 logistic regression 0.958, XGBoost 0.965. No quantum model beats the tuned classical models. |
+| **Classical comparison** | The VQC **beats plain (linear) logistic regression** (0.951 vs 0.945; trained-scale 0.955). A **degree-2 logistic regression** scores 0.958 and XGBoost 0.965, so against stronger classical models there is no quantum advantage. The edge over the linear baseline is mild non-linearity, which a classical quadratic model reproduces. |
 | **Small data (N = 25 to 500)** | Pre-registered: quantum non-inferior to the best classical model at every size, superior at none. |
 | **Search for a quantum benefit** | 1,200 feature maps and 30 robustness/shift/subtype settings: no benefit found. |
 | **Real hardware** | `ibm_marrakesh` (Heron r2), 200 ECGs, 1000 shots, no mitigation: AUC **0.956** (angle VQC) and **0.949** (brick-wall QNN). |

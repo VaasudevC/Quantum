@@ -10,6 +10,8 @@ with full tables are:
 | B. Hardware readiness (H0–H5) | [`HARDWARE.md`](../HARDWARE.md) | [`docs/runbooks/HARDWARE_RUNBOOK.md`](runbooks/HARDWARE_RUNBOOK.md) |
 | C. Model improvements (N1–N4) | [`NEXT.md`](../NEXT.md) | [`docs/runbooks/NEXT_RUNBOOK.md`](runbooks/NEXT_RUNBOOK.md) |
 
+*This log covers phases A to C (4 to 5 Nov 2026). Later phases are written up in [`BRICKWALL.md`](../BRICKWALL.md), [`SMALLDATA.md`](../SMALLDATA.md), [`QB.md`](../QB.md) and [`HARDWARE.md`](../HARDWARE.md) section H6; [`FINDINGS.md`](../FINDINGS.md) summarises everything.*
+
 How to reproduce each step: [`docs/REPRODUCE.md`](REPRODUCE.md). Code changes, file inventory and result-file formats:
 [`docs/CODE_AND_DATA.md`](CODE_AND_DATA.md).
 
@@ -35,7 +37,7 @@ quantum hardware (phase B), and whether the model can be improved further (phase
 | Does it hold on the official PTB-XL split? | Yes: π/6 k=32 0.942 vs LR 0.938, same ranking | RESULTS Stage 5 |
 | Does π/6 survive shot noise? | Yes: ≈180 shots per ECG keeps it within 0.01 AUC (π/2 needs ≈410) | HARDWARE H2 |
 | Does it survive IBM Heron noise (simulated)? | AUC yes (0.961 → 0.960); calibration no (needs one global rescale) | HARDWARE H3 |
-| Real IBM hardware? | **Not run**: no token, and this environment's network blocks IBM. Script ready and dry-run tested | HARDWARE H4 |
+| Real IBM hardware? | **Not run in this session** (no token; network blocks IBM). **Update 2026-11-14: run on `ibm_marrakesh` from Colab, AUC 0.956 (angle VQC) and 0.949 (brick-wall)** | HARDWARE H4, H6 |
 | Best model overall | Trained per-feature scales (N2): **0.955**, still below degree-2 LR (0.958) | NEXT N2 |
 | Training-free way to choose the scale? | Kernel-target alignment (Spearman 0.61; centered 0.86) rules out bad scales but does not pick the optimum | NEXT N3, HARDWARE H5 |
 
@@ -168,7 +170,7 @@ during the session.
   which preserves ranking but breaks calibration and the 0.5 threshold (balanced accuracy 0.883 → 0.857). *Added analysis:* a single global rescale
   restores it. Note: this uses the noiseless simulation of the same circuits, but no labels.
 
-### H4: real IBM hardware: not run
+### H4: real IBM hardware: not run (superseded by H6 on 2026-11-14)
 - No `QISKIT_IBM_TOKEN`, **and** the session's network policy returns 403 to CONNECT for `quantum.cloud.ibm.com`, `iam.cloud.ibm.com` and
   `us-east.quantum-computing.cloud.ibm.com`. No results were simulated in their place.
 - `hw_run_ibm.py` implements the plan (2 models, the same 100 ECGs, 1000 shots, one SamplerV2 job per model in a Batch, DD + twirling, readout
@@ -234,14 +236,14 @@ N1 and N2 ran in parallel (2 workers each, about 22 min), N3 and N4 used no trai
 | H2 | shots {100…10000} | added 30 and 2000 | locate the 0.01-loss point more precisely |
 | H3b | best compile, 300 ECGs | 8-qubit line compile for 300; best compile on 100 | 12-qubit density matrix ≈ 4 h |
 | H3b | raw vs mitigated vs noiseless | also shots-only, calibration and threshold analysis, global rescale | explains why AUC survives but probabilities do not |
-| H4 | run if token set | not run (no token; network blocked), script + dry run | no fabricated hardware data |
+| H4 | run if token set | not run in this session (no token; network blocked), script + dry run. Done later as H6 | no fabricated hardware data |
 | H5 | trace distance + fidelity | also purity, labelled post hoc | it was the informative column |
 | N3 | uncentered KTA | also centered KTA, decided before seeing results | standard fix for imbalance offset |
 | N4 | metrics per model | also LR and degree-2 LR references on the same features | the comparison the paper needs |
 
 ## 9. Open items / suggested next steps
 
-1. **Run H4 on real hardware** (`python -u hw_run_ibm.py --submit`) once `QISKIT_IBM_TOKEN` is available and IBM hosts are reachable. It is expected to use about 1–2 of the ~10 free QPU
+1. **(Done 2026-11-14 as H6 on `ibm_marrakesh`; see `HARDWARE.md`.)** Original item: run H4 on real hardware (`python -u hw_run_ibm.py --submit`) once `QISKIT_IBM_TOKEN` is available and IBM hosts are reachable. It is expected to use about 1–2 of the ~10 free QPU
    minutes. Compare against H3's best-compile numbers on the same 100 ECGs (π/6: noiseless 0.983, FakeFez 0.984; π: 0.856 / 0.866).
 2. Seed the random selector with the run seed if the random-feature control is to vary feature sets across seeds.
 3. N2 with more steps or a separate learning rate for the scales; N1 + N2 combined; a quadratic-capable readout to test whether the gap to degree-2 LR

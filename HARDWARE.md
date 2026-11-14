@@ -223,7 +223,7 @@ tracks AUC much better (Spearman +0.80, p = 0.001 over 13 configs; +0.96 at k=32
 are close to maximally mixed (purity 0.005 ≈ 1/256 at k=32 pi), the same saturation identified in the classical study. Purity, however, rises monotonically as the scale
 shrinks, so on its own it would pick pi/8 rather than pi/6 (0.947 vs 0.953). It is a cheap way to *rule out* over-large scales, not to pick the optimum.
 
-## H4 — real IBM hardware: script ready and dry-run tested; NOT run (2026-11-05)
+## H4 — real IBM hardware: script ready and dry-run tested; NOT run (2026-11-05; superseded by the real run H6, 2026-11-14)
 
 **Not run, for two independent reasons.** (1) No `QISKIT_IBM_TOKEN` is set. (2) This cloud environment's network policy **blocks IBM Quantum**: the
 proxy answers `403` to CONNECT for `quantum.cloud.ibm.com`, `iam.cloud.ibm.com` and `us-east.quantum-computing.cloud.ibm.com`. So even

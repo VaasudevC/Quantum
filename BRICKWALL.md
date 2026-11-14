@@ -1,6 +1,6 @@
 # BRICKWALL — Antonio's magic-state brick-wall QNN vs tuned classical models on PTB-XL (MI vs NORM)
 
-Branch `brickwall-overnight`. Chronological log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). This report is updated after every phase.
+Tag `v0.2-brickwall` (the branch is merged into `main`). Chronological log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). This report is updated after every phase.
 Status: **P0–P7 ✔; EXTRA 1–5 ✔ except where marked pending in the EXTRA section** (see OVERNIGHT_LOG.md for what finished last).
 
 ## Headline (best quantum vs best classical; advantage rule applied)

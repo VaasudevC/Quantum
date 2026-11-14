@@ -33,7 +33,7 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 * Claim (primary endpoint, N = 100, k = 8, as recorded): best quantum (Q3) vs best classical (random forest) d = −0.0028 [−0.0049, −0.0010]; non-inferiority met, superiority not. — `SMALLDATA.md` primary section (6eef855).
 * Claim: Holm-adjusted wins exist only against weaker classical models — kNN and XGBoost at most sizes, plain LR at N = 25 and N = 500 (reduced sample); never against SVM-RBF, GP or random forest. — `SMALLDATA.md` Phase 2 section, `results/sd_tables_k8_main.md` (a82370b).
 * Claim: logistic regression (9 parameters) matches the angle VQC (81 parameters) on test AUC and on the train–test gap at N = 100. — `SMALLDATA.md` sensitivity section (2af3bff).
-* Claim: the brick-wall QNN was significantly worse than LR, SVM-RBF, GP, RF and XGBoost at N = 100; it could not be run at other sizes (torch blocked by Windows Application Control). — `SMALLDATA.md` (6eef855, 56ea635, 4c4445c).
+* Claim: the brick-wall QNN was significantly worse than LR, SVM-RBF, GP, RF and XGBoost at N = 100; it was not run at other sizes (torch is blocked by Windows Application Control on the lab PC; Colab, used for the IBM run, has not been tried for this). — `SMALLDATA.md` (6eef855, 56ea635, 4c4445c).
 * Claim (secondary endpoint, complete 2026-11-14): k = 4 gives the same result: non-inferior at every N, superior at none; best classical is the GP classifier throughout. — `SMALLDATA.md` k = 4 section, `results/sd_analysis_k4_main.json`.
 * Figures 2 and Table 3: `results/paper/fig2_learning_curves.png`, `results/paper/table3_smalldata.md` (75c799e).
 
@@ -81,7 +81,7 @@ Framing: (1) compact, interpretable feature selection (extends the poster); (2) 
 
 ## Incomplete (updated 2026-11-14)
 * QB4 training (feature placement) and the QB5 full-data part (both stopped on purpose; QB5 units are 30 of 30 complete).
-* Brick-wall (Q4) at N = 25, 50, 200, 500 — torch blocked by Windows Application Control.
-* EXTRA 6 (shot-robust n = 12 / n = 16 heads) and the n = 16 external run — same reason.
+* Brick-wall (Q4) at N = 25, 50, 200, 500 — torch is blocked by Windows Application Control on the lab PC, and a numpy port could not reproduce the torch (complex64) results. Not yet attempted on Colab, which worked for the IBM run.
+* EXTRA 6 (shot-robust n = 12 / n = 16 heads) and the n = 16 external run — same reason, same untried Colab route.
 * C7 TabPFN — licence login required.
 * Real-device (IBM): done once (H6). Open: repeat on other folds, with readout-error mitigation and held-out thresholds; matched FakeMarrakesh simulation on the same 200 ECGs.

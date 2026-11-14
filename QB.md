@@ -1,6 +1,6 @@
 # QB — is there any setting where a quantum model gives a real benefit on this task?
 
-Branch `smalldata`. **This pre-registration was written and committed before any QB run.** Nothing below may be changed after a QB result has been seen; later additions go under "Exploratory (not pre-registered)".
+Tag `v0.3-smalldata` (merged into `main`). **This pre-registration was written and committed before any QB run.** Nothing below may be changed after a QB result has been seen; later additions go under "Exploratory (not pre-registered)".
 Every setting tried, including failures, is recorded in `results/qb_registry.csv`.
 
 ## Headline (updated 2026-11-14) — claim level: **no benefit found on the main analysis; 2 discovery candidates for QB6 confirmation**

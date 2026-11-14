@@ -1,6 +1,6 @@
 # DISTINGUISHER — where, if anywhere, does a quantum model beat the classical models?
 
-Branch `smalldata`. Written and committed BEFORE any DX experiment was run. Runs after SD5 (see `SMALLDATA.md`). Every setting tried (including failures) is logged in `results/dx_registry.csv`.
+Tag `v0.3-smalldata` (merged into `main`). Written and committed BEFORE any DX experiment was run. Runs after SD5 (see `SMALLDATA.md`). Every setting tried (including failures) is logged in `results/dx_registry.csv`.
 
 ## Anti-cherry-picking design (fixed now)
 

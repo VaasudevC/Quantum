@@ -125,7 +125,7 @@ One JSON object per trained model:
 | `h3_noisy_{line8,best12}.jsonl` | per model: AUC `noiseless` / `shots_only` / `noisy_raw` / `noisy_mitigated`, `corr_P_*`, `z_shrink_raw`, `n2q`, `physical_qubits`, readout errors `e0`/`e1` |
 | `h3_z_{line8,best12}_k*_*.npz` | per ECG: `idx` (row index into the feature table), `y`, `z_exact`, `z_raw`, `z_mit` (8 ⟨Z⟩ each) |
 | `h3_calibration.json` | balanced accuracy and Brier score: exact / raw / mitigated / rescaled |
-| `ibm_local/` (dry run), `ibm_hw/` (real, once run) | `meta.json` (backend, calibration time, job ids, circuit stats), `ecgs_*.npz`, `counts_*.json` (one counts dict per PUB; **the last two PUBs are readout calibration, all-0 then all-1**), `aer_counts_*.json`, `analysis.json` |
+| `ibm_local/` (dry run), `ibm_hw/` (planned real run, never used), `ibm_bw_hw/` (real run, 2026-11-14) | `meta.json` (backend, calibration time, job ids, circuit stats), `ecgs_*.npz`, `counts_*.json` (one counts dict per PUB; **the last two PUBs are readout calibration, all-0 then all-1**), `aer_counts_*.json`, `analysis.json` |
 | `h5_encoding.json` | per (k, scale): trace distance, fidelity, purity, trained AUC; Spearman values; post-hoc purity correlation |
 | `*.log` | console output of the long runs |
 

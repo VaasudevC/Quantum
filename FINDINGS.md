@@ -9,10 +9,23 @@ This file is the single-page summary of the whole project. Every number links to
 ## 1. Bottom line
 
 1. **A simple encoding fix is the main positive result.** Encoding each feature as `s·tanh(z)` with s = π (the original choice) makes the 8-qubit re-uploading VQC *worse* as more features are added (k = 32: AUC 0.791). Shrinking the scale to **s = π/6** removes the collapse and AUC *rises* with k: 0.928 (k=8) → 0.939 (k=16) → **0.951 (k=32)**. π/6 beats π in 5/5 folds at every k. The same lesson held in a second architecture (the brick-wall QNN).
-2. **No quantum advantage was found.** Tuned classical models match or beat every quantum model on the same inputs: XGBoost 0.965, degree-2 logistic regression 0.958, best VQC 0.955 (k = 32, 5-fold CV). The VQC's small edge over plain logistic regression (+0.006) is explained by mild non-linearity, not by anything quantum: a classical quadratic model with no more parameters matches it.
+2. **The quantum models beat linear logistic regression, but not a degree-2 one, so we claim no quantum advantage.** The VQC is consistently ahead of plain (degree-1) logistic regression on the same features (+0.006 AUC, CI [+0.004, +0.008]; +0.010 for the trained-scale VQC). Once the classical model is allowed degree-2 terms it overtakes the VQC (0.958 vs 0.951, and 0.955 for the best VQC), and XGBoost is higher still (0.965). The VQC's edge is mild non-linearity, not anything quantum: a classical quadratic model with no more parameters matches it. See the table below.
 3. **In small-data settings (N = 25 to 500 training ECGs), quantum models are non-inferior to the best classical model and superior at none** (pre-registered, margin 0.02 AUC).
 4. **The models survive a real quantum computer.** On `ibm_marrakesh` (IBM Heron r2, 200 ECGs, 1000 shots, no error mitigation) AUC was 0.949 (brick-wall, 8 qubits) and 0.956 (angle VQC), against 0.925 and 0.967 noiselessly on the same ECGs. This shows the pipeline works on hardware; it is not an advantage result.
 5. **Claims we do not make:** quantum advantage, parameter efficiency, clinical readiness. All models are classically simulable.
+
+### Where the quantum models win and where they do not
+
+| Comparison (k = 32, 5-fold CV, test AUC) | Result | Evidence |
+|---|---|---|
+| VQC (π/6) vs **plain logistic regression** | **VQC ahead: +0.0059** [+0.0042, +0.0077]; positive in 13 of 15 runs (5 folds × 3 seeds) | `RESULTS.md` Stage 3, Phase 4 bootstrap |
+| Trained-scale VQC vs plain logistic regression | **VQC ahead: +0.0096** [+0.0074, +0.0116] | `RESULTS.md` Phase 4 |
+| Small data: quantum vs plain logistic regression | VQC/quantum-kernel ahead at N = 25 (+0.010) and N = 500 (+0.0045); never against SVM-RBF, GP or random forest | `SMALLDATA.md` |
+| Brick-wall n = 12 vs plain logistic regression | ahead by +0.0047 [+0.003, +0.0065], 4 of 5 folds | `BRICKWALL.md` |
+| VQC (π/6) vs **degree-2 logistic regression** | **VQC behind: −0.0073** [−0.0089, −0.0056]; trained-scale VQC −0.0036 [−0.0052, −0.0021] | `RESULTS.md` Phase 4 |
+| VQC (π/6) vs XGBoost | VQC behind: −0.0136 [−0.0155, −0.0118] | `RESULTS.md` Phase 4 |
+
+Why: the π/6 VQC is 98.6% a quadratic function of its inputs, so it gains over a linear model by adding a little non-linearity. A degree-2 classical model has that non-linearity in full (plain → degree-2 logistic regression is +0.0132), so there is little room left for the quantum model. In the parameter-matched QB3 test, classical quadratic models with equal or fewer parameters matched the trained-scale VQC (0.956). The edge over the linear baseline is real but small, and it is a statement about the baseline, not evidence of a quantum advantage.
 
 ---
 
@@ -183,7 +196,7 @@ How to read this:
 1. A matched FakeMarrakesh noisy simulation on the same 200 ECGs, to separate "model noise" from "device noise" (`COLAB_HW.md`, Cell 9).
 2. Repeat the hardware run on other folds and with readout-error mitigation, with thresholds chosen on a held-out set.
 3. Test the inferior-MI subtype hypothesis on independent data.
-4. Brick-wall at N ≠ 100 and the n = 12 / n = 16 shot-robust heads (blocked locally by Windows Application Control; run from Colab).
+4. Brick-wall at N ≠ 100 and the n = 12 / n = 16 shot-robust heads (torch is blocked on the lab PC by Windows Application Control and a numpy port cannot reproduce the torch results; running them on Colab, as was done for the IBM job, is the untried route).
 5. Paper draft: [`PAPER_OUTLINE.md`](PAPER_OUTLINE.md) maps every claim to its supporting file and commit.
 
 ## 12. Reproducing

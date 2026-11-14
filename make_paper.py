@@ -58,7 +58,7 @@ def table2():
 def table3():
     L = ["# Table 3 — Pre-registered small-data benchmark: best quantum − best classical by training size N", "", STAMP, "",
          "Paired over 5 folds × 40 subsets (N = 500: **reduced sample**, 10 subsets); 95% hierarchical-bootstrap CIs (folds, then subsets); one-sided superiority with Holm; non-inferiority margin −0.02. "
-         "Source: `results/sd_analysis_k8_main.json` (and `_k4_main.json`). C7 TabPFN not run (licence login required); Q4 brick-wall only at N = 100 (torch blocked at other sizes).", ""]
+         "Source: `results/sd_analysis_k8_main.json` (and `_k4_main.json`). C7 TabPFN not run (licence login required); Q4 brick-wall only at N = 100 (torch blocked on the lab PC at other sizes; Colab not tried).", ""]
     for K in (8, 4):
         p = Path(f"results/sd_analysis_k{K}_main.json")
         if not p.exists():

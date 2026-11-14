@@ -1,6 +1,6 @@
 # SMALLDATA — do quantum models match or beat classical models when training data is small?
 
-Branch `smalldata` (from `brickwall-overnight`). Log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). Code: `sd_run.py`, `sd_analyze.py`. This report is updated after every sub-phase.
+Tag `v0.3-smalldata` (built on `v0.2-brickwall`; both merged into `main`). Log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md). Code: `sd_run.py`, `sd_analyze.py`. This report is updated after every sub-phase.
 
 ## Headline (k = 8, final; k = 4, secondary endpoint, final)
 
@@ -40,7 +40,7 @@ Same finding: quantum models non-inferior at every size, superior at none (Holm 
 At k = 4 the quantum models load each of 4 features once (no re-uploading), and the quantum-kernel SVM (Q3) uses a product kernel that a classical computer evaluates exactly. The k = 4 AUC is ~0.07 below k = 8 for all models, consistent with less information.
 
 This is an empirical result on classical ECG features; the theory in `brickwall/Scalable_Quantum_ML.pdf` (Prop. 8) does not predict hardness at this size, and the best quantum models here use a classically computable product kernel (geometric difference to RBF ≪ √N, `DISTINGUISHER.md`).
-**Remaining incomplete:** Q4 at N ≠ 100 (torch blocked by Windows Application Control), C7 TabPFN (licence login required).
+**Remaining incomplete:** Q4 at N ≠ 100 (torch blocked by Windows Application Control on the lab PC; a Colab run, as used for IBM, has not been tried), C7 TabPFN (licence login required).
 
 ## Pre-registered analysis plan
 

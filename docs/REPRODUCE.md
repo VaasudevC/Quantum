@@ -67,7 +67,7 @@ values are in RESULTS.md.
 | H3 calibration analysis | inline (balanced accuracy and Brier, raw / mitigated / rescaled, from the `h3_z_line8_*.npz`) | – | `results/hw/h3_calibration.json` |
 | H3 table + figure | `python hw_h3_plot.py` | 5 s | `results/hw/h3_noisy.md`, `results/figs/hw_noisy.png` |
 | H4 dry run | `python -u hw_run_ibm.py --local --n 10` | 5 min | `results/hw/ibm_local/` |
-| H4 real (not run) | `QISKIT_IBM_TOKEN=... python -u hw_run_ibm.py --submit` | queue + ~2 QPU min + 10–25 min local | `results/hw/ibm_hw/` |
+| H4 real (superseded by H6, which ran from Colab: see `HARDWARE.md` "How the H6 run was produced") | `QISKIT_IBM_TOKEN=... python -u hw_run_ibm.py --submit` | queue + ~2 QPU min + 10–25 min local | `results/hw/ibm_hw/` |
 | H4 re-fetch / analyze | `python -u hw_run_ibm.py --retrieve` · `python -u hw_run_ibm.py --analyze --tag hw` | – | `analysis.json` |
 | H5 | `python -u hw_h5_encoding.py` | 3 min | `results/hw/h5_encoding.{json,md}`, `results/figs/encoding_score.png` |
 
@@ -105,7 +105,7 @@ for ro in ("z", "zz"):
 
 ---
 
-## Small-data benchmark (branch `smalldata`): SD, DX, QB commands (added 2026-11-14)
+## Small-data benchmark (tag `v0.3-smalldata`): SD, DX, QB commands (added 2026-11-14)
 
 Environment: `.venv` only (no torch required). Python 3.14.3; numpy 2.4.6; scikit-learn 1.9.0; xgboost 3.4.1.
 CPU: Intel Core i7-13xxx (GenuineIntel, Family 6 Model 186 Stepping 2). OS: Windows 11 10.0.26300.
@@ -127,13 +127,13 @@ Lock file: `requirements-lock.txt` (generated `pip freeze` from `.venv`, 2026-11
 ..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 8 50,200,25 8 --reps 40 --tag _s2 --seedoff 1
 ..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 8 500 2 --reps 10 --tag _s2 --seedoff 1
 
-# 3. Secondary k=4 benchmark (tonight's target, 850 units)
+# 3. Secondary k=4 benchmark (850 units, complete 2026-11-14)
 ..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 4 100,50,200,25 6 --reps 40 --tag _k4
 ..\.venv\Scripts\python.exe sd_launch.py ..\.venv\Scripts\python.exe main 4 500 2 --reps 10 --tag _k4
 
 # 4. Analyse (run after each sub-phase)
 ..\.venv\Scripts\python.exe sd_analyze.py 8 25,50,100,200,500 _main   # -> results/sd_analysis_k8_main.json
-..\.venv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _k4     # -> results/sd_analysis_k4_main.json  [PENDING]
+..\.venv\Scripts\python.exe sd_analyze.py 4 25,50,100,200,500 _k4     # -> results/sd_analysis_k4_main.json  [COMPLETE 2026-11-14]
 ..\.venv\Scripts\python.exe sd_equivalence.py                          # -> results/sd_equivalence_k8.md
 ```
 
@@ -166,8 +166,8 @@ Lock file: `requirements-lock.txt` (generated `pip freeze` from `.venv`, 2026-11
 
 # QB5: robustness / shift / imbalance
 ..\.venv\Scripts\python.exe qb5_robust.py 0   # fold 0 -> results/qb5.jsonl  [COMPLETE]
-..\.venv\Scripts\python.exe qb5_robust.py 1   # fold 1  [IN PROGRESS]
-..\.venv\Scripts\python.exe qb5_robust.py 2   # fold 2  [IN PROGRESS]
+..\.venv\Scripts\python.exe qb5_robust.py 1   # fold 1  [COMPLETE 2026-11-14]
+..\.venv\Scripts\python.exe qb5_robust.py 2   # fold 2  [COMPLETE 2026-11-14]
 ..\.venv\Scripts\python.exe qb5_analyze.py    # final table, apply candidate rule -> results/qb5_analysis.json
 
 # VQC seed extension (k=32, seed=3, 5 more folds; appends to stage3_selectors.jsonl)
@@ -184,7 +184,7 @@ Lock file: `requirements-lock.txt` (generated `pip freeze` from `.venv`, 2026-11
 
 ---
 
-## Brick-wall study (branch `brickwall-overnight`): environment and workarounds
+## Brick-wall study (tag `v0.2-brickwall`): environment and workarounds
 
 Two Python 3.14.3 environments are used (Windows 11, 16 logical / 10 physical cores). **Do not merge them**: Windows Application Control (WDAC / Smart App Control)
 blocks some native DLLs, and which ones differs per location.
