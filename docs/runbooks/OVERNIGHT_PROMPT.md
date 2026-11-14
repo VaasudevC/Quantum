@@ -1,7 +1,7 @@
 # Overnight run: Claude Code in VS Code on your PC
 
 **Before you leave it**
-1. Open VS Code on `C:\Users\vaasu\OneDrive\Desktop\LimrickQuantumWork\cloud_repo`. The notebook and paper are already in `brickwall\`.
+1. Open VS Code on the repository root. The notebook and paper are already in `brickwall\`.
 2. If you get `quantum_utils.py` from Antonio, put it in `brickwall\` too. The prompt rebuilds it from the paper if it's missing.
 3. Set Windows to never sleep while plugged in (Settings → System → Power). Pausing OneDrive sync for the night also helps.
 4. Permissions: an overnight run stalls on the first approval prompt. Start the session in a mode that accepts edits. On the first few prompts, choose "don't ask again" for `python`, `pip` and `git`, and stay until you've seen the first phase start.

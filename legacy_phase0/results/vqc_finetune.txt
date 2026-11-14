@@ -1,0 +1,45 @@
+﻿========================================================================
+  Amplitude-Encoded VQC on 8 qubits (2**8 = 256 amplitude slots)
+========================================================================
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows       : 14,965
+  features   : 251  (pad to 256 for amplitude encoding)
+  MI vs NORM : 5,454 / 9,511
+  train      : 11,972   test : 2,993
+  class weights : NORM=0.787  MI=1.372  (MI/NORM ratio = 4,363/7,609)
+  warm-start: loaded 81 params  (prev test_AUC=0.8520  test_acc=0.7888)
+
+Encoding amplitudes ...
+  train state tensor : (11972, 256)   ||psi||_2 = 1  [ok]
+  test  state tensor : (2993, 256)
+  max norm error     : train 3.33e-16  test 3.33e-16
+
+Training VQC   N_QUBITS=8  N_PARAMS=81 (circuit=72 + readout=9)
+  gradient: parameter shift rule (exact, hardware-portable)
+  optimizer : Adam   steps=150   batch=500   lr=0.005   ≈6.3 effective epochs
+  step   1/150   batch_BCE=0.4925   lr=0.0050   batch=500
+  step  10/150   batch_BCE=0.5305   lr=0.0050   batch=500
+  step  20/150   batch_BCE=0.5165   lr=0.0050   batch=500
+  step  30/150   batch_BCE=0.4934   lr=0.0050   batch=500
+  step  40/150   batch_BCE=0.4760   lr=0.0050   batch=500
+  step  50/150   batch_BCE=0.5100   lr=0.0050   batch=500
+  step  60/150   batch_BCE=0.5018   lr=0.0050   batch=500
+  step  70/150   batch_BCE=0.4917   lr=0.0050   batch=500
+  step  80/150   batch_BCE=0.4961   lr=0.0050   batch=500
+  step  90/150   batch_BCE=0.4927   lr=0.0050   batch=500
+  step 100/150   batch_BCE=0.4613   lr=0.0050   batch=500
+  step 110/150   batch_BCE=0.4638   lr=0.0050   batch=500
+  step 120/150   batch_BCE=0.4908   lr=0.0050   batch=500
+  step 130/150   batch_BCE=0.4629   lr=0.0050   batch=500
+  step 140/150   batch_BCE=0.4895   lr=0.0050   batch=500
+  step 150/150   batch_BCE=0.4730   lr=0.0050   batch=500
+  wall time : 2897.2s
+
+------------------------------------------------------------------------
+  Results
+------------------------------------------------------------------------
+  Train  n=11,972   accuracy=0.7896   AUC=0.8651
+  Test   n=2,993   accuracy=0.7822   AUC=0.8595
+------------------------------------------------------------------------
+Saved loss curve -> <project_root>\results\vqc_amp8_training.png
+Saved trained parameters -> <project_root>\results\vqc_finetune_params.json

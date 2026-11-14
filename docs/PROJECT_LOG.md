@@ -6,7 +6,7 @@ with full tables are:
 
 | phase | write-up | runbook it followed |
 |---|---|---|
-| A. Classical simulation study (Stages 0–6 + 4b) | [`RESULTS.md`](../RESULTS.md) | [`CLOUD_RUNBOOK.md`](../CLOUD_RUNBOOK.md) |
+| A. Classical simulation study (Stages 0–6 + 4b) | [`RESULTS.md`](../RESULTS.md) | [`CLOUD_RUNBOOK.md`](runbooks/CLOUD_RUNBOOK.md) |
 | B. Hardware readiness (H0–H5) | [`HARDWARE.md`](../HARDWARE.md) | [`docs/runbooks/HARDWARE_RUNBOOK.md`](runbooks/HARDWARE_RUNBOOK.md) |
 | C. Model improvements (N1–N4) | [`NEXT.md`](../NEXT.md) | [`docs/runbooks/NEXT_RUNBOOK.md`](runbooks/NEXT_RUNBOOK.md) |
 

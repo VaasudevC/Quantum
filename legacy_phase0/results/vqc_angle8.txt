@@ -1,0 +1,77 @@
+========================================================================
+  Angle-Encoded VQC on 8 qubits with data re-uploading
+========================================================================
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows          : 14,965
+  features used : 8  (one per qubit)
+  MI vs NORM    : 5,454 / 9,511
+
+  Selected features:
+    V4_t_inverted
+    I_st_dev_j60
+    aVL_st_dev_j60
+    II_t_inverted
+    V3_t_inverted
+    max_st_depression
+    V3_t_amp
+    aVF_t_inverted
+
+  train: 11,972   test: 2,993
+
+  Angle encoding sanity check:
+    angles_tr  shape=(11972, 8)  min=-3.142  max=3.142
+    angles_te  shape=(2993, 8)
+
+  Per-feature angle stats (MI vs NORM mean angles):
+    V4_t_inverted              MI=-0.080  NORM=-0.842  sep=0.762
+    I_st_dev_j60               MI=-0.613  NORM=+0.610  sep=1.223
+    aVL_st_dev_j60             MI=-0.593  NORM=+0.632  sep=1.226
+    II_t_inverted              MI=-0.071  NORM=-0.878  sep=0.807
+    V3_t_inverted              MI=-0.201  NORM=-0.692  sep=0.491
+    max_st_depression          MI=-0.297  NORM=+0.660  sep=0.958
+    V3_t_amp                   MI=-0.675  NORM=+0.327  sep=1.002
+    aVF_t_inverted             MI=-0.229  NORM=-0.793  sep=0.565
+
+  class weights : NORM=0.787  MI=1.372  (MI/NORM ratio = 4,363/7,609)
+
+Training VQC  N_QUBITS=8  N_LAYERS=4  N_PARAMS=81 (72 circuit + 9 readout)
+  gradient:   parameter shift rule (exact, hardware-portable)
+  re-upload:  encoding gates re-applied at every layer
+  optimizer:  Adam   steps=200  batch=500  lr=0.02   ~8.4 effective epochs
+  step   1/200   batch_BCE=0.6956   lr=0.0200   batch=500
+  step  10/200   batch_BCE=0.6931   lr=0.0200   batch=500
+  step  20/200   batch_BCE=0.6777   lr=0.0200   batch=500
+  step  30/200   batch_BCE=0.6534   lr=0.0200   batch=500
+  step  40/200   batch_BCE=0.6137   lr=0.0200   batch=500
+  step  50/200   batch_BCE=0.5756   lr=0.0200   batch=500
+  step  60/200   batch_BCE=0.5734   lr=0.0200   batch=500
+  step  70/200   batch_BCE=0.5674   lr=0.0200   batch=500
+  step  80/200   batch_BCE=0.5465   lr=0.0200   batch=500
+  step  90/200   batch_BCE=0.6193   lr=0.0200   batch=500
+  step 100/200   batch_BCE=0.5556   lr=0.0200   batch=500
+  step 110/200   batch_BCE=0.5550   lr=0.0200   batch=500
+  step 120/200   batch_BCE=0.5609   lr=0.0200   batch=500
+  step 130/200   batch_BCE=0.5593   lr=0.0200   batch=500
+  step 140/200   batch_BCE=0.5430   lr=0.0200   batch=500
+  step 150/200   batch_BCE=0.5674   lr=0.0200   batch=500
+  step 160/200   batch_BCE=0.5019   lr=0.0200   batch=500
+  step 170/200   batch_BCE=0.5104   lr=0.0200   batch=500
+  step 180/200   batch_BCE=0.4986   lr=0.0200   batch=500
+  step 190/200   batch_BCE=0.5646   lr=0.0200   batch=500
+  step 200/200   batch_BCE=0.5196   lr=0.0200   batch=500
+  wall time: 6185.8s  (1.72h)
+
+------------------------------------------------------------------------
+  Results
+------------------------------------------------------------------------
+  Train  n=11,972   accuracy=0.7624   AUC=0.7988
+  Test   n=2,993   accuracy=0.7718   AUC=0.7998
+------------------------------------------------------------------------
+  >= 90% accuracy target: NO  -- gap = 0.1282
+
+  Confusion matrix (test):
+    TP= 715  FN= 376  sensitivity=0.6554 (recall)
+    FP= 307  TN=1595  specificity=0.8386
+
+Saved loss curve -> <project_root>\results\vqc_angle8_training.png
+Saved trained parameters -> <project_root>\results\vqc_angle8_params.json

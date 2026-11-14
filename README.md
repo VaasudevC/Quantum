@@ -1,91 +1,87 @@
-# ECG VQC: angle-scale study (PTB-XL, MI vs NORM)
+# ECG VQC: quantum classifiers for myocardial infarction detection
 
-An 8-qubit, 4-layer data-re-uploading variational quantum classifier (VQC) for myocardial infarction (MI) vs normal 12-lead ECGs, built on
-249 pre-extracted PTB-XL features. Each feature is encoded as the angle `s·tanh(z)`; the study is about the choice of the scale s.
+Variational quantum classifiers (VQCs) for **MI vs normal** 12-lead ECGs on [PTB-XL](https://physionet.org/content/ptb-xl/), built on 249 pre-extracted ST/T/QRS features. The study covers the encoding design, a full classical benchmark, a pre-registered small-data benchmark, a search for any quantum benefit, and a run on real IBM hardware.
 
-## Status (2026-11-14) — current conclusions
+> **Read [`FINDINGS.md`](FINDINGS.md) first.** It is the single-file summary of the whole project.
 
-No quantum-advantage claim and no parameter-efficiency claim. All models are classically simulable.
+## Key results
 
-**Encoding rule (full data, k = 32):** Angle saturation at s = π causes re-uploading collapse (AUC 0.791). s = π/6 fixes it (0.951). Replicated in the brick-wall (Qiskit, FakeFez).
+| | |
+|---|---|
+| **Encoding rule** | Angle `s·tanh(z)` with s = π collapses as features are re-uploaded (k = 32: AUC 0.791). **s = π/6 fixes it: AUC rises 0.928 → 0.939 → 0.951 for k = 8, 16, 32.** |
+| **Best VQC** | Trained per-feature scales, k = 32: **AUC 0.955** (5-fold patient-grouped CV) |
+| **Classical comparison** | Logistic regression 0.945, degree-2 logistic regression 0.958, XGBoost 0.965. No quantum model beats the tuned classical models. |
+| **Small data (N = 25 to 500)** | Pre-registered: quantum non-inferior to the best classical model at every size, superior at none. |
+| **Search for a quantum benefit** | 1,200 feature maps and 30 robustness/shift/subtype settings: no benefit found. |
+| **Real hardware** | `ibm_marrakesh` (Heron r2), 200 ECGs, 1000 shots, no mitigation: AUC **0.956** (angle VQC) and **0.949** (brick-wall QNN). |
 
-| model, k = 32 features | test AUC | source |
-|---|---|---|
-| VQC, s = π (original) | 0.791 | results/stage2_steps1000.jsonl |
-| VQC, s = π/2 | 0.910 | results/stage2_steps1000.jsonl |
-| logistic regression, same features | 0.945 | results/stage2_steps1000.jsonl |
-| **VQC, s = π/6** | **0.951** | results/stage2_steps1000.jsonl |
-| VQC, zz readout (π/6) | 0.953 | results/n1_zz.jsonl |
-| **VQC, trained per-feature scales** | **0.955** | results/n2_trainscale.jsonl |
-| degree-2 polynomial LR, same features | **0.958** | results/stage4b_poly.jsonl |
-| XGBoost (best classical at every k) | — | results/p1_classical.jsonl |
+**Not claimed:** quantum advantage, parameter efficiency, clinical readiness. All models are classically simulable.
 
-**Feature-map screen (QB1):** 1,200 settings screened; none passes the expressivity gate (g ≥ √N/2 only at s = π/2 where label alignment collapses). See [`QB.md`](QB.md).
-
-**Non-linearity (QB3):** rank-2 factorization machine and sparse degree-2 LR (≤ VQC parameters, same bounded inputs) match the trained-scale VQC. The win over LR = mild non-linearity, not quantum. See [`QB.md`](QB.md).
-
-**Small-data benchmark (k = 8, pre-registered):** VQC non-inferior to best classical at every N (25–500); superior at none. SVM-RBF within ±0.005 at every N (exploratory). **k = 4 secondary endpoint: in progress.** See [`SMALLDATA.md`](SMALLDATA.md).
-
-**Other benefit (QB5, 18/30 units):** no perturbation/shift/imbalance/subtype setting gives quantum ≥ +0.005 over best classical. See [`QB.md`](QB.md).
-
-**Hardware readiness (simulated):** ~180 shots/ECG keeps π/6 within 0.01 AUC of noiseless; under IBM Heron (FakeFez) noise AUC is unchanged (0.961 → 0.960). Real-device run not yet done; see `HARDWARE.md`.
-
-**Not claimed:** quantum advantage, parameter efficiency, real-device validation, TabPFN comparison.
-
-## Draft paper
-
-[`paper/PAPER_DRAFT.md`](paper/PAPER_DRAFT.md) — first draft (pending k = 4 results). Claims table: [`paper/CLAIMS_CHECK.md`](paper/CLAIMS_CHECK.md).
+| Test AUC, k = 32 (5-fold CV) | |
+|---|---|
+| VQC, s = π (original) | 0.791 |
+| VQC, s = π/2 | 0.910 |
+| Logistic regression, same features | 0.945 |
+| VQC, s = π/6 | 0.951 |
+| VQC, trained per-feature scales | 0.955 |
+| Degree-2 logistic regression | 0.958 |
+| XGBoost | 0.965 |
 
 ## Documentation
 
-| document | what is in it |
+| Document | What is in it |
 |---|---|
-| [`RESULTS.md`](RESULTS.md) | Phase A classical study: scale sweep, training length, selectors × seeds, shuffle control, official split, degree-2 comparison |
-| [`QB.md`](QB.md) | QB pre-registered benchmark: headline, feature-map screen, non-linearity, robustness/shift/imbalance |
-| [`SMALLDATA.md`](SMALLDATA.md) | small-data benchmark: pre-registered plan, deviations, results at k=8 (final) and k=4 (pending) |
-| [`HARDWARE.md`](HARDWARE.md) | Phase B hardware readiness: Qiskit vs PennyLane, circuit equivalence, shot noise, compilation, IBM noise model, encoding score |
-| [`NEXT.md`](NEXT.md) | Phase C improvements: zz readout, trained input scales, kernel-target alignment, clinical metrics |
-| [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md) | chronological log: every stage, decision, deviation, problem, open items |
-| [`docs/REPRODUCE.md`](docs/REPRODUCE.md) | every command in order, with run times and outputs |
-| [`docs/CODE_AND_DATA.md`](docs/CODE_AND_DATA.md) | file inventory, code changes and new interfaces, data, result-file formats |
-| [`CLOUD_RUNBOOK.md`](CLOUD_RUNBOOK.md), [`docs/runbooks/`](docs/runbooks/) | runbooks for all three phases |
-
-## Layout
-```
-Vqc_fast8.py         exact 8-qubit simulator, adjoint gradients (+ backward_full: per-sample input-angle gradients)
-Vqc_angle8.py        original parameter-shift implementation (only needed by Vqc_fast8.verify())
-Vqc_hybrid8.py       original hybrid model                    (only needed by Vqc_fast8.verify())
-scale_cv.py          experiment driver: CV, selectors, scales, --readout z|zz, --train-scale, shuffle control, --jobs, resumable
-summarize.py         aggregate result *.jsonl -> table (+ --md for Markdown)
-stage4b_poly.py      Stage 4b: VQC vs degree-2 polynomial LR, function-class R^2
-make_figs.py         Stage 6 figures
-qiskit_vqc.py        Qiskit + PennyLane versions of the circuit (verified identical), 6-model loader, count decoding
-hw_h1_verify.py      H0 benchmark + H1 equivalence      hw_h2_shots.py     H2 shot noise
-hw_h3_compile.py     H3a compilation                    hw_h3_noisy.py     H3b noisy simulation + readout mitigation
-hw_h3_plot.py        H3 table/figure                    hw_h5_encoding.py  H5 encoding score
-hw_run_ibm.py        H4 real IBM run (--local dry run, --submit, --retrieve, --analyze)
-n1_shots.py          N1 shot noise, zz vs z             n3_kta.py          N3 kernel-target alignment
-n4_clinical.py       N4 clinical metrics
-data/                st_features_plus_TR.csv.gz (features), ptbxl_database.csv (ecg_id, patient_id, strat_fold)
-results/             one JSONL line per trained model (config, AUCs, features, params), tables (*.md), logs
-results/hw/          hardware-stage outputs           results/figs/   all figures
-reference/           teammate's Oct-2026 report (HTML)
-docs/                project log, reproduction guide, code/data reference, runbooks
-```
+| [`FINDINGS.md`](FINDINGS.md) | **Whole-project summary**: results, limitations, open items |
+| [`RESULTS.md`](RESULTS.md) | Phase A: scale sweep, training length, selectors, shuffle control, degree-2 comparison, official split |
+| [`NEXT.md`](NEXT.md) | Phase C: zz readout, trained scales, kernel-target alignment, clinical metrics |
+| [`BRICKWALL.md`](BRICKWALL.md) | Phase D: brick-wall QNN reimplementation and full benchmark vs tuned classical models |
+| [`SMALLDATA.md`](SMALLDATA.md) | Phase E: pre-registered small-data benchmark (k = 8 and k = 4) |
+| [`QB.md`](QB.md) | Phase F: pre-registered search for a quantum benefit |
+| [`DISTINGUISHER.md`](DISTINGUISHER.md) | Kernel-geometry diagnostic |
+| [`HARDWARE.md`](HARDWARE.md) | Hardware readiness (simulated) and the real-device run (section H6) |
+| [`COLAB_HW.md`](COLAB_HW.md) | Step-by-step Colab notebook for the IBM run |
+| [`PAPER_OUTLINE.md`](PAPER_OUTLINE.md) | Paper outline with each claim mapped to its file and commit |
+| [`docs/PROJECT_LOG.md`](docs/PROJECT_LOG.md) | Chronological log: decisions, deviations, problems |
+| [`docs/REPRODUCE.md`](docs/REPRODUCE.md) | Every command in order, with run times |
+| [`docs/CODE_AND_DATA.md`](docs/CODE_AND_DATA.md) | File inventory and result-file formats |
+| [`docs/runbooks/`](docs/runbooks/) | The runbooks and prompts the work followed |
+| [`legacy_phase0/`](legacy_phase0/README.md) | The early Runs 1 to 7 (81.26% accuracy), archival |
 
 ## Quick start
+
 ```bash
-pip install -r requirements.txt                       # phase A
-pip install -r requirements-hw.txt                    # phases B and C (Qiskit, Aer, IBM Runtime, PennyLane)
-python -c "import Vqc_fast8; Vqc_fast8.verify()"      # adjoint vs parameter-shift check
+pip install -r requirements.txt                       # classical study and simulator
+pip install -r requirements-hw.txt                    # Qiskit, Aer, IBM Runtime, PennyLane
+python -c "import Vqc_fast8; Vqc_fast8.verify()"      # adjoint gradients vs parameter-shift check
 python -u scale_cv.py --scales "pi/6" --ks 32 --folds 0 --steps 50 --jobs 1 --out results/smoke.jsonl
 python summarize.py results/stage2_steps1000.jsonl
 python -u hw_run_ibm.py --local --n 10                # hardware pipeline dry run on a fake IBM device
 ```
 
-## Pre-session pilot (for reference)
+Real-device runs need an IBM Quantum token in the `QISKIT_IBM_TOKEN` environment variable. **Never commit a token.** `.gitignore` already excludes common secret filenames.
 
-Before this study, with 300 training steps: k=8 π 0.904 / π/2 0.919; k=16 0.864 / 0.908; k=32 0.787 / 0.896 (LR 0.922 / 0.932 / 0.945).
-These are in `results/pilot_runs.jsonl` and `results/sweep_partial.jsonl` (k=32, 600 steps, folds 0 and 3).
+## Repository layout
 
-Data: PTB-XL (CC BY 4.0) derived features. Keep this repo **private**.
+```
+Vqc_fast8.py          exact 8-qubit simulator with adjoint gradients
+Vqc_angle8.py         original parameter-shift implementation (used by Vqc_fast8.verify())
+Vqc_hybrid8.py        original hybrid model (used by Vqc_fast8.verify())
+scale_cv.py           experiment driver: CV, selectors, scales, readouts, shuffle control, resumable
+summarize.py          aggregate result *.jsonl into tables
+qiskit_vqc.py         Qiskit and PennyLane versions of the circuit (verified identical)
+bw_torch.py, bw_utils.py   brick-wall QNN
+p0_* ... p6_*         brick-wall benchmark phases (sanity, classical, verification, grid, external, noise)
+sd_*.py               small-data benchmark
+qb*.py                search for a quantum benefit
+hw_*.py               hardware readiness and IBM runs
+hw_bundle.zip         everything the Colab hardware run needs
+data/                 feature table (st_features_plus_TR.csv.gz) and patient/fold metadata
+results/              one JSONL line per trained model, tables, logs, figures
+results/hw/           hardware-stage outputs, including raw ibm_marrakesh data
+docs/                 project log, reproduction guide, code reference, runbooks
+legacy_phase0/        early Runs 1 to 7 (archival)
+```
+
+## Data and licence
+
+PTB-XL is distributed under CC BY 4.0 (Wagner et al., *Scientific Data* 2020). `data/` holds only derived features and metadata. The raw PTB-XL records are not included; download them from PhysioNet. `brickwall/` holds working material from the collaborator whose paper defines the brick-wall model; please check its terms before redistributing.

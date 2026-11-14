@@ -1,0 +1,38 @@
+========================================================================
+  Hybrid VQC: PLS-32 sequential encoding + MLP readout
+========================================================================
+  N_PARAMS = 72 circuit + 321 MLP = 393 total
+  PLS components : 32 (from all 251 features, sequential)
+  MLP            : 8 -> 32 -> 1
+  Encoding       : sequential, 8 different PLS components per layer
+
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows          : 14,965   MI: 5,454   NORM: 9,511
+  features used : 251
+  train: 11,972   test: 2,993
+
+Fitting PLS-32 preprocessor on training data ...
+  done (0.5s)
+  Classical LR on first  8 PLS comps: acc=0.8894  AUC=0.9481
+  Classical LR on first 16 PLS comps: acc=0.8881  AUC=0.9505
+  Classical LR on first 32 PLS comps: acc=0.8914  AUC=0.9539
+
+  Angles: shape=(11972, 32)  min=-3.142  max=3.142
+
+  PLS component separation by layer (MI vs NORM mean angle):
+    Layer 0 (PLS 1-8): mean_sep=0.900  max_sep=2.482
+    Layer 1 (PLS 9-16): mean_sep=0.220  max_sep=0.325
+    Layer 2 (PLS 17-24): mean_sep=0.119  max_sep=0.289
+    Layer 3 (PLS 25-32): mean_sep=0.062  max_sep=0.107
+  Class weights : NORM=0.787  MI=1.372
+
+  Warm-start quantum from: vqc_hybrid8_params.json
+    (prev test_acc=0.8126  AUC=0.8845)
+  MLP: Xavier random init
+
+Training  steps=300  batch=300  lr=0.01  ~7.5 effective epochs
+  Quantum gradient: PSR (exact, hardware-portable)
+  MLP gradient    : backpropagation
+  step   1/300   batch_BCE=0.7067   lr=0.0100   batch=300
+  step  10/300   batch_BCE=0.6935   lr=0.0100   batch=300
+  step  20/300   batch_BCE=0.6997   lr=0.0100   batch=300

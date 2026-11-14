@@ -1,0 +1,55 @@
+﻿========================================================================
+  Amplitude-Encoded VQC on 8 qubits (2**8 = 256 amplitude slots)
+========================================================================
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows       : 14,965
+  features   : 251  (pad to 256 for amplitude encoding)
+  MI vs NORM : 5,454 / 9,511
+  train      : 11,972   test : 2,993
+  class weights : NORM=0.787  MI=1.372  (MI/NORM ratio = 4,363/7,609)
+
+Encoding amplitudes ...
+  encoding: amplitude + log-scale feature (preserves magnitude info)
+  train state tensor : (11972, 256)   ||psi||_2 = 1  [ok]
+  test  state tensor : (2993, 256)
+  max norm error     : train 3.33e-16  test 2.22e-16
+
+Training VQC   N_QUBITS=8  N_PARAMS=81 (circuit=72 + readout=9)
+  gradient: parameter shift rule (exact, hardware-portable)
+  optimizer : Adam   steps=250   batch=500   lr=0.02   ≈10.4 effective epochs
+  step   1/250   batch_BCE=0.6942   lr=0.0200   batch=500
+  step  10/250   batch_BCE=0.6772   lr=0.0200   batch=500
+  step  20/250   batch_BCE=0.6466   lr=0.0200   batch=500
+  step  30/250   batch_BCE=0.6252   lr=0.0200   batch=500
+  step  40/250   batch_BCE=0.6001   lr=0.0200   batch=500
+  step  50/250   batch_BCE=0.5788   lr=0.0200   batch=500
+  step  60/250   batch_BCE=0.5843   lr=0.0200   batch=500
+  step  70/250   batch_BCE=0.5635   lr=0.0200   batch=500
+  step  80/250   batch_BCE=0.5446   lr=0.0200   batch=500
+  step  90/250   batch_BCE=0.5498   lr=0.0200   batch=500
+  step 100/250   batch_BCE=0.5394   lr=0.0200   batch=500
+  step 110/250   batch_BCE=0.5627   lr=0.0200   batch=500
+  step 120/250   batch_BCE=0.5063   lr=0.0200   batch=500
+  step 130/250   batch_BCE=0.5251   lr=0.0200   batch=500
+  step 140/250   batch_BCE=0.5027   lr=0.0200   batch=500
+  step 150/250   batch_BCE=0.4799   lr=0.0200   batch=500
+  step 160/250   batch_BCE=0.4905   lr=0.0200   batch=500
+  step 170/250   batch_BCE=0.4971   lr=0.0200   batch=500
+  step 180/250   batch_BCE=0.4921   lr=0.0200   batch=500
+  step 190/250   batch_BCE=0.4878   lr=0.0200   batch=500
+  step 200/250   batch_BCE=0.4680   lr=0.0200   batch=500
+  step 210/250   batch_BCE=0.5030   lr=0.0200   batch=500
+  step 220/250   batch_BCE=0.4740   lr=0.0200   batch=500
+  step 230/250   batch_BCE=0.5239   lr=0.0200   batch=500
+  step 240/250   batch_BCE=0.4494   lr=0.0200   batch=500
+  step 250/250   batch_BCE=0.4746   lr=0.0200   batch=500
+  wall time : 4856.5s
+
+------------------------------------------------------------------------
+  Results
+------------------------------------------------------------------------
+  Train  n=11,972   accuracy=0.8029   AUC=0.8762
+  Test   n=2,993   accuracy=0.7945   AUC=0.8691
+------------------------------------------------------------------------
+Saved loss curve -> <project_root>\results\vqc_amp8_training.png
+Saved trained parameters -> <project_root>\results\vqc_scale_params.json

@@ -1,0 +1,40 @@
+========================================================================
+  Hybrid VQC: PLS-8 preprocessing + data re-uploading + MLP readout
+========================================================================
+  N_PARAMS = 72 circuit + 321 MLP = 393 total
+  PLS components : 8 (from all 251 features)
+  MLP            : 8 -> 32 -> 1
+
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows          : 14,965   MI: 5,454   NORM: 9,511
+  features used : 251
+  train: 11,972   test: 2,993
+
+Fitting PLS-8 preprocessor on training data ...
+  done (0.2s)
+
+  Classical LR on PLS-8: acc=0.8894  AUC=0.9481  (quantum floor)
+
+  PLS component separation (MI vs NORM mean on train):
+    PLS-1: MI=+0.810  NORM=-0.464  sep=1.274
+    PLS-2: MI=+0.405  NORM=-0.232  sep=0.637
+    PLS-3: MI=+0.234  NORM=-0.134  sep=0.369
+    PLS-4: MI=+0.211  NORM=-0.121  sep=0.332
+    PLS-5: MI=-0.143  NORM=+0.082  sep=0.226
+    PLS-6: MI=-0.155  NORM=+0.089  sep=0.245
+    PLS-7: MI=+0.108  NORM=-0.062  sep=0.170
+    PLS-8: MI=+0.094  NORM=-0.054  sep=0.148
+
+  Angles: shape=(11972, 32)  min=-3.142  max=3.142
+  Class weights : NORM=0.787  MI=1.372
+
+  Initialization: fresh random  N(0,0.5) quantum, Xavier MLP
+
+Training  steps=300  batch=300  lr=0.01  ~7.5 effective epochs
+  Quantum gradient: PSR (exact, hardware-portable)
+  MLP gradient    : backpropagation
+  step   1/300   batch_BCE=0.6952   lr=0.0100   batch=300
+  step  10/300   batch_BCE=0.6831   lr=0.0100   batch=300
+  step  20/300   batch_BCE=0.6800   lr=0.0100   batch=300
+  step  30/300   batch_BCE=0.6714   lr=0.0100   batch=300
+  step  40/300   batch_BCE=0.6865   lr=0.0100   batch=300

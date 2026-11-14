@@ -6,3 +6,12 @@ data/*.csv
 !data/ptbxl_database.csv
 results/smoke*.jsonl
 *.log
+
+# secrets / local config - never commit
+.env
+*.env
+.qiskit/
+qiskit-ibm.json
+*token*
+*.pem
+.DS_Store

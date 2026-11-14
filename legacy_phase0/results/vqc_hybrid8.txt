@@ -1,0 +1,60 @@
+========================================================================
+  Hybrid VQC: sequential angle encoding (32 feat) + MLP readout
+========================================================================
+  N_PARAMS = 72 circuit + 321 MLP = 393 total
+  MLP: 8 -> 32 -> 1  (ReLU hidden layer)
+
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows   : 14,965   MI: 5,454   NORM: 9,511
+  train  : 11,972   test: 2,993
+  weights: NORM=0.787  MI=1.372
+
+  Warm-start: loaded quantum params from vqc_angle32_params.json
+  (Run 6 test_acc=0.8045  AUC=0.8699)
+  MLP readout: Xavier random init
+
+Training  steps=300  batch=500  lr=0.01  ~12.5 effective epochs
+  Quantum gradient: PSR (exact)
+  MLP gradient:     backpropagation
+  step   1/300   batch_BCE=0.7134   lr=0.0100   batch=500
+  step  10/300   batch_BCE=0.5978   lr=0.0100   batch=500
+  step  20/300   batch_BCE=0.4950   lr=0.0100   batch=500
+  step  30/300   batch_BCE=0.4908   lr=0.0100   batch=500
+  step  40/300   batch_BCE=0.4793   lr=0.0100   batch=500
+  step  50/300   batch_BCE=0.4486   lr=0.0100   batch=500
+  step  60/300   batch_BCE=0.4218   lr=0.0100   batch=500
+  step  70/300   batch_BCE=0.4084   lr=0.0100   batch=500
+  step  80/300   batch_BCE=0.4485   lr=0.0100   batch=500
+  step  90/300   batch_BCE=0.4358   lr=0.0100   batch=500
+  step 100/300   batch_BCE=0.4215   lr=0.0100   batch=500
+  step 110/300   batch_BCE=0.3742   lr=0.0100   batch=500
+  step 120/300   batch_BCE=0.3776   lr=0.0100   batch=500
+  step 130/300   batch_BCE=0.4219   lr=0.0100   batch=500
+  step 140/300   batch_BCE=0.4371   lr=0.0100   batch=500
+  step 150/300   batch_BCE=0.4665   lr=0.0100   batch=500
+  step 160/300   batch_BCE=0.4157   lr=0.0100   batch=500
+  step 170/300   batch_BCE=0.4095   lr=0.0100   batch=500
+  step 180/300   batch_BCE=0.4025   lr=0.0100   batch=500
+  step 190/300   batch_BCE=0.4683   lr=0.0100   batch=500
+  step 200/300   batch_BCE=0.4480   lr=0.0100   batch=500
+  step 210/300   batch_BCE=0.4399   lr=0.0100   batch=500
+  step 220/300   batch_BCE=0.4198   lr=0.0100   batch=500
+  step 230/300   batch_BCE=0.4378   lr=0.0100   batch=500
+  step 240/300   batch_BCE=0.4056   lr=0.0100   batch=500
+  step 250/300   batch_BCE=0.4635   lr=0.0100   batch=500
+  step 260/300   batch_BCE=0.4228   lr=0.0100   batch=500
+  step 270/300   batch_BCE=0.4138   lr=0.0100   batch=500
+  step 280/300   batch_BCE=0.3838   lr=0.0100   batch=500
+  step 290/300   batch_BCE=0.4286   lr=0.0100   batch=500
+  step 300/300   batch_BCE=0.4036   lr=0.0100   batch=500
+  wall time: 35358.3s  (9.82h)
+
+------------------------------------------------------------------------
+  Results
+------------------------------------------------------------------------
+  Train  n=11,972   acc=0.8189  AUC=0.8874  sens=0.7818  spec=0.8402
+  Test   n=2,993   acc=0.8126  AUC=0.8845  sens=0.7791  spec=0.8318
+------------------------------------------------------------------------
+  >= 90% accuracy: NO  -- gap = 0.0874
+
+Saved -> <project_root>\results\vqc_hybrid8_params.json

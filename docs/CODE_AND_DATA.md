@@ -36,7 +36,7 @@
 | `docs/PROJECT_LOG.md` | chronological log, decisions, deviations, problems, open items |
 | `docs/REPRODUCE.md` | every command, in order, with run times |
 | `docs/CODE_AND_DATA.md` | this file |
-| `CLOUD_RUNBOOK.md`, `docs/runbooks/HARDWARE_RUNBOOK.md`, `docs/runbooks/NEXT_RUNBOOK.md` | the three runbooks that were followed, unchanged |
+| `docs/runbooks/CLOUD_RUNBOOK.md`, `docs/runbooks/HARDWARE_RUNBOOK.md`, `docs/runbooks/NEXT_RUNBOOK.md` | the three runbooks that were followed, unchanged |
 | `requirements.txt`, `requirements-hw.txt` | dependencies (phase A; phase B/C extras) |
 
 ## 2. Code changes and new interfaces

@@ -1,0 +1,33 @@
+﻿========================================================================
+  Amplitude-Encoded VQC on 8 qubits (2**8 = 256 amplitude slots)
+========================================================================
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows       : 14,965
+  features   : 251  (pad to 256 for amplitude encoding)
+  MI vs NORM : 5,454 / 9,511
+  ** subset  : training on 500 rows for a fast demo **
+  train      : 500   test : 2,993
+  class weights : NORM=0.774  MI=1.412  (MI/NORM ratio = 177/323)
+
+Encoding amplitudes ...
+  train state tensor : (500, 256)   ||psi||_2 = 1  [ok]
+  test  state tensor : (2993, 256)
+  max norm error     : train 3.33e-16  test 3.33e-16
+
+Training VQC   N_QUBITS=8  N_PARAMS=81 (circuit=72 + readout=9)   max_iter=30
+  gradient: parameter shift rule (exact, hardware-portable)
+  iter   1   BCE = 0.6632
+  iter  10   BCE = 0.4189
+  iter  20   BCE = 0.3221
+  iter  30   BCE = 0.2792
+  converged: False   final BCE = 0.2792
+  wall time : 1539.2s
+
+------------------------------------------------------------------------
+  Results
+------------------------------------------------------------------------
+  Train  n=500   accuracy=0.8600   AUC=0.9530
+  Test   n=2,993   accuracy=0.7257   AUC=0.7813
+------------------------------------------------------------------------
+Saved loss curve -> <project_root>\results\vqc_amp8_training.png
+Saved trained parameters -> <project_root>\results\vqc_amp8_params.json

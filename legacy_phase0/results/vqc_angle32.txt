@@ -1,0 +1,111 @@
+========================================================================
+  Angle-Encoded VQC on 8 qubits with data re-uploading
+========================================================================
+Loading  <project_root>\PTB_XL\st_features_plus_TR.csv
+  rows          : 14,965
+  features used : 32  (8 per layer x 4 layers)
+  MI vs NORM    : 5,454 / 9,511
+
+  Feature loading (sequential, 8 per layer):
+    Layer 0: aVR_t_amp, V6_t_amp, I_t_amp, V5_t_amp, II_t_amp, aVR_t_inverted, V5_t_inverted, V6_t_inverted
+    Layer 1: III_q_depth, I_t_inverted, II_r_amp, V4_t_amp, V6_q_duration, V2_q_depth, V3_q_depth, V1_q_depth
+    Layer 2: aVF_q_depth, I_q_duration, aVL_st_amp_j80, V4_t_inverted, aVR_q_duration, I_st_dev_j80, aVL_t_inverted, aVL_st_mean
+    Layer 3: aVL_st_area, V5_q_duration, aVL_st_dev_j80, aVL_st_amp_j60, II_t_inverted, I_st_dev_j60, aVL_st_dev_j60, I_st_mean
+
+  train: 11,972   test: 2,993
+
+  Angle encoding sanity check:
+    angles_tr  shape=(11972, 32)  min=-3.142  max=3.142
+    angles_te  shape=(2993, 32)
+
+  Per-feature angle stats (MI vs NORM mean angles):
+  -- Layer 0 --
+    aVR_t_amp                       MI=+1.395  NORM=-0.949  sep=2.344
+    V6_t_amp                        MI=-1.347  NORM=+0.827  sep=2.174
+    I_t_amp                         MI=-1.213  NORM=+0.841  sep=2.054
+    V5_t_amp                        MI=-1.262  NORM=+0.801  sep=2.063
+    II_t_amp                        MI=-1.209  NORM=+0.764  sep=1.973
+    aVR_t_inverted                  MI=-0.928  NORM=+1.117  sep=2.045
+    V5_t_inverted                   MI=+0.093  NORM=-0.991  sep=1.084
+    V6_t_inverted                   MI=+0.089  NORM=-0.988  sep=1.078
+  -- Layer 1 --
+    III_q_depth                     MI=-0.558  NORM=+0.948  sep=1.506
+    I_t_inverted                    MI=+0.060  NORM=-0.968  sep=1.028
+    II_r_amp                        MI=-1.172  NORM=+0.498  sep=1.669
+    V4_t_amp                        MI=-0.967  NORM=+0.562  sep=1.530
+    V6_q_duration                   MI=-0.735  NORM=+0.834  sep=1.569
+    V2_q_depth                      MI=-0.400  NORM=+0.932  sep=1.332
+    V3_q_depth                      MI=-0.326  NORM=+0.923  sep=1.249
+    V1_q_depth                      MI=-0.500  NORM=+0.830  sep=1.330
+  -- Layer 2 --
+    aVF_q_depth                     MI=-0.386  NORM=+0.857  sep=1.242
+    I_q_duration                    MI=-0.725  NORM=+0.718  sep=1.443
+    aVL_st_amp_j80                  MI=-0.633  NORM=+0.706  sep=1.339
+    V4_t_inverted                   MI=-0.080  NORM=-0.842  sep=0.762
+    aVR_q_duration                  MI=+0.604  NORM=-0.800  sep=1.404
+    I_st_dev_j80                    MI=-0.701  NORM=+0.607  sep=1.308
+    aVL_t_inverted                  MI=+0.048  NORM=-0.977  sep=1.024
+    aVL_st_mean                     MI=-0.621  NORM=+0.652  sep=1.274
+  -- Layer 3 --
+    aVL_st_area                     MI=-0.619  NORM=+0.652  sep=1.271
+    V5_q_duration                   MI=-0.693  NORM=+0.729  sep=1.421
+    aVL_st_dev_j80                  MI=-0.616  NORM=+0.632  sep=1.247
+    aVL_st_amp_j60                  MI=-0.603  NORM=+0.675  sep=1.278
+    II_t_inverted                   MI=-0.071  NORM=-0.878  sep=0.807
+    I_st_dev_j60                    MI=-0.613  NORM=+0.610  sep=1.223
+    aVL_st_dev_j60                  MI=-0.593  NORM=+0.632  sep=1.226
+    I_st_mean                       MI=-0.587  NORM=+0.632  sep=1.219
+
+  class weights : NORM=0.787  MI=1.372  (MI/NORM ratio = 4,363/7,609)
+
+Training VQC  N_QUBITS=8  N_LAYERS=4  N_FEATURES=32  N_PARAMS=81 (72 circuit + 9 readout)
+  gradient:   parameter shift rule (exact, hardware-portable)
+  encoding:   sequential -- 8 different features loaded per layer
+  optimizer:  Adam   steps=300  batch=500  lr=0.01   ~12.5 effective epochs
+  step   1/300   batch_BCE=0.6958   lr=0.0100   batch=500
+  step  10/300   batch_BCE=0.6920   lr=0.0100   batch=500
+  step  20/300   batch_BCE=0.6867   lr=0.0100   batch=500
+  step  30/300   batch_BCE=0.6742   lr=0.0100   batch=500
+  step  40/300   batch_BCE=0.6608   lr=0.0100   batch=500
+  step  50/300   batch_BCE=0.6472   lr=0.0100   batch=500
+  step  60/300   batch_BCE=0.6474   lr=0.0100   batch=500
+  step  70/300   batch_BCE=0.6304   lr=0.0100   batch=500
+  step  80/300   batch_BCE=0.5927   lr=0.0100   batch=500
+  step  90/300   batch_BCE=0.6023   lr=0.0100   batch=500
+  step 100/300   batch_BCE=0.5594   lr=0.0100   batch=500
+  step 110/300   batch_BCE=0.5780   lr=0.0100   batch=500
+  step 120/300   batch_BCE=0.5735   lr=0.0100   batch=500
+  step 130/300   batch_BCE=0.5436   lr=0.0100   batch=500
+  step 140/300   batch_BCE=0.5066   lr=0.0100   batch=500
+  step 150/300   batch_BCE=0.5097   lr=0.0100   batch=500
+  step 160/300   batch_BCE=0.4913   lr=0.0100   batch=500
+  step 170/300   batch_BCE=0.4919   lr=0.0100   batch=500
+  step 180/300   batch_BCE=0.4838   lr=0.0100   batch=500
+  step 190/300   batch_BCE=0.4988   lr=0.0100   batch=500
+  step 200/300   batch_BCE=0.4843   lr=0.0100   batch=500
+  step 210/300   batch_BCE=0.4909   lr=0.0100   batch=500
+  step 220/300   batch_BCE=0.4959   lr=0.0100   batch=500
+  step 230/300   batch_BCE=0.5081   lr=0.0100   batch=500
+  step 240/300   batch_BCE=0.4702   lr=0.0100   batch=500
+  step 250/300   batch_BCE=0.4706   lr=0.0100   batch=500
+  step 260/300   batch_BCE=0.4663   lr=0.0100   batch=500
+  step 270/300   batch_BCE=0.4643   lr=0.0100   batch=500
+  step 280/300   batch_BCE=0.4447   lr=0.0100   batch=500
+  step 290/300   batch_BCE=0.4667   lr=0.0100   batch=500
+  step 300/300   batch_BCE=0.4899   lr=0.0100   batch=500
+  wall time: 8073.9s  (2.24h)
+
+------------------------------------------------------------------------
+  Results
+------------------------------------------------------------------------
+  Train  n=11,972   accuracy=0.8015   AUC=0.8670
+  Test   n=2,993   accuracy=0.8045   AUC=0.8699
+------------------------------------------------------------------------
+  >= 90% accuracy target: NO  -- gap = 0.0955
+
+  Confusion matrix (test):
+    TP= 862  FN= 229  sensitivity=0.7901 (recall)
+    FP= 356  TN=1546  specificity=0.8128
+
+Saved loss curve -> <project_root>\results\vqc_angle8_training.png
+Saved trained parameters -> <project_root>\results\vqc_angle32_params.json

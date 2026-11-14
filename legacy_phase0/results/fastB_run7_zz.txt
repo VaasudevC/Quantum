@@ -1,0 +1,48 @@
+========================================================================
+  Fast VQC  features=run7  readout=zz (36 obs)  scale=3.1416  hidden=32
+  params: 72 ansatz + 1217 MLP = 1289
+========================================================================
+  rows=14,965  train=10,176  val=1,796  test=2,993
+  reference: LR on the same encoded angles -> test acc=0.8674 AUC=0.9381
+  class weights NORM=0.787  MI=1.372
+
+Training  steps=1500  batch=2000  lr=0.01 (warmup+cosine)  l2=0.0001  ~295 epochs
+  step    25/1500  loss=0.6608  lr=0.01000  val_acc=0.6180  val_auc=0.6812 *
+  step    50/1500  loss=0.5810  lr=0.00999  val_acc=0.6776  val_auc=0.7596 *
+  step    75/1500  loss=0.5305  lr=0.00997  val_acc=0.7166  val_auc=0.7955 *
+  step   100/1500  loss=0.4829  lr=0.00993  val_acc=0.7645  val_auc=0.8288 *
+  step   125/1500  loss=0.4552  lr=0.00988  val_acc=0.7712  val_auc=0.8476 *
+  step   150/1500  loss=0.4361  lr=0.00982  val_acc=0.7823  val_auc=0.8517 *
+  step   175/1500  loss=0.4245  lr=0.00975  val_acc=0.7795  val_auc=0.8549 *
+  step   200/1500  loss=0.4185  lr=0.00966  val_acc=0.7856  val_auc=0.8553 *
+  step   225/1500  loss=0.4081  lr=0.00956  val_acc=0.7940  val_auc=0.8539
+  step   250/1500  loss=0.4077  lr=0.00945  val_acc=0.7862  val_auc=0.8526
+  step   275/1500  loss=0.3982  lr=0.00932  val_acc=0.7840  val_auc=0.8491
+  step   300/1500  loss=0.3981  lr=0.00919  val_acc=0.7829  val_auc=0.8484
+  step   325/1500  loss=0.3898  lr=0.00904  val_acc=0.7801  val_auc=0.8502
+  step   350/1500  loss=0.3873  lr=0.00888  val_acc=0.7784  val_auc=0.8476
+  step   375/1500  loss=0.3803  lr=0.00871  val_acc=0.7840  val_auc=0.8504
+  step   400/1500  loss=0.3857  lr=0.00854  val_acc=0.7823  val_auc=0.8480
+  step   425/1500  loss=0.3766  lr=0.00835  val_acc=0.7717  val_auc=0.8454
+  step   450/1500  loss=0.3754  lr=0.00815  val_acc=0.7762  val_auc=0.8455
+  step   475/1500  loss=0.3809  lr=0.00795  val_acc=0.7656  val_auc=0.8422
+  step   500/1500  loss=0.3714  lr=0.00774  val_acc=0.7723  val_auc=0.8436
+  step   525/1500  loss=0.3688  lr=0.00752  val_acc=0.7589  val_auc=0.8388
+  step   550/1500  loss=0.3649  lr=0.00730  val_acc=0.7656  val_auc=0.8394
+  step   575/1500  loss=0.3659  lr=0.00707  val_acc=0.7673  val_auc=0.8372
+  step   600/1500  loss=0.3615  lr=0.00683  val_acc=0.7606  val_auc=0.8356
+  step   625/1500  loss=0.3612  lr=0.00659  val_acc=0.7622  val_auc=0.8375
+  step   650/1500  loss=0.3618  lr=0.00635  val_acc=0.7645  val_auc=0.8354
+  step   675/1500  loss=0.3595  lr=0.00610  val_acc=0.7684  val_auc=0.8365
+  step   700/1500  loss=0.3596  lr=0.00585  val_acc=0.7689  val_auc=0.8353
+  step   725/1500  loss=0.3536  lr=0.00560  val_acc=0.7678  val_auc=0.8334
+  step   750/1500  loss=0.3563  lr=0.00535  val_acc=0.7589  val_auc=0.8337
+  step   775/1500  loss=0.3490  lr=0.00510  val_acc=0.7712  val_auc=0.8318
+  step   800/1500  loss=0.3476  lr=0.00485  val_acc=0.7700  val_auc=0.8312
+  step   825/1500  loss=0.3482  lr=0.00460  val_acc=0.7656  val_auc=0.8322
+  step   850/1500  loss=0.3489  lr=0.00435  val_acc=0.7622  val_auc=0.8302
+  step   875/1500  loss=0.3492  lr=0.00410  val_acc=0.7656  val_auc=0.8290
+  step   900/1500  loss=0.3541  lr=0.00386  val_acc=0.7622  val_auc=0.8301
+  step   925/1500  loss=0.3512  lr=0.00362  val_acc=0.7634  val_auc=0.8282
+  step   950/1500  loss=0.3408  lr=0.00339  val_acc=0.7634  val_auc=0.8301
+  step   975/1500  loss=0.3423  lr=0.00316  val_acc=0.7667  val_auc=0.8288

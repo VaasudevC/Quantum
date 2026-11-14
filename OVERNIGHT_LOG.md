@@ -13,7 +13,7 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - Application Control blocks DLL loads transiently on first use (sklearn _argkmin/_loss in C:\bwvenv); a retry works. Runners must tolerate this (retry once).
 - P2 done: p2_verify.py (n=8,12; k=2,4 / 2,4,6; 2 columns). Fast sector simulator vs independent dense 2^n gate-level simulator: states agree to <=1.3e-15
   (numpy sector incl. global phase, torch complex128 up to global phase), features <=5e-15, no weight leakage (0.0), Lemma-2 occupations k/n to 1.4e-15
-  (after spreading and after data layer), autograd vs finite differences <=2.3e-10. PennyLane check pending install (pip log C:\Users\vaasu\pip_pl.log).
+  (after spreading and after data layer), autograd vs finite differences <=2.3e-10. PennyLane check pending install (pip log).
   Reconstructed quantum_utils (bw_utils.py). FINDING: the literal "Hadamard brick-wall" (n-1 columns of chain-pair RBS(pi/4)) is orthogonal
   but NOT uniform-modulus (max | |W_ij|^2-1/n | = 0.35 at n=8, 0.40 at n=12), so it doesn't satisfy Lemma 2. DECISION: U_had = normalised
   Walsh-Hadamard (n=8), real Hadamard matrix of order 12 (Paley) at n=12, applied as exact many-body passive-FLO (JW) operator.
