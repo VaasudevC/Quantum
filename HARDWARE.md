@@ -289,14 +289,16 @@ Note: actual QPU time (as opposed to wall-clock time) was not saved in metadata.
 
 ### Main results (200 ECGs, 1000 shots, ibm_marrakesh)
 
-| model | AUC noiseless [95% CI] | AUC raw [95% CI] | AUC postselected [95% CI] | kept fraction |
-|---|---|---|---|---|
-| bw8 | 0.9253 [0.8846, 0.9576] | 0.9485 [0.9170, 0.9737] | 0.9483 [0.9149, 0.9750] | 0.499 ± 0.025 |
-| vqc32 | 0.9673 [0.9414, 0.9878] | 0.9561 [0.9238, 0.9822] | – | – |
+| model | AUC noiseless [95% CI] | AUC raw [95% CI] | AUC postselected [95% CI] | kept fraction | paired Δ (raw − noiseless) [95% CI] |
+|---|---|---|---|---|---|
+| bw8 | 0.9253 [0.8846, 0.9576] | 0.9485 [0.9170, 0.9737] | 0.9483 [0.9149, 0.9750] | 0.499 ± 0.025 | +0.023 [+0.003, +0.046] |
+| vqc32 | 0.9673 [0.9414, 0.9878] | 0.9561 [0.9238, 0.9822] | – | – | −0.011 [−0.024, −0.001] |
 
-Bootstrap CIs: B = 2000, seed = 0, percentile method. Noiseless AUC computed from exact circuit simulation (precomputed in `ecgs_*.npz`). The 200-ECG test set has ~±0.01 AUC sampling error.
+Bootstrap CIs: B = 2000, seed = 0, percentile method, paired resampling for Δ. Noiseless AUC computed from exact circuit simulation (precomputed in `ecgs_*.npz`). The 200-ECG test set has ~±0.01 AUC sampling error. 2.2 resource units consumed (ibm_marrakesh billing).
 
-**Key reading:** AUC degrades by only −0.01 (vqc32) or improves slightly (+0.02 bw8) on real hardware vs noiseless simulation. Both models are well above 0.90 raw AUC on ibm_marrakesh.
+**bw8 particle-number note:** 50% of shots violated the k = 4 particle-number constraint and were discarded by postselection (`kept_fraction = 0.499`); postselected AUC (0.9483) is essentially unchanged from raw (0.9485), so postselection neither helps nor hurts here.
+
+**Key reading:** vqc32 AUC degrades by −0.011 (CI excludes 0 marginally: [−0.024, −0.001]), consistent with ⟨Z⟩ contraction under real hardware noise. bw8 AUC is +0.023 *higher* on hardware than noiseless (paired CI [+0.003, +0.046] excludes 0): hardware ranked these 200 ECGs better than its own exact noiseless simulation. This is most likely a noise-induced change in the effective decision function (the raw bw8 logit is noisier but differently biased), not a reliable improvement — it is one run, one fold, 200 ECGs. Both models are well above 0.90 AUC on ibm_marrakesh.
 
 ### Per-ECG agreement (hardware vs noiseless logit)
 
@@ -307,9 +309,9 @@ Bootstrap CIs: B = 2000, seed = 0, percentile method. Noiseless AUC computed fro
 
 Contraction factor = mean|hw_logit − b| / mean|nl_logit − b|. The bw8 raw contraction factor >1 indicates a systematic bias expansion under hardware noise; vqc32 shows the more typical ⟨Z⟩ contraction (~0.44×). With postselection (k=4), bw8 MAE improves to 1.86. The ranking is preserved at Pearson/Spearman r ≈ 0.93–0.97.
 
-### Calibration
+### Calibration (threshold tuned on the test ECGs — optimistic)
 
-Threshold labelled "noiseless-optimal" is the balanced-accuracy-maximising threshold found on the noiseless logits + true labels (not from a held-out validation set — this is the same test set, so this overfits in principle). The hardware logit has a different offset; applying the noiseless threshold directly fails (spec ≈ 0). Using the hardware-optimal threshold or the rescaled logit with its own optimal threshold restores calibration.
+Threshold labelled "noiseless-optimal" is the balanced-accuracy-maximising threshold found on the noiseless logits + true labels (not from a held-out validation set — this is the same test set, so this overfits in principle). The hardware logit has a different offset; applying the noiseless threshold directly fails (spec ≈ 0). Using the hardware-optimal threshold or the rescaled logit with its own optimal threshold restores calibration. **All thresholds are tuned on the test ECGs themselves; these figures are optimistic and would need a separate held-out set in deployment.**
 
 | model | condition | bal. acc | sens | spec | acc |
 |---|---|---|---|---|---|
@@ -324,7 +326,7 @@ Global rescale factors: bw8 s = 1.97, vqc32 s = 2.23 (s * hw_logit ≈ noiseless
 
 H3b used a **different circuit compile** (best-compile 80 CZ for vqc32, pessimistic 109–117 CZ for the 300-ECG run) vs real hardware (80 CZ for vqc32 as per info_vqc32.json), different number of ECGs (300 vs 200), and different shots (2000 vs 1000).
 
-H3b FakeFez predictions: AUC degrades by ≤ 0.006 from noiseless under the simulated noise model, with ⟨Z⟩ contraction 0.71–0.88×. Real hardware (H6): AUC degradation ≤ 0.012 for vqc32 (within ±0.01 sampling error), logit contraction 0.44× for vqc32 and expansion 1.56× for bw8. The larger bw8 "contraction" and the offset shift suggest real hardware has additional noise not captured by FakeFez (crosstalk, drift, leakage). The vqc32 AUC agrees well with FakeFez predictions (~0.960 FakeFez vs 0.956 real hardware), consistent with the same 80 CZ compile. The bw8 raw AUC (0.949) exceeds noiseless (0.925) by +0.024 — an artefact of the small test set (200 ECGs, ±0.01 sampling error) rather than noise improving the model; the CIs overlap. Overall real hardware is consistent with FakeFez for the purpose of AUC survival.
+H3b FakeFez predictions: AUC degrades by ≤ 0.006 from noiseless under the simulated noise model, with ⟨Z⟩ contraction 0.71–0.88×. Real hardware (H6): AUC degradation ≤ 0.012 for vqc32 (within ±0.01 sampling error), logit contraction 0.44× for vqc32 and expansion 1.56× for bw8. The larger bw8 "contraction" and the offset shift suggest real hardware has additional noise not captured by FakeFez (crosstalk, drift, leakage). The vqc32 AUC agrees well with FakeFez predictions (~0.960 FakeFez vs 0.956 real hardware), consistent with the same 80 CZ compile. The bw8 paired Δ (+0.023, CI [+0.003, +0.046]) is a real paired difference on the same 200 ECGs, not a sampling artefact — but it is one run on one fold and most likely reflects a noise-induced shift in the effective bw8 decision function rather than a reliable improvement; see main results note. The vqc32 AUC degradation (−0.011) and ⟨Z⟩ contraction (0.44×) are consistent with the FakeFez prediction direction (≤ 0.006 AUC loss, 0.71–0.88× contraction), though real hardware shows ~2× more contraction, suggesting additional noise sources (crosstalk, drift, leakage) beyond the FakeFez noise model. The vqc32 AUC agrees well with FakeFez (~0.960 FakeFez vs 0.956 real hardware) with the same 80 CZ compile. Overall real hardware is consistent with FakeFez for the purpose of AUC survival.
 
 ### Noisy simulation cell (see also COLAB_HW.md)
 
@@ -336,35 +338,35 @@ This experiment tests whether two trained quantum models (bw8, vqc32) retain the
 
 ---
 
-## Real-device command for the paper run (added 2026-11-14)
+## How the H6 run was produced (2026-11-14)
 
-**Target:** k = 32, s = π/6 angle VQC on 300 stratified fold-0 test ECGs at 1,024 shots/PUB, plus 2 readout-calibration PUBs on the same qubits.
-Reports: noiseless AUC, FakeFez-noise AUC, hardware AUC (once returned), per-ECG score correlation, circuit layout (physical qubits, depth, 2-qubit gate count).
+**Qiskit is blocked by WDAC on the lab PC.** The run was done from Google Colab using `hw_bundle.zip` (see `COLAB_HW.md` for the exact notebook cells). The commands below reproduce it.
 
-**Prerequisite:** in `hw_run_ibm.py` change line `N_ECG, SHOTS, CAL_SHOTS = 100, 1000, 1000` to `N_ECG, SHOTS, CAL_SHOTS = 300, 1024, 1024`.
-
-**Dry run (FakeFez, no account needed):**
+**Step 1 — Colab dry run (FakeFez; no account needed):**
 ```bash
-# Requires C:\bwvenv with Qiskit/Aer; use from an environment not blocked by Application Control.
-# Blocked on this machine (Qiskit _accelerate DLL blocked by WDAC as of 2026-11-14; dry run incomplete).
-C:\bwvenv\Scripts\python.exe hw_run_ibm.py --local --n 300
-# Output: results/hw/ibm_local/analysis.json
+# In Colab after extracting hw_bundle.zip and installing requirements-colab.txt:
+python hw_run_ibm_brickwall.py --local --n 4 --shots 200 --models bw8,vqc32
+# Output: results/hw/ibm_bw_local/ (FakeFez, 4 ECGs)
 ```
 
-**Real-device command (run this yourself from a machine with network access to IBM):**
+**Step 2 — Pilot run (10 ECGs, 500 shots, ibm_marrakesh):**
 ```bash
-pip install -r requirements-hw.txt
-export QISKIT_IBM_TOKEN=<your_token>           # from quantum.cloud.ibm.com; never commit
-export QISKIT_IBM_INSTANCE=<crn_if_needed>     # IBM Cloud accounts only
-C:\bwvenv\Scripts\python.exe hw_run_ibm.py --submit --n 300 --yes
-# Submits 2 models × (300 ECG PUBs + 2 calibration PUBs) × 1024 shots ≈ 616k shots
-# Expected QPU time: ~3–6 of the 10 free minutes/month (at 1024 shots/PUB for n=12 circuits).
-# Results: results/hw/ibm_hw/analysis.json (AUC table + per-ECG correlations)
-# To re-fetch after a session drop: C:\bwvenv\Scripts\python.exe hw_run_ibm.py --retrieve
+python hw_run_ibm_brickwall.py --submit --n 10 --shots 500 --models bw8,vqc32 --tag pilot --yes
+# Job ids: bw8=dbs3abhabdes73fqmv50, vqc32=dbs3ac7v5hds73diglr0
+# Output: results/hw/ibm_bw_pilot/  (2.2 RU total for pilot + main)
 ```
 
-**What the analysis reports** (from `results/hw/ibm_hw/analysis.json`):
-- AUC columns: `noiseless`, `aer_noisy_raw`, `aer_noisy_mitigated`, `hw_raw`, `hw_mitigated`
-- `corr_P_vs_noiseless`: Pearson r of hardware P(MI) vs noiseless P(MI) per ECG
-- Circuit stats in `meta.json`: backend name, calibration timestamp, `n2q` (2-qubit gate count), `depth`, physical qubit layout
-- Note: bootstrap CIs for AUC are not yet implemented in `analyze()`; compute offline with `sklearn.utils.resample` on the per-ECG scores saved in `ecgs_*.npz` + `counts_*.json`.
+**Step 3 — Main run (200 ECGs, 1000 shots, ibm_marrakesh):**
+```bash
+python hw_run_ibm_brickwall.py --submit --n 200 --shots 1000 --models bw8,vqc32 --tag hw --yes
+# Job ids: bw8=dbs3bcvv5hds73digmrg, vqc32=dbs3bd7v5hds73digms0
+# Output: results/hw/ibm_bw_hw/
+```
+
+**Step 4 — Analysis (run on lab PC after downloading results; no Qiskit needed):**
+```bash
+..\.venv\Scripts\python.exe hw_run_ibm_brickwall.py --analyze --tag hw
+..\.venv\Scripts\python.exe hw_analyze_extended.py --tag hw
+```
+
+For the matched noisy-simulation comparison (FakeMarrakesh), see `COLAB_HW.md` Cell 9.

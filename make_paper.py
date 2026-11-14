@@ -167,16 +167,20 @@ def table5():
         return f"{v:.4f}"
     L = ["# Table 5 — Real hardware results: ibm_marrakesh (Heron r2), 200 ECGs, 1000 shots, 2026-11-14", "", STAMP, "",
          "Source: `results/hw/ibm_bw_hw/extended_analysis.json`.",
-         "Bootstrap CIs: B=2000, seed=0, percentile method. Noiseless AUC from exact simulation.", "",
-         "## AUC with 95% bootstrap CIs", "",
-         "| model | circuit (CZ, depth) | AUC noiseless [95% CI] | AUC raw [95% CI] | AUC postselected [95% CI] | kept fraction |",
-         "|---|---|---|---|---|---|"]
+         "Bootstrap CIs: B=2000, seed=0, percentile method. Noiseless AUC from exact simulation.",
+         "2.2 RU consumed (ibm_marrakesh billing). bw8: 50% of shots violated k=4 particle number; postselection left AUC unchanged.", "",
+         "## AUC with 95% bootstrap CIs and paired difference (hardware − noiseless)", "",
+         "| model | circuit (CZ, depth) | AUC noiseless [95% CI] | AUC raw [95% CI] | AUC postselected [95% CI] | kept fraction | paired Δ [95% CI] |",
+         "|---|---|---|---|---|---|---|"]
     circuits = {"bw8": "136 CZ, depth 254", "vqc32": "80 CZ, depth 208"}
     for mname in ("bw8", "vqc32"):
         if mname not in r: continue
         mr = r[mname]
         kf = f"{mr['kept_fraction_mean']:.3f} ± {mr['kept_fraction_std']:.3f}" if "kept_fraction_mean" in mr else "–"
-        L.append(f"| {mname} | {circuits[mname]} | {fmt('auc_noiseless', mr)} | {fmt('auc_raw', mr)} | {fmt('auc_postselected', mr)} | {kf} |")
+        d = mr.get("diff_raw_minus_noiseless", float("nan"))
+        ci = mr.get("diff_raw_minus_noiseless_ci", [float("nan"), float("nan")])
+        paired = f"{d:+.4f} [{ci[0]:+.4f}, {ci[1]:+.4f}]"
+        L.append(f"| {mname} | {circuits[mname]} | {fmt('auc_noiseless', mr)} | {fmt('auc_raw', mr)} | {fmt('auc_postselected', mr)} | {kf} | {paired} |")
     L += ["", "## Per-ECG agreement (hardware vs noiseless logit)", "",
           "| model | Pearson r | Spearman ρ | MAE logit | contraction factor |",
           "|---|---|---|---|---|"]
@@ -195,7 +199,8 @@ def table5():
         cal_nl = r[mname].get("calibration", {}).get("noiseless", {})
         if cal_nl:
             L.append(f"| {mname} noiseless | {cal_nl.get('bal_acc', float('nan')):.3f} | {cal_nl.get('sens', float('nan')):.3f} | {cal_nl.get('spec', float('nan')):.3f} | {cal_nl.get('acc', float('nan')):.3f} |")
-    L += ["", "Note: threshold is hardware-optimal on this same test set (not held-out validation). The 200-ECG test set has ~±0.01 AUC sampling error."]
+    L += ["", "Note: thresholds tuned on the same test ECGs (optimistic; not held-out validation). The 200-ECG test set has ~±0.01 AUC sampling error.",
+          "bw8 paired Δ excludes 0 (CI [+0.003, +0.046]): hardware ranked ECGs better than noiseless simulation; likely a noise-induced shift in the decision function, not a reliable improvement (one run, one fold)."]
     (OUT / "table5_hardware.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 
 

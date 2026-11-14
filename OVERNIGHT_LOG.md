@@ -104,3 +104,5 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-14 14:55 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 2.37 GB, elapsed 12.0h
 - 2026-11-14 15:29 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 3.57 GB, elapsed 12.6h
 - 2026-11-14 15:59 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 2.64 GB, elapsed 13.1h
+- 2026-11-14 16:29 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 3.62 GB, elapsed 13.6h
+- 2026-11-14 16:59 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 3.12 GB, elapsed 14.1h

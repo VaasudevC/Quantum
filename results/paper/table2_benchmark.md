@@ -1,6 +1,6 @@
 # Table 2 — Full-data benchmark by feature count (5-fold patient-grouped CV, test AUC mean ± SD)
 
-Built from commit 8a5214d by make_paper.py.
+Built from commit e12d996 by make_paper.py.
 
 Sources: `results/p1_classical.jsonl` (classical, hyper-parameters by validation AUC), `results/n4_clinical.json` (angle VQC π/6), `results/bw/p3_analysis.json` (brick-wall finals).
 

@@ -1,6 +1,6 @@
 # Table 4 — Training-free screen of quantum feature maps (QB1, pre-registered in QB.md; discovery folds 0–2, k = 8)
 
-Built from commit 8a5214d by make_paper.py.
+Built from commit e12d996 by make_paper.py.
 
 F0 product map, F1 re-uploading (L loads, CNOT ring), F2 IQP/ZZ (ring), F3 IQP with clinically paired RZZ, F4 Heisenberg-ring evolution (T Trotter steps), F5 brick-wall encoding state. g = geometric difference to a CV-tuned RBF kernel (Huang et al. 2021). Gate (N = 500, k = 8, ≥ 2 of 3 folds): g ≥ √N/2 at λ ∈ {1e-3, 1e-2, 1e-1}, mean off-diagonal > 0.05, centered alignment ≥ 90 % of RBF.
 **Maps passing the gate: 0.** Source `results/qb1_screen.jsonl`.
