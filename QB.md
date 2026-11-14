@@ -185,7 +185,8 @@ Two candidates from QB5 are sent to confirmation: **(1) subtype_IMI Q1 angle VQC
 * **Bootstrap:** paired hierarchical bootstrap exactly as sd_analyze.py (B = 5000, resample folds then subsets, percentile 95% CI). One run only; no re-runs.
 * **Holm correction:** over the 2 candidates (not over models or twins; twins are reported separately). A candidate passes only if the Holm-adjusted CI lower bound vs SVM-RBF > 0 AND point estimate ≥ +0.005 AND it beats its twin (bounded-input SVM-RBF).
 * **Wording if confirmed:** "benefit confirmed (subtype_IMI)". If not confirmed: "hypothesis for future work (subtype_IMI)". Either way, the main-analysis claim remains "no benefit found".
-* **Script to write:** `qb6_confirm.py` (not yet written). Output: `results/qb6.jsonl`, `results/qb6_table.md`.
+* **Script:** `qb6_confirm.py`. Output: `results/qb6.jsonl`, `results/qb6_table.md`, `results/qb6_analysis.json`.
+  Run: `..\.venv\Scripts\python.exe qb6_confirm.py 3 4`
 
 **Status: NOT RUN.** Protocol is committed; folds 3–4 have not been touched.
 
