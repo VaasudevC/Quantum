@@ -2,6 +2,8 @@
 
 Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (other apps) -> few workers.
 
+- [Task HW3] extended analysis planned (2026-11-14): hw_analyze_extended.py will load results/hw/ibm_bw_{tag}/ data and compute bootstrap CIs (B=2000, seed=0, percentile CI) for auc_noiseless/auc_raw/auc_postselected; per-ECG Pearson/Spearman of hardware vs noiseless logit; Z-contraction factor; calibration (balanced-accuracy-optimal threshold from noiseless, accuracy/sens/spec for raw and rescaled hardware); saves extended_analysis.json and hw_report.md. Pure numpy/scipy/sklearn, no qiskit.
+
 - [start] P0: env = ../.venv (py3.14.3, numpy 2.4.6, sklearn 1.9.0, xgboost 3.4.1, wfdb 4.3.1). `p0_sanity.py`:
   fold-0 k=32 pi/6 test AUC recomputed from stored params = 0.959758698692389 == logged (diff 0.0). P0 PASS.
 - Problem: `import torch` in ../.venv fails: "Application Control policy has blocked torch_global_deps.dll" (WDAC).
@@ -99,3 +101,6 @@ Times are local. Machine: 16 cores, 15.7 GB RAM but only ~1 GB free at start (ot
 - 2026-11-14 13:24 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 6.97 GB, elapsed 10.5h
 - 2026-11-14 13:54 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 5.32 GB, elapsed 11.0h
 - 2026-11-14 14:24 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 2.14 GB, elapsed 11.5h
+- 2026-11-14 14:55 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 2.37 GB, elapsed 12.0h
+- 2026-11-14 15:29 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 3.57 GB, elapsed 12.6h
+- 2026-11-14 15:59 progress: k4 units 850/850, QB5 30/30, seed3 runs 0/5, free RAM 2.64 GB, elapsed 13.1h
