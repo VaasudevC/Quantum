@@ -1,0 +1,12 @@
+{
+ "bw8": {
+  "auc_noiseless": 0.9583333333333334,
+  "auc_raw": 0.9166666666666666,
+  "auc_postselected": 0.9583333333333334,
+  "kept_fraction_mean": 0.481640625
+ },
+ "vqc32": {
+  "auc_noiseless": 0.9583333333333334,
+  "auc_raw": 1.0
+ }
+}

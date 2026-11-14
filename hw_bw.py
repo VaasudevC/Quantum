@@ -10,9 +10,6 @@ odd trainable columns (as in the notebook).
 """
 from __future__ import annotations
 import numpy as np
-from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
-from qiskit.circuit import Parameter, ParameterVector
-from qiskit.circuit.library import XXPlusYYGate
 import bw_utils as B
 
 
@@ -34,10 +31,12 @@ def givens_decompose(W):
 
 def rbs(qc, phi, a, b):
     """SingleExcitation(phi) on (a, b) in PennyLane's |q_a q_b> basis."""
+    from qiskit.circuit.library import XXPlusYYGate
     qc.append(XXPlusYYGate(phi, np.pi / 2), [b, a])              # orientation fixed by numerical test (hw_bw.check_rbs)
 
 
 def check_rbs():
+    from qiskit import QuantumCircuit
     from qiskit.quantum_info import Operator
     phi = 0.7; c, s = np.cos(phi / 2), np.sin(phi / 2)
     SE = np.array([[1, 0, 0, 0], [0, c, -s, 0], [0, s, c, 0], [0, 0, 0, 1]], complex)      # pennylane basis |q_a q_b>, a = MSB
@@ -49,6 +48,8 @@ def check_rbs():
 
 def build(n, columns, k, W=None, data_params=True, measure=True):
     """parametrised circuit: data phases theta_j (ParameterVector 'x') ; trainable w bound later via bind_weights."""
+    from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
+    from qiskit.circuit import Parameter, ParameterVector
     W = B.spreading_matrix(n) if W is None else W
     gates, d = givens_decompose(W)
     q = QuantumRegister(n, "q"); c = ClassicalRegister(n, "c")

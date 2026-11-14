@@ -15,14 +15,21 @@ from __future__ import annotations
 import argparse, json, os, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
-import numpy as np, torch
-import bw_torch as T, hw_bw as H, qiskit_vqc as Q, Vqc_fast8 as V
-torch.set_num_threads(1)
+import numpy as np
 # Cache directory: set BW_CACHE env var to override (e.g. "C:/bwcache" on the lab PC).
 # Default "cache" matches the layout of hw_bundle.zip.
 _CACHE = Path(os.environ.get("BW_CACHE", "cache"))
 PER_SHOT_S = 0.4e-3            # conservative QPU seconds per shot (rep delay ~250 us + circuit + readout, with margin)
 ALL = ["bw8", "bw12", "vqc32"]
+
+
+def _auc(y, s):
+    """Pure-numpy rank-based AUC (ties averaged); no torch/sklearn needed."""
+    y = np.asarray(y); s = np.asarray(s, dtype=float)
+    _, inv, cnt = np.unique(s, return_inverse=True, return_counts=True)
+    ranks = (np.cumsum(cnt) - (cnt - 1) / 2.0)[inv]
+    n1 = y.sum(); n0 = len(y) - n1
+    return float((ranks[y == 1].sum() - n1 * (n1 + 1) / 2) / (n1 * n0))
 
 
 def outdir(tag):
@@ -37,6 +44,8 @@ def stratified(y, n, seed=0):
 
 def model_inputs(name, n_ecg):
     """returns (template circuit, {param name: values array (n_ecg,)}, info dict, labels, positions in the fold-0 test set)"""
+    import torch; import bw_torch as T; torch.set_num_threads(1)
+    import hw_bw as H, qiskit_vqc as Q, Vqc_fast8 as V
     hw = np.load(_CACHE / "hw_inputs.npz"); y_te = hw["y_te"]; pos = stratified(y_te, n_ecg)
     if name.startswith("bw"):
         n = int(name[2:])
@@ -150,19 +159,20 @@ def retrieve(tag):
 
 
 def analyze(tag):
+    import hw_bw as H, qiskit_vqc as Q
     d = outdir(tag); out = {}
     for k in ALL:
         if not (d / f"counts_{k}.json").exists():
             continue
         info = json.load(open(d / f"info_{k}.json")); e = np.load(d / f"ecgs_{k}.npz"); y = e["y"]
-        cnt = json.load(open(d / f"counts_{k}.json")); res = dict(auc_noiseless=T.auc(y, np.array(e["noiseless_score"])))
+        cnt = json.load(open(d / f"counts_{k}.json")); res = dict(auc_noiseless=_auc(y, np.array(e["noiseless_score"])))
         if info["kind"] == "bw":
             n, kk, h, b = info["n"], info["k"], np.array(info["h"]), info["b"]
             fr = [H.features_from_counts(c, n) for c in cnt]; fp = [H.features_from_counts(c, n, kk) for c in cnt]
-            res.update(auc_raw=T.auc(y, np.array([f for f, _ in fr]) @ h + b), auc_postselected=T.auc(y, np.array([f for f, _ in fp]) @ h + b),
+            res.update(auc_raw=_auc(y, np.array([f for f, _ in fr]) @ h + b), auc_postselected=_auc(y, np.array([f for f, _ in fp]) @ h + b),
                        kept_fraction_mean=float(np.mean([q for _, q in fp])))
         else:
-            z = np.array([Q.z_from_counts(c) for c in cnt]); res["auc_raw"] = T.auc(y, z @ np.array(info["w"]) + info["b"])
+            z = np.array([Q.z_from_counts(c) for c in cnt]); res["auc_raw"] = _auc(y, z @ np.array(info["w"]) + info["b"])
         out[k] = res; print(k, {a: round(v, 4) for a, v in res.items()}, flush=True)
     json.dump(out, open(d / "analysis.json", "w"), indent=1)
 
